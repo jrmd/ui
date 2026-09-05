@@ -251,11 +251,11 @@ import {Button} from "@/components/jez-ui/ui/button";
             <h2>0.1.0 · Initial collection</h2>
             <ul>
               <li>
-                90 components across foundations, product controls, motion,
+                91 components across foundations, product controls, motion,
                 effects, and charts.
               </li>
-              <li>36 composed marketing and product blocks.</li>
-              <li>Eight standalone multipage Next.js templates.</li>
+              <li>79 composed marketing and product blocks.</li>
+              <li>Nine standalone multipage Next.js templates.</li>
               <li>
                 Source registry, searchable documentation, isolated previews,
                 and template archives.

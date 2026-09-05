@@ -1,0 +1,6 @@
+@import "./theme.css";
+@import "./template.css";
+@import "@fontsource-variable/instrument-sans/wght.css";
+@import "@fontsource-variable/instrument-sans/wght-italic.css";
+@source "../registry";
+:root{--background:#080a0d;--foreground:#e5eaf1;--primary:#c0d2ee;--primary-foreground:#101820;--border:#2c333e;}

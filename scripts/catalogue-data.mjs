@@ -10,12 +10,21 @@ export const groups = {
   charts:
     "Area Chart,Line Chart,Bar Chart,Stacked Bar Chart,Donut Chart,Radial Gauge,Heatmap,Sparkline,Live Line Chart,Scatter Chart",
   marketing:
-    "Editorial Hero,Product Demo Hero,WebGL Hero,Logo Wall,Feature Grid,Alternating Feature Story,Product Comparison,Metrics Strip,Testimonial Grid,Testimonial Carousel,Pricing Table,Pricing Comparison,FAQ,Newsletter Signup,Contact Form,CTA Section,Marketing Navigation,Mega Navigation,Floating Navigation,Terrain Hero,Marketing Footer,Particle Hero,Liquid Hero,Orb Hero,Silk Hero,Eclipse Hero,Tunnel Hero,Constellation Hero,Distortion Hero,Media Hero,Typographic Hero,Shape Hero,Studio Hero,Journal Hero,Poster Hero,Portfolio Hero,Collage Hero,Editorial Navigation,Commerce Navigation,Studio Navigation",
+    "Media Aside,Journal Bento,Article Sidebar,Editorial Footer,Studio Footer,Newsletter Footer,Plan Comparison,Feature Comparison,Usage Pricing,Editorial Hero,Product Demo Hero,WebGL Hero,Logo Wall,Feature Grid,Alternating Feature Story,Product Comparison,Metrics Strip,Testimonial Grid,Testimonial Carousel,Pricing Table,Pricing Comparison,FAQ,Newsletter Signup,Contact Form,CTA Section,Marketing Navigation,Mega Navigation,Floating Navigation,Terrain Hero,Marketing Footer,Particle Hero,Liquid Hero,Orb Hero,Silk Hero,Eclipse Hero,Tunnel Hero,Constellation Hero,Distortion Hero,Media Hero,Typographic Hero,Shape Hero,Studio Hero,Journal Hero,Poster Hero,Portfolio Hero,Collage Hero,Editorial Navigation,Commerce Navigation,Studio Navigation",
   workspace:
-    "Application Shell,Workspace Navigation,Analytics Overview,Activity Feed,Searchable Records Screen,Record Detail Panel,Kanban Board,Task List,Calendar Schedule,Onboarding Wizard,Sign In Form,Sign Up Form,Password Reset Form,Profile Settings,Team Management,Billing Settings,Notification Centre,Command Search,Chat Workspace,Workspace Sidebar,Rail Sidebar,Inset Sidebar,User Switcher,Organization Switcher,SSO Login,Split Login,Workspace Login",
+    "Immersive Login,Ribbon Login,Editorial Login,Application Shell,Workspace Navigation,Analytics Overview,Activity Feed,Searchable Records Screen,Record Detail Panel,Kanban Board,Task List,Calendar Schedule,Onboarding Wizard,Sign In Form,Sign Up Form,Password Reset Form,Profile Settings,Team Management,Billing Settings,Notification Centre,Command Search,Chat Workspace,Workspace Sidebar,Rail Sidebar,Inset Sidebar,User Switcher,Organization Switcher,SSO Login,Split Login,Workspace Login",
 };
 export const slugify = (s) => s.toLowerCase().replaceAll(" ", "-");
 export const templateSpecs = [
+  {
+    slug: "product-launch",
+    name: "Afterhours",
+    title: "Product launch",
+    description:
+      "A cinematic WebGL launch with a playable sound-design instrument.",
+    color: "#a6bce4",
+    routes: ["", "early-access", "release-notes"],
+  },
   {
     slug: "saas",
     name: "Forma",

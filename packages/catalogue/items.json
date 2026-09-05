@@ -1001,6 +1001,105 @@
     "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">Find the pattern.</h3><p className=\"mt-2 text-sm text-muted-foreground\">The relationship behind the numbers</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><ScatterChart/></div>"
   },
   {
+    "slug": "media-aside",
+    "title": "Media Aside",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/media-aside.tsx",
+    "symbol": "MediaAside",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<MediaAside/>"
+  },
+  {
+    "slug": "journal-bento",
+    "title": "Journal Bento",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/journal-bento.tsx",
+    "symbol": "JournalBento",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<JournalBento/>"
+  },
+  {
+    "slug": "article-sidebar",
+    "title": "Article Sidebar",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/article-sidebar.tsx",
+    "symbol": "ArticleSidebar",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<ArticleSidebar/>"
+  },
+  {
+    "slug": "editorial-footer",
+    "title": "Editorial Footer",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/editorial-footer.tsx",
+    "symbol": "EditorialFooter",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<EditorialFooter/>"
+  },
+  {
+    "slug": "studio-footer",
+    "title": "Studio Footer",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/studio-footer.tsx",
+    "symbol": "StudioFooter",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<StudioFooter/>"
+  },
+  {
+    "slug": "newsletter-footer",
+    "title": "Newsletter Footer",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/newsletter-footer.tsx",
+    "symbol": "NewsletterFooter",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<NewsletterFooter/>"
+  },
+  {
+    "slug": "plan-comparison",
+    "title": "Plan Comparison",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/plan-comparison.tsx",
+    "symbol": "PlanComparison",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<PlanComparison/>"
+  },
+  {
+    "slug": "feature-comparison",
+    "title": "Feature Comparison",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/feature-comparison.tsx",
+    "symbol": "FeatureComparison",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<FeatureComparison/>"
+  },
+  {
+    "slug": "usage-pricing",
+    "title": "Usage Pricing",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/usage-pricing.tsx",
+    "symbol": "UsagePricing",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<UsagePricing/>"
+  },
+  {
     "slug": "editorial-hero",
     "title": "Editorial Hero",
     "group": "marketing",
@@ -1632,6 +1731,47 @@
     "customization": [],
     "copyDefaults": {},
     "example": "<StudioNavigation/>"
+  },
+  {
+    "slug": "immersive-login",
+    "title": "Immersive Login",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/immersive-login.tsx",
+    "symbol": "ImmersiveLogin",
+    "customization": [
+      "title",
+      "description",
+      "brand"
+    ],
+    "copyDefaults": {},
+    "example": "<ImmersiveLogin/>"
+  },
+  {
+    "slug": "ribbon-login",
+    "title": "Ribbon Login",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/ribbon-login.tsx",
+    "symbol": "RibbonLogin",
+    "customization": [
+      "title",
+      "description",
+      "brand"
+    ],
+    "copyDefaults": {},
+    "example": "<RibbonLogin/>"
+  },
+  {
+    "slug": "editorial-login",
+    "title": "Editorial Login",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/editorial-login.tsx",
+    "symbol": "EditorialLogin",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<EditorialLogin/>"
   },
   {
     "slug": "application-shell",

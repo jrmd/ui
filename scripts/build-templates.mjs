@@ -53,4 +53,6 @@ fs.writeFileSync(
     2,
   ),
 );
-console.log("All eight extracted archives build independently.");
+console.log(
+  `All ${templateSpecs.length} extracted archives build independently.`,
+);

@@ -1,6 +1,6 @@
 # Template Design Reference
 
-This document records the visual rules of the two standalone illustrative templates rebuilt in September 2026. It is a template-specific companion to the catalogue [DESIGN.md](../DESIGN.md), not a replacement for it. The identities below deliberately override some shared catalogue tokens inside their own template roots.
+This document records the visual rules of the standalone illustrative templates rebuilt in September 2026. It is a template-specific companion to the catalogue [DESIGN.md](../DESIGN.md), not a replacement for it. The identities below deliberately override some shared catalogue tokens inside their own template roots. The Afterhours product launch has its own focused companion, [PRODUCT-LAUNCH-TEMPLATE.md](./PRODUCT-LAUNCH-TEMPLATE.md), because its working browser instrument and inherited WebGL lifecycle need behavioral guidance as well as visual rules.
 
 ## Overview
 

@@ -7,7 +7,7 @@ export default function Page() {
     <Shell>
       <main>
         <header className="catalogue-title">
-          <h1>Eight new starting points.</h1>
+          <h1>Find your next starting point.</h1>
           <p>
             Complete frontend journeys, each with a point of view. Explore every
             route, then download a standalone project and make it your own.

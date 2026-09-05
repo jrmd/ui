@@ -376,6 +376,8 @@ fs.writeFileSync(
 fs.mkdirSync("assets", { recursive: true });
 // Artwork in assets/ is authored source. Builds copy it without rewriting it.
 const themes = {
+  "product-launch":
+    "--background:#080a0d;--foreground:#e5eaf1;--primary:#c0d2ee;--primary-foreground:#101820;--border:#2c333e;",
   saas: "--primary:#36483e;--accent:#d9e3cd;",
   analytics: "--background:#fbfcfa;--primary:#426957;--accent:#d6e8d2;",
   projects:
@@ -446,6 +448,9 @@ for (const spec of templateSpecs) {
           "@types/node": pkg.devDependencies["@types/node"],
           "@types/react": pkg.devDependencies["@types/react"],
           "@types/react-dom": pkg.devDependencies["@types/react-dom"],
+          ...(deps.three
+            ? { "@types/three": pkg.devDependencies["@types/three"] }
+            : {}),
         },
       },
       null,
@@ -529,8 +534,8 @@ fs.writeFileSync(
 );
 fs.writeFileSync(
   out + "/llms.txt",
-  `# Jez UI\n\n90 source-owned React components, 67 blocks, eight templates.\n\n${items.map((i) => `- [${i.title}](/${i.kind === "block" ? "blocks" : "components"}/${i.slug}): ${i.group}`).join("\n")}\n`,
+  `# Jez UI\n\n91 source-owned React components, 79 blocks, ${templateSpecs.length} templates.\n\n${items.map((i) => `- [${i.title}](/${i.kind === "block" ? "blocks" : "components"}/${i.slug}): ${i.group}`).join("\n")}\n`,
 );
 console.log(
-  `Generated ${items.length} registry entries, eight standalone templates and downloads.`,
+  `Generated ${items.length} registry entries, ${templateSpecs.length} standalone templates and downloads.`,
 );

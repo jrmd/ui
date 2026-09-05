@@ -7,9 +7,9 @@ const items = JSON.parse(
   fs.readFileSync("apps/catalogue/generated/catalogue.json", "utf8"),
 );
 assert.equal(items.filter((i) => i.kind === "component").length, 91);
-assert.equal(items.filter((i) => i.kind === "block").length, 67);
-assert.equal(new Set(items.map((i) => i.slug)).size, 158);
-assert.equal(templateSpecs.length, 8);
+assert.equal(items.filter((i) => i.kind === "block").length, 79);
+assert.equal(new Set(items.map((i) => i.slug)).size, 170);
+assert.equal(templateSpecs.length, 9);
 const ajv = new Ajv({ strict: false, allErrors: true });
 const schema = JSON.parse(
   fs.readFileSync("docs/schemas/registry-item.json", "utf8"),
@@ -61,5 +61,5 @@ for (const t of templateSpecs) {
     );
 }
 console.log(
-  "PASS: 91 components, 67 blocks, 8 templates; official registry schema; complete dependency closures; canonical source parity; local assets.",
+  "PASS: 91 components, 79 blocks, 9 templates; official registry schema; complete dependency closures; canonical source parity; local assets.",
 );

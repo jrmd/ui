@@ -1,6 +1,6 @@
 # Jez UI
 
-90 source-owned React components, 67 blocks, eight templates.
+91 source-owned React components, 79 blocks, 9 templates.
 
 - [Button](/components/button): foundations
 - [Icon Button](/components/icon-button): foundations
@@ -93,6 +93,15 @@
 - [Sparkline](/components/sparkline): charts
 - [Live Line Chart](/components/live-line-chart): charts
 - [Scatter Chart](/components/scatter-chart): charts
+- [Media Aside](/blocks/media-aside): marketing
+- [Journal Bento](/blocks/journal-bento): marketing
+- [Article Sidebar](/blocks/article-sidebar): marketing
+- [Editorial Footer](/blocks/editorial-footer): marketing
+- [Studio Footer](/blocks/studio-footer): marketing
+- [Newsletter Footer](/blocks/newsletter-footer): marketing
+- [Plan Comparison](/blocks/plan-comparison): marketing
+- [Feature Comparison](/blocks/feature-comparison): marketing
+- [Usage Pricing](/blocks/usage-pricing): marketing
 - [Editorial Hero](/blocks/editorial-hero): marketing
 - [Product Demo Hero](/blocks/product-demo-hero): marketing
 - [WebGL Hero](/blocks/webgl-hero): marketing
@@ -133,6 +142,9 @@
 - [Editorial Navigation](/blocks/editorial-navigation): marketing
 - [Commerce Navigation](/blocks/commerce-navigation): marketing
 - [Studio Navigation](/blocks/studio-navigation): marketing
+- [Immersive Login](/blocks/immersive-login): workspace
+- [Ribbon Login](/blocks/ribbon-login): workspace
+- [Editorial Login](/blocks/editorial-login): workspace
 - [Application Shell](/blocks/application-shell): workspace
 - [Workspace Navigation](/blocks/workspace-navigation): workspace
 - [Analytics Overview](/blocks/analytics-overview): workspace

@@ -12,13 +12,13 @@ React 19, TypeScript, Tailwind 4; pnpm workspace, Next.js catalogue and template
 Product builders, beginning with our own products, and developers evaluating a future commercial collection.
 
 ## Product Purpose
-A complete reusable collection of 90 components, 36 composed blocks, and eight multipage frontend templates. Installation, documentation, and standalone template delivery are part of the product.
+A complete reusable collection of 91 components, 79 composed blocks, and nine multipage frontend templates. Installation, documentation, and standalone template delivery are part of the product.
 
 ## Capabilities and Constraints
 Accessible foundations, optional animation and WebGL, charts, searchable live examples, responsive previews, and editable source. Demo journeys do not connect to live auth, AI, billing, or order services. Commerce and public deployment are deferred. Original source is private; no open-source licence is granted.
 
 ## Brand Commitments
-Jez UI. Clean, fun, expressive. Warm white and ink, confident Instrument Sans typography across headings and interface text, concentrated electric colour. Eight distinct template identities. No fabricated endorsements.
+Jez UI. Clean, fun, expressive. Warm white and ink, confident Instrument Sans typography across headings and interface text, concentrated electric colour. Nine distinct template identities. No fabricated endorsements.
 
 ## Product Principles
 - Distribute the same source used by the examples.

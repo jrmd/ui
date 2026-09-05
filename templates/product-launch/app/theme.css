@@ -1,0 +1,234 @@
+@import "tailwindcss";
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --font-sans: var(--font-interface);
+  --font-display: var(--font-heading);
+}
+:root {
+  --background: #f8f7f3;
+  --foreground: #171817;
+  --muted: #eeede7;
+  --muted-foreground: #64665d;
+  --border: #d6d7ce;
+  --primary: #36483e;
+  --primary-foreground: #ffffff;
+  --accent: #d9e3cd;
+  --danger: #b32335;
+  --danger-foreground: #ffffff;
+  --font-interface:
+    "Instrument Sans Variable", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: var(--font-interface);
+  --radius: 12px;
+  --motion-duration: 220ms;
+  --space: 4px;
+  color-scheme: light;
+}
+.dark {
+  --background: #191b19;
+  --foreground: #f4f4ec;
+  --muted: #282b27;
+  --muted-foreground: #b5baae;
+  --border: #464b42;
+  --primary: #bdcfb8;
+  --primary-foreground: #17241b;
+  --accent: #d9e3cd;
+  --danger: #ff9ba7;
+  --danger-foreground: #3a101b;
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-interface);
+}
+@layer base {
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+}
+button:not(:disabled),
+summary {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+a {
+  text-underline-offset: 4px;
+}
+@layer base {
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+  }
+}
+::selection {
+  background: var(--accent);
+  color: #171817;
+}
+input,
+textarea {
+  caret-color: var(--primary);
+}
+* {
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+button {
+  touch-action: manipulation;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted-foreground);
+}
+@keyframes jez-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes jez-shift {
+  to {
+    background-position: 200% 50%;
+  }
+}
+@keyframes jez-grid {
+  to {
+    background-position: 48px 48px;
+  }
+}
+@keyframes jez-ripple {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+@keyframes jez-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes jez-aurora {
+  50% {
+    transform: translate(12%, -8%) rotate(20deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes jez-sheet-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes jez-sheet-out {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes jez-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes jez-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes jez-expand {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+@keyframes jez-collapse {
+  from {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+@keyframes jez-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.jez-sheet[data-state="open"] {
+  animation: jez-sheet-in 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.jez-sheet[data-state="closed"] {
+  animation: jez-sheet-out 220ms cubic-bezier(0.4, 0, 1, 1);
+}
+.jez-overlay[data-state="open"] {
+  animation: jez-fade-in 220ms ease-out;
+}
+.jez-overlay[data-state="closed"] {
+  animation: jez-fade-out 200ms ease-in;
+}
+.jez-collapse[data-state="open"] {
+  animation: jez-expand 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.jez-collapse[data-state="closed"] {
+  animation: jez-collapse 180ms ease-in;
+}
+.jez-popover[data-state="open"] {
+  animation: jez-pop-in 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
