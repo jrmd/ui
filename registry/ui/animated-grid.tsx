@@ -5,13 +5,22 @@ export function AnimatedGrid({
   children,
   className,
   paused = false,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    children?: React.ReactNode;
+    className?: string;
+    paused?: boolean;
+  }
+> & {
   children?: React.ReactNode;
   className?: string;
   paused?: boolean;
 }) {
   return (
     <div
+      {...rootProps}
       className={cn(
         "relative min-h-60 overflow-hidden rounded-xl bg-background",
         className,

@@ -5,13 +5,24 @@ import { motion, useReducedMotion } from "motion/react";
 export function SplitText({
   children,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"span">,
+  keyof {
+    children: string;
+    className?: string;
+  }
+> & {
   children: string;
   className?: string;
 }) {
   const reduce = useReducedMotion();
   return (
-    <span aria-label={children} className={cn("inline-block", className)}>
+    <span
+      {...rootProps}
+      aria-label={children}
+      className={cn("inline-block", className)}
+    >
       {children.split(" ").map((word, i) => (
         <motion.span
           aria-hidden="true"

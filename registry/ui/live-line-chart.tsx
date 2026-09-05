@@ -5,13 +5,19 @@ import { LineChart } from "./line-chart";
 import { sampleChartData, type ChartProps } from "./chart-frame";
 import { Button } from "./button";
 export function LiveLineChart({
+  children,
   className,
   data: suppliedData,
   label = "Live signal · simulated",
   color,
   startLabel = "Start stream",
   pauseLabel = "Pause stream",
-}: ChartProps & { startLabel?: string; pauseLabel?: string }) {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof (ChartProps<"div"> & { startLabel?: string; pauseLabel?: string })
+> &
+  (ChartProps<"div"> & { startLabel?: string; pauseLabel?: string })) {
   const [data, setData] = React.useState(sampleChartData);
   const [running, setRunning] = React.useState(false);
   const tick = React.useRef(0);
@@ -31,12 +37,18 @@ export function LiveLineChart({
     return () => clearInterval(t);
   }, [running, suppliedData]);
   return (
-    <div className={cn("grid gap-3", className)}>
-      <LineChart data={suppliedData ?? data} label={label} color={color} />
-      {!suppliedData && (
-        <Button variant="outline" onClick={() => setRunning((v) => !v)}>
-          {running ? pauseLabel : startLabel}
-        </Button>
+    <div {...rootProps} className={cn("grid gap-3", className)}>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <LineChart data={suppliedData ?? data} label={label} color={color} />
+          {!suppliedData && (
+            <Button variant="outline" onClick={() => setRunning((v) => !v)}>
+              {running ? pauseLabel : startLabel}
+            </Button>
+          )}
+        </>
       )}
     </div>
   );

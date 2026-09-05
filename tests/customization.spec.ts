@@ -1,4 +1,6 @@
 import { test, expect } from "@playwright/test";
+import items from "../packages/catalogue/items.json";
+const blockCount = items.filter(item => item.kind === "block").length;
 test("hero edits update the live preview, code, and reset", async ({
   page,
 }) => {
@@ -55,7 +57,7 @@ test("block sidebar and gallery share collections without losing entries", async
   await expect(
     sidebar.getByRole("heading", { name: "heroes", exact: true }),
   ).toBeVisible();
-  await expect(sidebar.getByRole("link")).toHaveCount(67);
+  await expect(sidebar.getByRole("link")).toHaveCount(blockCount);
   await page.goto("/blocks?category=authentication");
-  await expect(page.getByText("Showing 6 of 67")).toBeVisible();
+  await expect(page.getByText(`Showing 9 of ${blockCount}`)).toBeVisible();
 });

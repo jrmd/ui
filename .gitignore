@@ -12,3 +12,5 @@ fixtures/*/src/registry/
 fixtures/*/app/registry/
 
 .next-*/
+
+test-results-composition/

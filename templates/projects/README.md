@@ -14,7 +14,7 @@ Edit app/view.tsx for route content, app/globals.css for this identity, and regi
 
 ## Backend integration
 
-Forms expose async onSubmit adapters in their source. Replace useDemoState with your data layer for persistence; local demo storage uses jez-demo: keys and is not authentication. ChatWorkspace.respond is the simulated streaming boundary: replace it with your provider transport and abort handling. Storefront add and checkout handlers are frontend demos; pricing and orders must be validated server-side in a real shop. Never store credentials in local storage.
+Forms expose async onSubmit adapters in their source. Blocks expose value/defaultValue/onValueChange for state ownership. Supply persistence from your application; template-specific demo storage uses jez-demo: keys and is not authentication. ChatWorkspace accepts an onSend callback with message history and an AbortSignal for your provider transport. Storefront add and checkout handlers are frontend demos; pricing and orders must be validated server-side in a real shop. Never store credentials in local storage.
 
 ## Demo reset
 

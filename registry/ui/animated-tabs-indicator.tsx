@@ -10,8 +10,15 @@ export function AnimatedTabsIndicator({
   defaultValue,
   onValueChange,
   className,
-}: {
-  items: { value: string; label: string; content: React.ReactNode }[];
+  listProps,
+  triggerProps,
+  contentProps,
+  ...props
+}: React.ComponentProps<typeof P.Root> & {
+  listProps?: React.ComponentProps<typeof P.List>;
+  triggerProps?: Omit<React.ComponentProps<typeof P.Trigger>, "value">;
+  contentProps?: Omit<React.ComponentProps<typeof P.Content>, "value">;
+  items: { value: string; label: React.ReactNode; content: React.ReactNode }[];
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -26,16 +33,27 @@ export function AnimatedTabsIndicator({
   const reduce = useReducedMotion();
   return (
     <P.Root
+      {...props}
       value={selected}
       onValueChange={setSelected}
       className={cn("", className)}
     >
-      <P.List className="flex gap-1 rounded-xl bg-muted p-1">
+      <P.List
+        {...listProps}
+        className={cn(
+          "flex gap-1 rounded-xl bg-muted p-1",
+          listProps?.className,
+        )}
+      >
         {items.map((i) => (
           <P.Trigger
+            {...triggerProps}
             key={i.value}
             value={i.value}
-            className="relative flex-1 rounded-lg px-3 py-2 text-sm"
+            className={cn(
+              "relative flex-1 rounded-lg px-3 py-2 text-sm",
+              triggerProps?.className,
+            )}
           >
             {selected === i.value && (
               <motion.span
@@ -49,7 +67,12 @@ export function AnimatedTabsIndicator({
         ))}
       </P.List>
       {items.map((i) => (
-        <P.Content key={i.value} value={i.value} className="py-5">
+        <P.Content
+          {...contentProps}
+          key={i.value}
+          value={i.value}
+          className={cn("py-5", contentProps?.className)}
+        >
           {i.content}
         </P.Content>
       ))}

@@ -32,6 +32,18 @@ const icons: Record<string, typeof Search> = {
   ChevronRight,
   "Conversation Demo": MessageSquare,
 };
+export type ApplicationShellOptions = {
+  children: React.ReactNode;
+  brand?: string;
+  items?: { label: string; href: string }[];
+  className?: string;
+  currentPath?: string;
+};
+export type ApplicationShellProps = Omit<
+  React.ComponentProps<"div">,
+  keyof ApplicationShellOptions
+> &
+  ApplicationShellOptions;
 export function ApplicationShell({
   children,
   brand = "Workspace",
@@ -42,13 +54,8 @@ export function ApplicationShell({
   ],
   className,
   currentPath,
-}: {
-  children: React.ReactNode;
-  brand?: string;
-  items?: { label: string; href: string }[];
-  className?: string;
-  currentPath?: string;
-}) {
+  ...rootProps
+}: ApplicationShellProps) {
   const [path, setPath] = React.useState(currentPath ?? "");
   const [search, setSearch] = React.useState("");
   const [collapsed, setCollapsed] = React.useState(false);
@@ -81,6 +88,7 @@ export function ApplicationShell({
   const page = active?.label ?? items[0]?.label ?? brand;
   return (
     <div
+      {...rootProps}
       className={cn(
         "min-h-screen bg-muted/45 md:grid md:p-2 md:pl-0",
         collapsed
@@ -89,7 +97,7 @@ export function ApplicationShell({
         className,
       )}
     >
-      <aside className="flex flex-col md:sticky md:top-2 md:h-[calc(100vh-16px)]">
+      <ApplicationShellAside>
         <div className="flex h-16 items-center justify-between gap-2 px-4">
           <a
             href={items[0]?.href}
@@ -157,7 +165,7 @@ export function ApplicationShell({
               const Icon = icons[i.label] ?? FolderOpen;
               const selected = active?.href === i.href;
               return (
-                <a
+                <ApplicationShellItem
                   key={i.href}
                   href={i.href}
                   title={collapsed ? i.label : undefined}
@@ -165,7 +173,6 @@ export function ApplicationShell({
                   aria-label={i.label}
                   aria-current={selected ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-2.5 whitespace-nowrap rounded-md px-2.5 py-2 text-sm transition-colors",
                     selected
                       ? "bg-background font-medium text-foreground shadow-xs ring-1 ring-border/60"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -184,7 +191,7 @@ export function ApplicationShell({
                       )}
                     </>
                   )}
-                </a>
+                </ApplicationShellItem>
               );
             })}
           {!collapsed &&
@@ -211,8 +218,8 @@ export function ApplicationShell({
             </div>
           )}
         </div>
-      </aside>
-      <div className="min-w-0 bg-background md:rounded-xl md:border md:border-border md:shadow-xs">
+      </ApplicationShellAside>
+      <ApplicationShellContent>
         <header className="flex h-14 items-center justify-between gap-4 border-b border-border px-5 md:px-7">
           <div className="flex items-center gap-3">
             <button
@@ -243,7 +250,54 @@ export function ApplicationShell({
         <main className="mx-auto min-w-0 max-w-[1440px] p-5 md:p-7">
           {children}
         </main>
-      </div>
+      </ApplicationShellContent>
     </div>
+  );
+}
+
+export function ApplicationShellAside({
+  className,
+  ...props
+}: React.ComponentProps<"aside">) {
+  return (
+    <aside
+      data-slot="application-shell-aside"
+      className={cn(
+        "flex flex-col md:sticky md:top-2 md:h-[calc(100vh-16px)]",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function ApplicationShellContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="application-shell-content"
+      className={cn(
+        "min-w-0 bg-background md:rounded-xl md:border md:border-border md:shadow-xs",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export function ApplicationShellItem({
+  className,
+  ...props
+}: React.ComponentProps<"a">) {
+  return (
+    <a
+      data-slot="application-shell-item"
+      className={cn(
+        "flex items-center gap-2.5 whitespace-nowrap rounded-md px-2.5 py-2 text-sm transition-colors",
+        className,
+      )}
+      {...props}
+    />
   );
 }

@@ -133,9 +133,10 @@ for (const [group, names] of Object.entries(groups))
     if (group === "product") ex = productExample(slug, ex);
     if (group === "effects" && !slug.startsWith("webgl-"))
       ex = effectExample(slug, symbol) ?? ex;
+    if (slug === "chat-workspace")
+      ex = `<ChatWorkspace onSend={async (prompt) => "Demo response: define a clear outcome for “" + prompt + "”, then try a small version."}/>`;
     const customizable =
-      source.includes(": HeroProps") ||
-      source.includes("LoginHandlers & LoginPresentation");
+      source.includes("HeroProps") || source.includes("LoginPresentation");
     const copyMatch = source.match(/export const \w+Copy = (\{[\s\S]*?\});/);
     const copyDefaults = {};
     if (copyMatch) {

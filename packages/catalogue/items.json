@@ -1350,6 +1350,28 @@
     "example": "<TerrainHero/>"
   },
   {
+    "slug": "terrain-relief-hero",
+    "title": "Terrain Relief Hero",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/terrain-relief-hero.tsx",
+    "symbol": "TerrainReliefHero",
+    "customization": [
+      "title",
+      "description",
+      "actionLabel",
+      "artwork"
+    ],
+    "copyDefaults": {
+      "brand": "FIELD / 01",
+      "meta": "A study in elevation",
+      "playLabel": "Play",
+      "pauseLabel": "Pause",
+      "animationName": "terrain"
+    },
+    "example": "<TerrainReliefHero/>"
+  },
+  {
     "slug": "marketing-footer",
     "title": "Marketing Footer",
     "group": "marketing",
@@ -1769,7 +1791,14 @@
     "kind": "block",
     "file": "registry/blocks/editorial-login.tsx",
     "symbol": "EditorialLogin",
-    "customization": [],
+    "customization": [
+      "title",
+      "description",
+      "brand",
+      "imageSrc",
+      "imageAlt",
+      "artwork"
+    ],
     "copyDefaults": {},
     "example": "<EditorialLogin/>"
   },
@@ -1980,7 +2009,7 @@
     "symbol": "ChatWorkspace",
     "customization": [],
     "copyDefaults": {},
-    "example": "<ChatWorkspace/>"
+    "example": "<ChatWorkspace onSend={async (prompt) => \"Demo response: define a clear outcome for “\" + prompt + \"”, then try a small version.\"}/>"
   },
   {
     "slug": "workspace-sidebar",

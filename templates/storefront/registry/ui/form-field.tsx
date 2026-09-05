@@ -7,7 +7,21 @@ export function FormField({
   error,
   children,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    label: string;
+    hint?: string;
+    error?: string;
+    children: React.ReactElement<{
+      id?: string;
+      "aria-describedby"?: string;
+      "aria-invalid"?: boolean;
+    }>;
+    className?: string;
+  }
+> & {
   label: string;
   hint?: string;
   error?: string;
@@ -21,7 +35,7 @@ export function FormField({
   const generatedId = React.useId();
   const id = children.props.id ?? generatedId;
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div {...rootProps} className={cn("grid gap-2", className)}>
       <label htmlFor={id} className="text-sm font-medium">
         {label}
       </label>

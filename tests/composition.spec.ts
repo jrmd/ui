@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 import items from "../packages/catalogue/items.json";
-test("all twenty heroes expose their remaining text slots", async ({
+test("all heroes expose their remaining text slots", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   test.setTimeout(120000);
   const heroes = items.filter((i) => i.slug.endsWith("-hero"));
-  expect(heroes).toHaveLength(20);
+  expect(heroes.length).toBeGreaterThanOrEqual(20);
   for (const item of heroes) {
     await page.goto("/blocks/" + item.slug);
     await page.getByRole("button", { name: "Customise this block" }).click();

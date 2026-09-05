@@ -40,7 +40,8 @@ export function SidebarLayout({
   className,
   children,
   onNavigate,
-}: {
+  ...rootProps
+}: React.ComponentProps<"div"> & {
   sidebar?: React.ReactNode;
   organizations?: Organization[];
   accounts?: SwitcherAccount[];
@@ -68,6 +69,7 @@ export function SidebarLayout({
       className="contents"
     >
       <div
+        {...rootProps}
         className={cn(
           "relative flex min-h-[620px] overflow-hidden rounded-xl border border-border bg-muted/50",
           variant === "inset" && "md:p-2",

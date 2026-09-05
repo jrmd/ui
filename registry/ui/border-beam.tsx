@@ -5,13 +5,22 @@ export function BorderBeam({
   children,
   className,
   paused = false,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    children?: React.ReactNode;
+    className?: string;
+    paused?: boolean;
+  }
+> & {
   children?: React.ReactNode;
   className?: string;
   paused?: boolean;
 }) {
   return (
     <div
+      {...rootProps}
       className={cn("rounded-xl p-px", className)}
       style={{
         background:
@@ -19,6 +28,7 @@ export function BorderBeam({
         backgroundSize: "200% 100%",
         animation: "jez-shift 4s linear infinite",
         animationPlayState: paused ? "paused" : "running",
+        ...rootProps.style,
       }}
     >
       <div className="rounded-[11px] bg-background p-8">{children}</div>

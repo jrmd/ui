@@ -122,6 +122,7 @@
 - [Mega Navigation](/blocks/mega-navigation): marketing
 - [Floating Navigation](/blocks/floating-navigation): marketing
 - [Terrain Hero](/blocks/terrain-hero): marketing
+- [Terrain Relief Hero](/blocks/terrain-relief-hero): marketing
 - [Marketing Footer](/blocks/marketing-footer): marketing
 - [Particle Hero](/blocks/particle-hero): marketing
 - [Liquid Hero](/blocks/liquid-hero): marketing

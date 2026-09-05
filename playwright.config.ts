@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
+  testIgnore: /composability-contract\.spec\.ts/,
   timeout: 45000,
   expect: { timeout: 8000 },
   fullyParallel: true,

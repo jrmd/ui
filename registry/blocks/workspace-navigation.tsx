@@ -9,106 +9,181 @@ import {
   CalendarDays,
   Settings2,
 } from "lucide-react";
+import { useControllable } from "../ui/use-controllable";
 import { cn } from "../ui/utils";
 import { Button } from "../ui/button";
-export function WorkspaceNavigation({
-  className,
-  onViewChange,
-  onCreate,
-}: {
+export type WorkspaceNavigationOptions = {
   className?: string;
   onViewChange?: (view: string) => void;
   onCreate?: () => void;
-}) {
-  const [view, setView] = React.useState("Board");
+  items?: typeof WorkspaceNavigationDefaultItems;
+  views?: typeof WorkspaceNavigationDefaultViews;
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+};
+export type WorkspaceNavigationProps = Omit<
+  React.ComponentProps<"div">,
+  keyof WorkspaceNavigationOptions
+> &
+  WorkspaceNavigationOptions;
+const WorkspaceNavigationDefaultItems = ["AM", "SP", "RL"];
+const WorkspaceNavigationDefaultViews = [
+  { label: "Board", icon: LayoutGrid },
+  { label: "List", icon: List },
+  { label: "Calendar", icon: CalendarDays },
+  { label: "Settings", icon: Settings2 },
+];
+export function WorkspaceNavigation({
+  value: suppliedValue,
+  defaultValue = "Board",
+  onValueChange,
+  items = WorkspaceNavigationDefaultItems,
+  views = WorkspaceNavigationDefaultViews,
+  className,
+  onViewChange,
+  onCreate,
+  children,
+  ...rootProps
+}: WorkspaceNavigationProps) {
+  const [view, setView] = useControllable<string>(
+    suppliedValue,
+    defaultValue,
+    onValueChange,
+  );
   const [notice, setNotice] = React.useState("");
   return (
     <div
+      {...rootProps}
       className={cn("rounded-xl border border-border bg-background", className)}
     >
-      <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-4">
-        <div className="flex min-w-0 items-center gap-2.5 text-sm">
-          <Layers size={18} />
-          <span className="text-muted-foreground">Acme</span>
-          <ChevronRight size={13} className="text-muted-foreground" />
-          <span className="truncate font-medium">Website refresh</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="hidden -space-x-2 sm:flex">
-            {["AM", "SP", "RL"].map((v) => (
-              <span
-                key={v}
-                className="grid size-7 place-items-center rounded-full border-2 border-background bg-muted text-xs"
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <WorkspaceNavigationHeader>
+            <div className="flex min-w-0 items-center gap-2.5 text-sm">
+              <Layers size={18} />
+              <span className="text-muted-foreground">Acme</span>
+              <ChevronRight size={13} className="text-muted-foreground" />
+              <span className="truncate font-medium">Website refresh</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="hidden -space-x-2 sm:flex">
+                {items.map((v) => (
+                  <span
+                    key={v}
+                    className="grid size-7 place-items-center rounded-full border-2 border-background bg-muted text-xs"
+                  >
+                    {v}
+                  </span>
+                ))}
+              </div>
+              <Button
+                size="sm"
+                onClick={() => {
+                  if (onCreate) onCreate();
+                  else setNotice("New project action selected.");
+                }}
               >
-                {v}
-              </span>
+                <Plus size={14} />
+                New project
+              </Button>
+            </div>
+          </WorkspaceNavigationHeader>
+          <WorkspaceNavigationContent role="tablist" aria-label="Project view">
+            {views.map((item, i) => (
+              <WorkspaceNavigationItem
+                key={item.label}
+                role="tab"
+                aria-selected={view === item.label}
+                tabIndex={view === item.label ? 0 : -1}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    const siblings =
+                      e.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
+                        '[role="tab"]',
+                      );
+                    const next =
+                      siblings?.[(i + (e.key === "ArrowRight" ? 1 : 3)) % 4];
+                    next?.focus();
+                    next?.click();
+                  }
+                }}
+                onClick={() => {
+                  setView(item.label);
+                  onViewChange?.(item.label);
+                }}
+                className={cn(
+                  view === item.label
+                    ? "border-primary font-medium"
+                    : "border-transparent text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <item.icon size={15} />
+                {item.label}
+              </WorkspaceNavigationItem>
             ))}
-          </div>
-          <Button
-            size="sm"
-            onClick={() => {
-              if (onCreate) onCreate();
-              else setNotice("New project action selected.");
-            }}
-          >
-            <Plus size={14} />
-            New project
-          </Button>
-        </div>
-      </div>
-      <div
-        role="tablist"
-        aria-label="Project view"
-        className="flex gap-5 overflow-x-auto border-t border-border px-5"
-      >
-        {[
-          { label: "Board", icon: LayoutGrid },
-          { label: "List", icon: List },
-          { label: "Calendar", icon: CalendarDays },
-          { label: "Settings", icon: Settings2 },
-        ].map((item, i) => (
-          <button
-            key={item.label}
-            role="tab"
-            aria-selected={view === item.label}
-            tabIndex={view === item.label ? 0 : -1}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-                e.preventDefault();
-                const siblings =
-                  e.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
-                    '[role="tab"]',
-                  );
-                const next =
-                  siblings?.[(i + (e.key === "ArrowRight" ? 1 : 3)) % 4];
-                next?.focus();
-                next?.click();
-              }
-            }}
-            onClick={() => {
-              setView(item.label);
-              onViewChange?.(item.label);
-            }}
-            className={cn(
-              "flex shrink-0 items-center gap-2 border-b-2 py-3 text-sm",
-              view === item.label
-                ? "border-primary font-medium"
-                : "border-transparent text-muted-foreground hover:text-foreground",
-            )}
-          >
-            <item.icon size={15} />
-            {item.label}
-          </button>
-        ))}
-      </div>
-      {notice && (
-        <p
-          role="status"
-          className="border-t border-border p-4 text-xs text-muted-foreground"
-        >
-          {notice}
-        </p>
+          </WorkspaceNavigationContent>
+          {notice && (
+            <p
+              role="status"
+              className="border-t border-border p-4 text-xs text-muted-foreground"
+            >
+              {notice}
+            </p>
+          )}
+        </>
       )}
     </div>
+  );
+}
+
+export function WorkspaceNavigationHeader({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="workspace-navigation-header"
+      className={cn(
+        "flex flex-wrap items-center justify-between gap-4 px-5 py-4",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function WorkspaceNavigationContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="workspace-navigation-content"
+      className={cn(
+        "flex gap-5 overflow-x-auto border-t border-border px-5",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export function WorkspaceNavigationItem({
+  className,
+  ...props
+}: React.ComponentProps<"button">) {
+  return (
+    <button
+      type="button"
+      data-slot="workspace-navigation-item"
+      className={cn(
+        "flex shrink-0 items-center gap-2 border-b-2 py-3 text-sm",
+        className,
+      )}
+      {...props}
+    />
   );
 }

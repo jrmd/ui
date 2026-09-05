@@ -1,6 +1,19 @@
 "use client";
 import * as React from "react";
 import { cn } from "../ui/utils";
+export type ArticleSidebarOptions = {
+  className?: string;
+  title?: string;
+  children?: React.ReactNode;
+  aside?: React.ReactNode;
+  imageSrc?: string;
+  imageAlt?: string;
+};
+export type ArticleSidebarProps = Omit<
+  React.ComponentProps<"article">,
+  keyof ArticleSidebarOptions
+> &
+  ArticleSidebarOptions;
 export function ArticleSidebar({
   className,
   title = "Make space for the work.",
@@ -8,20 +21,12 @@ export function ArticleSidebar({
   aside,
   imageSrc = "/assets/editorial-question.svg",
   imageAlt = "An editorial study of questions",
-}: {
-  className?: string;
-  title?: string;
-  children?: React.ReactNode;
-  aside?: React.ReactNode;
-  imageSrc?: string;
-  imageAlt?: string;
-}) {
+  ...rootProps
+}: ArticleSidebarProps) {
   return (
-    <article className={cn("py-8", className)}>
-      <h2 className="max-w-2xl text-4xl leading-tight tracking-tight md:text-6xl">
-        {title}
-      </h2>
-      <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_220px]">
+    <article {...rootProps} className={cn("py-8", className)}>
+      <ArticleSidebarTitle>{title}</ArticleSidebarTitle>
+      <ArticleSidebarContent>
         <div className="min-w-0 space-y-6 text-base leading-relaxed">
           {children ?? (
             <>
@@ -40,7 +45,9 @@ export function ArticleSidebar({
                   From the studio notebook. Illustrative editorial content.
                 </figcaption>
               </figure>
-              <h3 className="text-2xl">Start with what you notice</h3>
+              <ArticleSidebarItemTitle>
+                Start with what you notice
+              </ArticleSidebarItemTitle>
               <p>
                 A small detail can change the direction of an entire piece of
                 work. Collect observations before solutions. Give the unfamiliar
@@ -66,7 +73,50 @@ export function ArticleSidebar({
             </>
           )}
         </aside>
-      </div>
+      </ArticleSidebarContent>
     </article>
+  );
+}
+
+export function ArticleSidebarTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h2">) {
+  return (
+    <h2
+      data-slot="article-sidebar-title"
+      className={cn(
+        "max-w-2xl text-4xl leading-tight tracking-tight md:text-6xl",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function ArticleSidebarContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="article-sidebar-content"
+      className={cn(
+        "mt-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_220px]",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function ArticleSidebarItemTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h3">) {
+  return (
+    <h3
+      data-slot="article-sidebar-itemtitle"
+      className={cn("text-2xl", className)}
+      {...props}
+    />
   );
 }

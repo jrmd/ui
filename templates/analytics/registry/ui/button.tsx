@@ -3,7 +3,7 @@ import * as React from "react";
 import { Slot } from "radix-ui";
 import { LoaderCircle } from "lucide-react";
 import { cn } from "./utils";
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = React.ComponentProps<"button"> & {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
   size?: "sm" | "md" | "lg";
   loading?: boolean;

@@ -6,8 +6,11 @@ import { Input } from "./input";
 import { cn } from "./utils";
 export function PasswordInput({
   className,
+  inputClassName,
   ...props
-}: Omit<React.ComponentProps<typeof Input>, "type">) {
+}: Omit<React.ComponentProps<typeof Input>, "type"> & {
+  inputClassName?: string;
+}) {
   const [visible, setVisible] = React.useState(false);
   const reduce = useReducedMotion();
   return (
@@ -21,7 +24,7 @@ export function PasswordInput({
         autoComplete="current-password"
         {...props}
         type={visible ? "text" : "password"}
-        className="px-10"
+        className={cn("px-10", inputClassName)}
       />
       <button
         type="button"

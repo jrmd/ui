@@ -4,7 +4,14 @@ import { cn } from "./utils";
 export function GrainOverlay({
   children,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    children?: React.ReactNode;
+    className?: string;
+  }
+> & {
   children?: React.ReactNode;
   className?: string;
 }) {
@@ -24,6 +31,7 @@ export function GrainOverlay({
   }, []);
   return (
     <div
+      {...rootProps}
       className={cn(
         "relative min-h-60 overflow-hidden rounded-xl bg-muted",
         className,

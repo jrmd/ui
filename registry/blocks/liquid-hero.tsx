@@ -10,6 +10,21 @@ export const LiquidHeroCopy = {
   brand: "Tide®",
   eyebrow: "Ideas in motion",
 };
+export type LiquidHeroOptions = Pick<
+  HeroProps,
+  | "copy"
+  | "title"
+  | "actionLabel"
+  | "description"
+  | "artwork"
+  | "className"
+  | "href"
+>;
+export type LiquidHeroProps = Omit<
+  React.ComponentProps<"section">,
+  keyof LiquidHeroOptions
+> &
+  LiquidHeroOptions;
 export function LiquidHero({
   copy = {},
   title,
@@ -18,57 +33,96 @@ export function LiquidHero({
   artwork,
   className,
   href = "/blocks",
-}: HeroProps) {
+  children,
+  ...rootProps
+}: LiquidHeroProps) {
   return (
     <section
+      {...rootProps}
       className={cn(
         "relative isolate overflow-hidden rounded-xl bg-[#1c2945] text-[#edf1fb]",
         className,
       )}
     >
-      <div className="grid md:grid-cols-2">
-        <div className="flex flex-col items-start justify-between gap-10 p-8 md:p-12">
-          <span className="font-display text-xl">{copy.brand ?? "Tide®"}</span>
-          <div>
-            <p className="mb-5 text-xs uppercase tracking-widest text-[#a8bade]">
-              {copy.eyebrow ?? "Ideas in motion"}
-            </p>
-            <h1 className="font-display text-6xl leading-[.95] tracking-tight md:text-7xl">
-              {title ?? (
-                <>
-                  Stay
-                  <br />
-                  in your
-                  <br />
-                  <em className="font-serif font-normal">flow.</em>
-                </>
-              )}
-            </h1>
-            <p className="my-7 max-w-xs text-sm leading-relaxed text-[#bac8e4]">
-              {description ?? (
-                <>
-                  A quiet current for a busy mind. Your space to think, collect,
-                  and begin again.
-                </>
-              )}
-            </p>
-            <HeroLink href={href}>
-              {actionLabel ?? <>Find your rhythm</>}
-            </HeroLink>
-          </div>
-        </div>
-        <HeroArt
-          options={{
-            ...artwork,
-            label: copy.artworkLabel ?? artwork?.label,
-            playLabel: copy.playLabel ?? artwork?.playLabel,
-            pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
-          }}
-          kind="liquid"
-          color="#98bccc"
-          className="min-h-80 md:min-h-[570px]"
-        />
-      </div>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <LiquidHeroContent>
+            <div className="flex flex-col items-start justify-between gap-10 p-8 md:p-12">
+              <span className="font-display text-xl">
+                {copy.brand ?? "Tide®"}
+              </span>
+              <div>
+                <p className="mb-5 text-xs uppercase tracking-widest text-[#a8bade]">
+                  {copy.eyebrow ?? "Ideas in motion"}
+                </p>
+                <LiquidHeroTitle>
+                  {title ?? (
+                    <>
+                      Stay
+                      <br />
+                      in your
+                      <br />
+                      <em className="font-serif font-normal">flow.</em>
+                    </>
+                  )}
+                </LiquidHeroTitle>
+                <p className="my-7 max-w-xs text-sm leading-relaxed text-[#bac8e4]">
+                  {description ?? (
+                    <>
+                      A quiet current for a busy mind. Your space to think,
+                      collect, and begin again.
+                    </>
+                  )}
+                </p>
+                <HeroLink href={href}>
+                  {actionLabel ?? <>Find your rhythm</>}
+                </HeroLink>
+              </div>
+            </div>
+            <HeroArt
+              options={{
+                ...artwork,
+                label: copy.artworkLabel ?? artwork?.label,
+                playLabel: copy.playLabel ?? artwork?.playLabel,
+                pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+              }}
+              kind="liquid"
+              color="#98bccc"
+              className="min-h-80 md:min-h-[570px]"
+            />
+          </LiquidHeroContent>
+        </>
+      )}
     </section>
+  );
+}
+
+export function LiquidHeroContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="liquid-hero-content"
+      className={cn("grid md:grid-cols-2", className)}
+      {...props}
+    />
+  );
+}
+export function LiquidHeroTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h1">) {
+  return (
+    <h1
+      data-slot="liquid-hero-title"
+      className={cn(
+        "font-display text-6xl leading-[.95] tracking-tight md:text-7xl",
+        className,
+      )}
+      {...props}
+    />
   );
 }

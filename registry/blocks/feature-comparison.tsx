@@ -2,110 +2,240 @@
 import * as React from "react";
 import { cn } from "../ui/utils";
 import { Button } from "../ui/button";
+export type FeatureComparisonPlan = {
+  id: string;
+  name: React.ReactNode;
+  price: React.ReactNode;
+  action?: React.ReactNode;
+};
+export type FeatureComparisonRow = {
+  id: string;
+  label: React.ReactNode;
+  group?: React.ReactNode;
+  values: Record<string, React.ReactNode>;
+};
+const defaultPlans: FeatureComparisonPlan[] = [
+  {
+    id: "Personal",
+    name: "Personal",
+    price: (
+      <>
+        £8<span className="text-xs"> / month</span>
+      </>
+    ),
+  },
+  {
+    id: "Studio",
+    name: "Studio",
+    price: (
+      <>
+        £32<span className="text-xs"> / month</span>
+      </>
+    ),
+  },
+];
+const defaultRows: FeatureComparisonRow[] = [
+  {
+    id: "projects",
+    group: "Workspace",
+    label: "Projects",
+    values: { Personal: "3", Studio: "Unlimited" },
+  },
+  {
+    id: "people",
+    label: "Collaborators",
+    values: { Personal: "1", Studio: "Unlimited" },
+  },
+  {
+    id: "domains",
+    group: "Publishing",
+    label: "Custom domains",
+    values: { Personal: "1", Studio: "Unlimited" },
+  },
+  {
+    id: "branding",
+    label: "Remove branding",
+    values: { Personal: "No", Studio: "Yes" },
+  },
+  {
+    id: "history",
+    group: "Support",
+    label: "Version history",
+    values: { Personal: "7 days", Studio: "Unlimited" },
+  },
+  {
+    id: "support",
+    label: "Support channel",
+    values: { Personal: "Community", Studio: "Priority email" },
+  },
+];
+export type FeatureComparisonOptions = {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  plans?: FeatureComparisonPlan[];
+  rows?: FeatureComparisonRow[];
+  caption?: string;
+  onSelect?: (plan: string) => void;
+  highlightedPlan?: string;
+};
+export type FeatureComparisonProps = Omit<
+  React.ComponentProps<"section">,
+  keyof FeatureComparisonOptions
+> &
+  FeatureComparisonOptions;
 export function FeatureComparison({
   className,
   title = "Compare the details.",
+  description = "Illustrative plans · GBP per workspace, billed monthly.",
+  plans = defaultPlans,
+  rows = defaultRows,
+  caption = "Plan features",
+  highlightedPlan = "Studio",
   onSelect,
-}: {
-  className?: string;
-  title?: string;
-  onSelect?: (plan: string) => void;
-}) {
+  children,
+  ...props
+}: FeatureComparisonProps) {
   const [message, setMessage] = React.useState("");
   return (
-    <section className={cn("py-8", className)}>
-      <h2 className="text-4xl tracking-tight">{title}</h2>
-      <p className="mt-4 text-sm text-muted-foreground">
-        Illustrative plans · GBP per workspace, billed monthly.
-      </p>
-      <div
-        role="region"
-        aria-label="Plan features"
-        tabIndex={0}
-        className="mt-8 overflow-x-auto"
-      >
-        <table className="w-full min-w-[540px] border-collapse text-left text-sm">
-          <caption className="sr-only">
-            Personal and Studio pricing and feature comparison
-          </caption>
-          <thead>
-            <tr className="border-b border-border">
-              <th scope="col" className="p-4">
-                Included
-              </th>
-              {["Personal", "Studio"].map((p, i) => (
-                <th
-                  scope="col"
-                  key={p}
-                  className={cn("p-4", i === 1 && "bg-muted")}
-                >
-                  <span className="block text-lg">{p}</span>
-                  <span className="mt-2 block text-3xl font-normal">
-                    £{i ? 32 : 8}
-                    <span className="text-xs"> / month</span>
-                  </span>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ["Workspace", "Projects", "3", "Unlimited"],
-              ["", "Collaborators", "1", "Unlimited"],
-              ["Publishing", "Custom domains", "1", "Unlimited"],
-              ["", "Remove branding", "No", "Yes"],
-              ["Support", "Version history", "7 days", "Unlimited"],
-              ["", "Support channel", "Community", "Priority email"],
-            ].map((r, i) => (
-              <tr key={i} className="border-b border-border">
-                <th scope="row" className="p-4 font-normal">
-                  {r[0] && (
-                    <span className="mb-2 block font-semibold">{r[0]}</span>
-                  )}
-                  {r[1]}
-                </th>
-                <td className="p-4">{r[2]}</td>
-                <td className="bg-muted p-4">{r[3]}</td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td />
-              <td className="p-4">
-                <Button
-                  variant="outline"
-                  onClick={() =>
-                    onSelect
-                      ? onSelect("Personal")
-                      : setMessage(
-                          "Personal selected. Demo only; no purchase made.",
-                        )
-                  }
-                >
-                  Choose Personal
-                </Button>
-              </td>
-              <td className="bg-muted p-4">
-                <Button
-                  onClick={() =>
-                    onSelect
-                      ? onSelect("Studio")
-                      : setMessage(
-                          "Studio selected. Demo only; no purchase made.",
-                        )
-                  }
-                >
-                  Choose Studio
-                </Button>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      <p role="status" className="mt-4 text-sm">
-        {message}
-      </p>
+    <section {...props} className={cn("min-w-0 py-8", className)}>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <FeatureComparisonTitle>{title}</FeatureComparisonTitle>
+          <FeatureComparisonDescription>
+            {description}
+          </FeatureComparisonDescription>
+          <FeatureComparisonContent
+            role="region"
+            aria-label={caption}
+            tabIndex={0}
+          >
+            <table className="w-full min-w-[540px] border-collapse text-left text-sm">
+              <caption className="sr-only">{caption}</caption>
+              <thead>
+                <tr className="border-b border-border">
+                  <th scope="col" className="p-4">
+                    Included
+                  </th>
+                  {plans.map((plan) => (
+                    <th
+                      scope="col"
+                      key={plan.id}
+                      className={cn(
+                        "p-4",
+                        plan.id === highlightedPlan && "bg-muted",
+                      )}
+                    >
+                      <span className="block text-lg">{plan.name}</span>
+                      <span className="mt-2 block text-3xl font-normal">
+                        {plan.price}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr key={row.id} className="border-b border-border">
+                    <th scope="row" className="p-4 font-normal">
+                      {row.group && (
+                        <span className="mb-2 block font-semibold">
+                          {row.group}
+                        </span>
+                      )}
+                      {row.label}
+                    </th>
+                    {plans.map((plan) => (
+                      <td
+                        key={plan.id}
+                        className={cn(
+                          "p-4",
+                          plan.id === highlightedPlan && "bg-muted",
+                        )}
+                      >
+                        {row.values[plan.id] ?? "—"}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td />
+                  {plans.map((plan) => (
+                    <td
+                      key={plan.id}
+                      className={cn(
+                        "p-4",
+                        plan.id === highlightedPlan && "bg-muted",
+                      )}
+                    >
+                      {plan.action !== undefined ? (
+                        plan.action
+                      ) : (
+                        <Button
+                          variant={
+                            plan.id === highlightedPlan ? "primary" : "outline"
+                          }
+                          onClick={() =>
+                            onSelect
+                              ? onSelect(plan.id)
+                              : setMessage(
+                                  `${plan.id} selected. Demo only; no purchase made.`,
+                                )
+                          }
+                        >
+                          Choose {plan.name}
+                        </Button>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              </tfoot>
+            </table>
+          </FeatureComparisonContent>
+          <p role="status" className="mt-4 text-sm">
+            {message}
+          </p>
+        </>
+      )}
     </section>
+  );
+}
+export function FeatureComparisonTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h2">) {
+  return (
+    <h2
+      data-slot="feature-comparison-title"
+      className={cn("text-4xl tracking-tight", className)}
+      {...props}
+    />
+  );
+}
+export function FeatureComparisonDescription({
+  className,
+  ...props
+}: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="feature-comparison-description"
+      className={cn("mt-4 text-sm text-muted-foreground", className)}
+      {...props}
+    />
+  );
+}
+export function FeatureComparisonContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="feature-comparison-content"
+      className={cn("mt-8 overflow-x-auto", className)}
+      {...props}
+    />
   );
 }

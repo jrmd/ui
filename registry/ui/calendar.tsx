@@ -7,13 +7,25 @@ export function dateKey(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 export function Calendar({
+  children,
   value,
   defaultValue = "",
   onValueChange,
   className,
   min,
   max,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    value?: string;
+    defaultValue?: string;
+    onValueChange?: (value: string) => void;
+    className?: string;
+    min?: string;
+    max?: string;
+  }
+> & {
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -36,87 +48,97 @@ export function Calendar({
   const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
   return (
     <div
+      {...rootProps}
       className={cn(
         "w-72 max-w-full rounded-xl border border-border p-4",
         className,
       )}
     >
-      <div className="mb-4 flex items-center justify-between">
-        <Button
-          variant="ghost"
-          aria-label="Previous month"
-          onClick={() => setMonth(new Date(y, m - 1, 1))}
-        >
-          ←
-        </Button>
-        <span aria-live="polite" className="text-sm font-medium">
-          {month.toLocaleDateString("en-GB", {
-            month: "long",
-            year: "numeric",
-          })}
-        </span>
-        <Button
-          variant="ghost"
-          aria-label="Next month"
-          onClick={() => setMonth(new Date(y, m + 1, 1))}
-        >
-          →
-        </Button>
-      </div>
-      <div className="grid grid-cols-7 gap-1">
-        {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
-          <span
-            key={i}
-            aria-hidden="true"
-            className="py-1 text-center text-xs text-muted-foreground"
-          >
-            {d}
-          </span>
-        ))}
-        {Array.from({ length: offset }, (_, i) => (
-          <span key={"s" + i} />
-        ))}
-        {Array.from({ length: days }, (_, i) => {
-          const key = dateKey(new Date(y, m, i + 1));
-          return (
-            <button
-              type="button"
-              key={key}
-              ref={(el) => {
-                refs.current[i] = el;
-              }}
-              aria-label={new Date(y, m, i + 1).toLocaleDateString("en-GB", {
-                dateStyle: "full",
-              })}
-              aria-pressed={selected === key}
-              disabled={!!((min && key < min) || (max && key > max))}
-              onClick={() => setSelected(key)}
-              onKeyDown={(e) => {
-                const delta = (
-                  {
-                    ArrowLeft: -1,
-                    ArrowRight: 1,
-                    ArrowUp: -7,
-                    ArrowDown: 7,
-                  } as Record<string, number>
-                )[e.key];
-                if (delta) {
-                  e.preventDefault();
-                  refs.current[
-                    Math.min(days - 1, Math.max(0, i + delta))
-                  ]?.focus();
-                }
-              }}
-              className={cn(
-                "size-8 max-w-full rounded-lg text-sm hover:bg-muted disabled:opacity-30",
-                selected === key && "bg-primary text-primary-foreground",
-              )}
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <div className="mb-4 flex items-center justify-between">
+            <Button
+              variant="ghost"
+              aria-label="Previous month"
+              onClick={() => setMonth(new Date(y, m - 1, 1))}
             >
-              {i + 1}
-            </button>
-          );
-        })}
-      </div>
+              ←
+            </Button>
+            <span aria-live="polite" className="text-sm font-medium">
+              {month.toLocaleDateString("en-GB", {
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
+            <Button
+              variant="ghost"
+              aria-label="Next month"
+              onClick={() => setMonth(new Date(y, m + 1, 1))}
+            >
+              →
+            </Button>
+          </div>
+          <div className="grid grid-cols-7 gap-1">
+            {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+              <span
+                key={i}
+                aria-hidden="true"
+                className="py-1 text-center text-xs text-muted-foreground"
+              >
+                {d}
+              </span>
+            ))}
+            {Array.from({ length: offset }, (_, i) => (
+              <span key={"s" + i} />
+            ))}
+            {Array.from({ length: days }, (_, i) => {
+              const key = dateKey(new Date(y, m, i + 1));
+              return (
+                <button
+                  type="button"
+                  key={key}
+                  ref={(el) => {
+                    refs.current[i] = el;
+                  }}
+                  aria-label={new Date(y, m, i + 1).toLocaleDateString(
+                    "en-GB",
+                    {
+                      dateStyle: "full",
+                    },
+                  )}
+                  aria-pressed={selected === key}
+                  disabled={!!((min && key < min) || (max && key > max))}
+                  onClick={() => setSelected(key)}
+                  onKeyDown={(e) => {
+                    const delta = (
+                      {
+                        ArrowLeft: -1,
+                        ArrowRight: 1,
+                        ArrowUp: -7,
+                        ArrowDown: 7,
+                      } as Record<string, number>
+                    )[e.key];
+                    if (delta) {
+                      e.preventDefault();
+                      refs.current[
+                        Math.min(days - 1, Math.max(0, i + delta))
+                      ]?.focus();
+                    }
+                  }}
+                  className={cn(
+                    "size-8 max-w-full rounded-lg text-sm hover:bg-muted disabled:opacity-30",
+                    selected === key && "bg-primary text-primary-foreground",
+                  )}
+                >
+                  {i + 1}
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

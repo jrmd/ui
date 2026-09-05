@@ -5,8 +5,9 @@ import { motion, useReducedMotion } from "motion/react";
 export function TextReveal({
   children,
   className,
-}: {
-  children: string;
+  ...props
+}: React.ComponentProps<typeof motion.span> & {
+  children: React.ReactNode;
   className?: string;
 }) {
   const reduce = useReducedMotion();
@@ -16,6 +17,7 @@ export function TextReveal({
       whileInView={{ clipPath: "inset(0 0 0% 0)" }}
       viewport={{ once: true }}
       transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      {...props}
       className={cn("inline-block", className)}
     >
       {children}

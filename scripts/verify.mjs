@@ -7,8 +7,16 @@ const items = JSON.parse(
   fs.readFileSync("apps/catalogue/generated/catalogue.json", "utf8"),
 );
 assert.equal(items.filter((i) => i.kind === "component").length, 91);
-assert.equal(items.filter((i) => i.kind === "block").length, 79);
-assert.equal(new Set(items.map((i) => i.slug)).size, 170);
+const sourceItems = JSON.parse(
+  fs.readFileSync("packages/catalogue/items.json", "utf8"),
+);
+const blockCount = sourceItems.filter((i) => i.kind === "block").length;
+assert.equal(items.filter((i) => i.kind === "block").length, blockCount);
+assert.deepEqual(
+  items.map((i) => i.slug).sort(),
+  sourceItems.map((i) => i.slug).sort(),
+);
+assert.equal(new Set(items.map((i) => i.slug)).size, sourceItems.length);
 assert.equal(templateSpecs.length, 9);
 const ajv = new Ajv({ strict: false, allErrors: true });
 const schema = JSON.parse(
@@ -61,5 +69,5 @@ for (const t of templateSpecs) {
     );
 }
 console.log(
-  "PASS: 91 components, 79 blocks, 9 templates; official registry schema; complete dependency closures; canonical source parity; local assets.",
+  `PASS: 91 components, ${blockCount} blocks, 9 templates; official registry schema; complete dependency closures; canonical source parity; local assets.`,
 );

@@ -4,14 +4,25 @@ import { cn } from "./utils";
 export function SpotlightCard({
   children,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    children: React.ReactNode;
+    className?: string;
+  }
+> & {
   children: React.ReactNode;
   className?: string;
 }) {
   const [point, setPoint] = React.useState({ x: 50, y: 50 });
   return (
     <div
+      {...rootProps}
       onPointerMove={(e) => {
+        rootProps.onPointerMove?.(e);
+        if (e.defaultPrevented) return;
+
         const r = e.currentTarget.getBoundingClientRect();
         setPoint({
           x: ((e.clientX - r.left) / r.width) * 100,

@@ -1,24 +1,40 @@
 "use client";
 import * as React from "react";
+import { cn } from "../ui/utils";
 import { RotateCcw } from "lucide-react";
 export function WorkspaceHeading({
   title,
   description,
   action,
-}: {
-  title: string;
-  description: string;
+  className,
+  children,
+  ...props
+}: Omit<React.ComponentProps<"header">, "title"> & {
+  title: React.ReactNode;
+  description: React.ReactNode;
   action?: React.ReactNode;
 }) {
   return (
-    <header className="mb-7 flex flex-wrap items-start justify-between gap-4">
-      <div>
-        <h2 className="text-2xl font-medium tracking-tight">{title}</h2>
-        <p className="mt-2 max-w-lg text-sm leading-relaxed text-muted-foreground">
-          {description}
-        </p>
-      </div>
-      {action}
+    <header
+      {...props}
+      className={cn(
+        "mb-7 flex flex-wrap items-start justify-between gap-4",
+        className,
+      )}
+    >
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <div>
+            <h2 className="text-2xl font-medium tracking-tight">{title}</h2>
+            <p className="mt-2 max-w-lg text-sm leading-relaxed text-muted-foreground">
+              {description}
+            </p>
+          </div>
+          {action}
+        </>
+      )}
     </header>
   );
 }

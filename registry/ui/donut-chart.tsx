@@ -13,30 +13,45 @@ export function DonutChart({
   className,
   color,
   colors = ["var(--primary)", "#9eb95f", "#e29366", "#8498bb"],
+  children,
+  ...rootProps
 }: ChartProps & { colors?: string[] }) {
   return (
-    <ChartFrame data={data} label={label} className={cn("", className)}>
-      <ResponsiveContainer initialDimension={{ width: 600, height: 240 }}>
-        <PieChart>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            innerRadius="58%"
-            outerRadius="88%"
-            paddingAngle={3}
-            isAnimationActive={false}
-          >
-            {data.map((_, i) => (
-              <Cell
-                key={i}
-                fill={color ?? colors[i % colors.length] ?? "var(--primary)"}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+    <ChartFrame
+      {...rootProps}
+      data={data}
+      label={label}
+      className={cn("", className)}
+    >
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <ResponsiveContainer initialDimension={{ width: 600, height: 240 }}>
+            <PieChart>
+              <Pie
+                data={data}
+                dataKey="value"
+                nameKey="name"
+                innerRadius="58%"
+                outerRadius="88%"
+                paddingAngle={3}
+                isAnimationActive={false}
+              >
+                {data.map((_, i) => (
+                  <Cell
+                    key={i}
+                    fill={
+                      color ?? colors[i % colors.length] ?? "var(--primary)"
+                    }
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </>
+      )}
     </ChartFrame>
   );
 }

@@ -5,7 +5,14 @@ import { cn } from "./utils";
 export function ScrambleText({
   children,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"span">,
+  keyof {
+    children: string;
+    className?: string;
+  }
+> & {
   children: string;
   className?: string;
 }) {
@@ -40,10 +47,17 @@ export function ScrambleText({
   let offset = 0;
   return (
     <span
+      {...rootProps}
       tabIndex={0}
       aria-label={children}
-      onPointerEnter={run}
-      onFocus={run}
+      onPointerEnter={(event) => {
+        rootProps.onPointerEnter?.(event);
+        if (!event.defaultPrevented) run();
+      }}
+      onFocus={(event) => {
+        rootProps.onFocus?.(event);
+        if (!event.defaultPrevented) run();
+      }}
       className={cn("inline-block", className)}
     >
       {children.split(/(\s+)/).map((word, w) => {

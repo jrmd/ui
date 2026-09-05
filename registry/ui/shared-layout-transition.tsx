@@ -5,7 +5,8 @@ import { motion, LayoutGroup, useReducedMotion } from "motion/react";
 export function SharedLayoutTransition({
   items,
   className,
-}: {
+  ...props
+}: React.ComponentProps<"div"> & {
   items: { id: string; title: string; description: string }[];
   className?: string;
 }) {
@@ -14,7 +15,7 @@ export function SharedLayoutTransition({
   const reduce = useReducedMotion();
   return (
     <LayoutGroup id={id}>
-      <div className={cn("grid gap-3", className)}>
+      <div {...props} className={cn("grid gap-3", className)}>
         {items.map((i) => (
           <motion.button
             key={i.id}

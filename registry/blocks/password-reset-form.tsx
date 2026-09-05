@@ -5,17 +5,29 @@ import { LockKeyhole } from "lucide-react";
 import { Input } from "../ui/input";
 import { FormField } from "../ui/form-field";
 import { Button } from "../ui/button";
-export function PasswordResetForm({
-  className,
-  onSubmit,
-}: {
+export type PasswordResetFormOptions = {
   className?: string;
   onSubmit?: (data: Record<string, string>) => Promise<void>;
-}) {
+  heading?: React.ReactNode;
+};
+export type PasswordResetFormProps = Omit<
+  React.ComponentProps<"form">,
+  keyof PasswordResetFormOptions
+> &
+  PasswordResetFormOptions;
+
+export function PasswordResetForm({
+  heading = <>Forgot your password?</>,
+  className,
+  onSubmit,
+  children,
+  ...rootProps
+}: PasswordResetFormProps) {
   const [status, setStatus] = React.useState("");
   const [busy, setBusy] = React.useState(false);
   return (
     <form
+      {...rootProps}
       className={cn(
         "grid w-full max-w-md gap-5 rounded-2xl border border-border bg-background p-7 sm:p-9",
         className,
@@ -40,32 +52,63 @@ export function PasswordResetForm({
         }
       }}
     >
-      <div className="mb-2">
-        <span className="mb-5 grid size-10 place-items-center rounded-xl border border-border bg-muted/30">
-          <LockKeyhole size={18} />
-        </span>
-        <h2 className="font-display text-2xl">Forgot your password?</h2>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          Enter the email address associated with your account.
-        </p>
-      </div>
-      <FormField label="Email">
-        <Input
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@company.com"
-        />
-      </FormField>
-      <Button type="submit" loading={busy}>
-        Send reset link
-      </Button>
-      {status && (
-        <p role="status" className="text-sm">
-          {status}
-        </p>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <PasswordResetFormContent>
+            <span className="mb-5 grid size-10 place-items-center rounded-xl border border-border bg-muted/30">
+              <LockKeyhole size={18} />
+            </span>
+            <PasswordResetFormTitle>{heading}</PasswordResetFormTitle>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Enter the email address associated with your account.
+            </p>
+          </PasswordResetFormContent>
+          <FormField label="Email">
+            <Input
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="you@company.com"
+            />
+          </FormField>
+          <Button type="submit" loading={busy}>
+            Send reset link
+          </Button>
+          {status && (
+            <p role="status" className="text-sm">
+              {status}
+            </p>
+          )}
+        </>
       )}
     </form>
+  );
+}
+
+export function PasswordResetFormContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="password-reset-form-content"
+      className={cn("mb-2", className)}
+      {...props}
+    />
+  );
+}
+export function PasswordResetFormTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h2">) {
+  return (
+    <h2
+      data-slot="password-reset-form-title"
+      className={cn("font-display text-2xl", className)}
+      {...props}
+    />
   );
 }

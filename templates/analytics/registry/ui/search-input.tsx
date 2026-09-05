@@ -9,6 +9,9 @@ export function SearchInput({
   defaultValue = "",
   onValueChange,
   className,
+  inputClassName,
+  ref: forwardedRef,
+  clearLabel = "Clear search",
   loading = false,
   ...props
 }: Omit<
@@ -19,9 +22,12 @@ export function SearchInput({
   defaultValue?: string;
   onValueChange?: (value: string) => void;
   loading?: boolean;
+  inputClassName?: string;
+  clearLabel?: string;
 }) {
   const [query, setQuery] = useControllable(value, defaultValue, onValueChange);
   const ref = React.useRef<HTMLInputElement>(null);
+  React.useImperativeHandle(forwardedRef, () => ref.current!, []);
   return (
     <div role="search" className={cn("group relative w-full", className)}>
       {loading ? (
@@ -43,13 +49,16 @@ export function SearchInput({
         {...props}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="px-10 [&::-webkit-search-cancel-button]:appearance-none"
+        className={cn(
+          "px-10 [&::-webkit-search-cancel-button]:appearance-none",
+          inputClassName,
+        )}
       />
       {query && (
         <button
           type="button"
           disabled={props.disabled}
-          aria-label="Clear search"
+          aria-label={clearLabel}
           onClick={() => {
             setQuery("");
             ref.current?.focus();

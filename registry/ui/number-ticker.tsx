@@ -3,10 +3,19 @@ import * as React from "react";
 import { cn } from "./utils";
 import { animate, useReducedMotion } from "motion/react";
 export function NumberTicker({
+  children,
   value,
   decimals = 0,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"span">,
+  keyof {
+    value: number;
+    decimals?: number;
+    className?: string;
+  }
+> & {
   value: number;
   decimals?: number;
   className?: string;
@@ -24,10 +33,17 @@ export function NumberTicker({
   }, [value, reduce]);
   return (
     <span
+      {...rootProps}
       className={cn("tabular-nums", className)}
       aria-label={value.toFixed(decimals)}
     >
-      <span aria-hidden="true">{display.toFixed(decimals)}</span>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <span aria-hidden="true">{display.toFixed(decimals)}</span>
+        </>
+      )}
     </span>
   );
 }

@@ -3,10 +3,20 @@ import * as React from "react";
 import { cn } from "./utils";
 import { animate, useInView, useReducedMotion } from "motion/react";
 export function AnimatedCounter({
+  ref: forwardedRef,
+  children,
   target,
   duration = 1.4,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"span">,
+  keyof {
+    target: number;
+    duration?: number;
+    className?: string;
+  }
+> & {
   target: number;
   duration?: number;
   className?: string;
@@ -23,13 +33,21 @@ export function AnimatedCounter({
     });
     return () => animation.stop();
   }, [visible, target, duration, reduce]);
+  React.useImperativeHandle(forwardedRef, () => ref.current!, []);
   return (
     <span
+      {...rootProps}
       ref={ref}
       className={cn("tabular-nums", className)}
       aria-label={String(target)}
     >
-      <span aria-hidden="true">{value.toLocaleString()}</span>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <span aria-hidden="true">{value.toLocaleString()}</span>
+        </>
+      )}
     </span>
   );
 }

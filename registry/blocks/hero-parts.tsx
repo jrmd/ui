@@ -27,7 +27,8 @@ export type HeroProps = {
   title?: React.ReactNode;
   description?: React.ReactNode;
   actionLabel?: React.ReactNode;
-  secondaryImageSrc?:string; secondaryImageAlt?:string;
+  secondaryImageSrc?: string;
+  secondaryImageAlt?: string;
   imageSrc?: string;
   imageAlt?: string;
   artwork?: {
@@ -42,13 +43,15 @@ export function HeroLink({
   href = "/blocks",
   children = "Explore the collection",
   className,
-}: {
+  ...props
+}: React.ComponentProps<"a"> & {
   href?: string;
   children?: React.ReactNode;
   className?: string;
 }) {
   return (
     <a
+      {...props}
       href={href}
       className={cn(
         "inline-flex items-center gap-3 rounded-full border border-current/30 px-5 py-3 text-sm transition-colors hover:bg-current/10",

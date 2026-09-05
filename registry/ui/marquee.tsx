@@ -5,14 +5,22 @@ export function Marquee({
   children,
   duration = 24,
   className,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    children: React.ReactNode;
+    duration?: number;
+    className?: string;
+  }
+> & {
   children: React.ReactNode;
   duration?: number;
   className?: string;
 }) {
   const [paused, setPaused] = React.useState(false);
   return (
-    <div className={cn("overflow-hidden", className)}>
+    <div {...rootProps} className={cn("overflow-hidden", className)}>
       <div
         className="flex w-max gap-10"
         style={{

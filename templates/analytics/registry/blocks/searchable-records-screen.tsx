@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "../ui/utils";
 import { Badge } from "../ui/badge";
 import { DataTable } from "../ui/data-table";
-export const demoRecords = [
+export const defaultDemoRecords = [
   {
     name: "Alex Morgan",
     email: "alex@example.com",
@@ -47,36 +47,88 @@ export const demoRecords = [
     revenue: 0,
   },
 ];
-export function SearchableRecordsScreen({ className }: { className?: string }) {
+export type SearchableRecordsScreenOptions = {
+  className?: string;
+  records?: typeof defaultDemoRecords;
+  heading?: React.ReactNode;
+};
+export type SearchableRecordsScreenProps = Omit<
+  React.ComponentProps<"section">,
+  keyof SearchableRecordsScreenOptions
+> &
+  SearchableRecordsScreenOptions;
+export const demoRecords = defaultDemoRecords;
+export function SearchableRecordsScreen({
+  records = defaultDemoRecords,
+  heading = <>Customer directory</>,
+  className,
+  children,
+  ...rootProps
+}: SearchableRecordsScreenProps) {
   return (
-    <section className={cn("", className)}>
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold">Customer directory</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          People and businesses using your product.
-        </p>
-      </div>
-      <DataTable
-        data={demoRecords}
-        columns={[
-          { accessorKey: "name", header: "Name" },
-          { accessorKey: "email", header: "Email" },
-          {
-            accessorKey: "status",
-            header: "Status",
-            cell: (c) => (
-              <Badge tone={c.getValue() === "Active" ? "positive" : "neutral"}>
-                {String(c.getValue())}
-              </Badge>
-            ),
-          },
-          {
-            accessorKey: "revenue",
-            header: "Revenue",
-            cell: (c) => "£" + c.getValue(),
-          },
-        ]}
-      />
+    <section {...rootProps} className={cn("", className)}>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <SearchableRecordsScreenContent>
+            <SearchableRecordsScreenTitle>
+              {heading}
+            </SearchableRecordsScreenTitle>
+            <p className="mt-1 text-sm text-muted-foreground">
+              People and businesses using your product.
+            </p>
+          </SearchableRecordsScreenContent>
+          <DataTable
+            data={records}
+            columns={[
+              { accessorKey: "name", header: "Name" },
+              { accessorKey: "email", header: "Email" },
+              {
+                accessorKey: "status",
+                header: "Status",
+                cell: (c) => (
+                  <Badge
+                    tone={c.getValue() === "Active" ? "positive" : "neutral"}
+                  >
+                    {String(c.getValue())}
+                  </Badge>
+                ),
+              },
+              {
+                accessorKey: "revenue",
+                header: "Revenue",
+                cell: (c) => "£" + c.getValue(),
+              },
+            ]}
+          />
+        </>
+      )}
     </section>
+  );
+}
+
+export function SearchableRecordsScreenContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="searchable-records-screen-content"
+      className={cn("mb-6", className)}
+      {...props}
+    />
+  );
+}
+export function SearchableRecordsScreenTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h2">) {
+  return (
+    <h2
+      data-slot="searchable-records-screen-title"
+      className={cn("text-lg font-semibold", className)}
+      {...props}
+    />
   );
 }

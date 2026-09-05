@@ -12,7 +12,8 @@
     "verify": "pnpm generate && pnpm typecheck && pnpm lint && node scripts/verify.mjs",
     "test": "playwright test",
     "templates:build": "node scripts/build-templates.mjs",
-    "fixtures:verify": "node scripts/verify-fixtures.mjs"
+    "fixtures:verify": "node scripts/verify-fixtures.mjs",
+    "test:composition": "tsc --noEmit -p fixtures/composition/tsconfig.json && playwright test -c playwright.composition.config.ts"
   },
   "dependencies": {
     "@react-three/fiber": "9.7.0",

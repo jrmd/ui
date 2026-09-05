@@ -5,7 +5,8 @@ import { motion, useReducedMotion } from "motion/react";
 export function StaggerGroup({
   children,
   className,
-}: {
+  ...props
+}: React.ComponentProps<typeof motion.div> & {
   children: React.ReactNode;
   className?: string;
 }) {
@@ -16,6 +17,7 @@ export function StaggerGroup({
       whileInView="shown"
       viewport={{ once: true }}
       transition={{ staggerChildren: reduce ? 0 : 0.1 }}
+      {...props}
       className={cn("grid gap-3", className)}
     >
       {React.Children.map(children, (child) => (

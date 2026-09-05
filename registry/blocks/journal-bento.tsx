@@ -31,55 +31,111 @@ const stories: JournalStory[] = [
     imageAlt: "Common project artwork",
   },
 ];
+export type JournalBentoOptions = {
+  className?: string;
+  title?: string;
+  items?: JournalStory[];
+};
+export type JournalBentoProps = Omit<
+  React.ComponentProps<"section">,
+  keyof JournalBentoOptions
+> &
+  JournalBentoOptions;
 export function JournalBento({
   className,
   title = "The journal",
   items = stories,
-}: {
-  className?: string;
-  title?: string;
-  items?: JournalStory[];
-}) {
+  children,
+  ...rootProps
+}: JournalBentoProps) {
   return (
-    <section className={cn("py-6", className)}>
-      <h2 className="mb-8 text-4xl tracking-tight">{title}</h2>
-      <div className="grid gap-5 md:grid-cols-2">
-        {items.map((s, i) => (
-          <article
-            key={s.title}
-            className={cn(
-              "group overflow-hidden rounded-xl bg-muted",
-              i === 0 && "md:row-span-2",
-            )}
-          >
-            <a
-              href={s.href}
-              className={cn("block h-full", i > 0 && "sm:grid sm:grid-cols-2")}
-            >
-              <img
-                src={s.imageSrc}
-                alt={s.imageAlt}
-                className={cn(
-                  "w-full object-cover",
-                  i === 0 ? "h-72 md:h-96" : "h-48 sm:h-full sm:min-h-48",
-                )}
-              />
-              <div className="p-6">
-                <p className="text-xs text-muted-foreground">{s.category}</p>
-                <h3
+    <section {...rootProps} className={cn("py-6", className)}>
+      {children !== undefined ? (
+        children
+      ) : (
+        <>
+          <JournalBentoTitle>{title}</JournalBentoTitle>
+          <JournalBentoContent>
+            {items.map((s, i) => (
+              <JournalBentoItem
+                key={s.title}
+                className={cn(i === 0 && "md:row-span-2")}
+              >
+                <a
+                  href={s.href}
                   className={cn(
-                    "mt-3 leading-tight tracking-tight group-hover:underline",
-                    i === 0 ? "text-3xl" : "text-2xl",
+                    "block h-full",
+                    i > 0 && "sm:grid sm:grid-cols-2",
                   )}
                 >
-                  {s.title}
-                </h3>
-                <span className="mt-6 inline-block text-sm">Read story</span>
-              </div>
-            </a>
-          </article>
-        ))}
-      </div>
+                  <img
+                    src={s.imageSrc}
+                    alt={s.imageAlt}
+                    className={cn(
+                      "w-full object-cover",
+                      i === 0 ? "h-72 md:h-96" : "h-48 sm:h-full sm:min-h-48",
+                    )}
+                  />
+                  <div className="p-6">
+                    <p className="text-xs text-muted-foreground">
+                      {s.category}
+                    </p>
+                    <h3
+                      className={cn(
+                        "mt-3 leading-tight tracking-tight group-hover:underline",
+                        i === 0 ? "text-3xl" : "text-2xl",
+                      )}
+                    >
+                      {s.title}
+                    </h3>
+                    <span className="mt-6 inline-block text-sm">
+                      Read story
+                    </span>
+                  </div>
+                </a>
+              </JournalBentoItem>
+            ))}
+          </JournalBentoContent>
+        </>
+      )}
     </section>
+  );
+}
+
+export function JournalBentoTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h2">) {
+  return (
+    <h2
+      data-slot="journal-bento-title"
+      className={cn("mb-8 text-4xl tracking-tight", className)}
+      {...props}
+    />
+  );
+}
+export function JournalBentoContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="journal-bento-content"
+      className={cn("grid gap-5 md:grid-cols-2", className)}
+      {...props}
+    />
+  );
+}
+
+export function JournalBentoItem({
+  className,
+  ...props
+}: React.ComponentProps<"article">) {
+  return (
+    <article
+      data-slot="journal-bento-item"
+      className={cn("group overflow-hidden rounded-xl bg-muted", className)}
+      {...props}
+    />
   );
 }

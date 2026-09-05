@@ -11,27 +11,33 @@ export const sampleChartData: ChartDatum[] = [
   { name: "Sat", value: 82, previous: 49 },
   { name: "Sun", value: 73, previous: 51 },
 ];
-export type ChartProps = {
-  data?: ChartDatum[];
-  label?: string;
-  className?: string;
-  color?: string;
-};
+export type ChartProps<E extends React.ElementType = "figure"> =
+  React.ComponentProps<E> & {
+    data?: ChartDatum[];
+    label?: string;
+    className?: string;
+    color?: string;
+  };
 export function ChartFrame({
   children,
   data,
   label,
   className,
-}: {
+  contentProps,
+  captionProps,
+  ...rootProps
+}: React.ComponentProps<"figure"> & {
+  contentProps?: React.ComponentProps<"div">;
+  captionProps?: React.ComponentProps<"figcaption">;
   children: React.ReactNode;
   data: ChartDatum[];
   label: string;
   className?: string;
 }) {
   return (
-    <figure className={cn("m-0 w-full min-w-0", className)}>
-      <figcaption className="mb-4 text-sm font-medium">{label}</figcaption>
-      <div className="h-60 w-full min-w-0 overflow-hidden">{children}</div>
+    <figure {...rootProps} className={cn("m-0 w-full min-w-0", className)}>
+      <ChartCaption {...captionProps}>{label}</ChartCaption>
+      <ChartContent {...contentProps}>{children}</ChartContent>
       <details className="mt-3 text-xs text-muted-foreground">
         <summary>View data table</summary>
         <table className="mt-3 w-full text-left">
@@ -55,5 +61,28 @@ export function ChartFrame({
         </table>
       </details>
     </figure>
+  );
+}
+
+export function ChartCaption({
+  className,
+  ...props
+}: React.ComponentProps<"figcaption">) {
+  return (
+    <figcaption
+      className={cn("mb-4 text-sm font-medium", className)}
+      {...props}
+    />
+  );
+}
+export function ChartContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn("h-60 w-full min-w-0 overflow-hidden", className)}
+      {...props}
+    />
   );
 }

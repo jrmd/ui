@@ -5,7 +5,15 @@ export function RippleField({
   className,
   children = "Click anywhere. Make a little wave.",
   label = "Create a ripple",
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"button">,
+  keyof {
+    className?: string;
+    children?: React.ReactNode;
+    label?: string;
+  }
+> & {
   className?: string;
   children?: React.ReactNode;
   label?: string;
@@ -15,6 +23,7 @@ export function RippleField({
   >([]);
   return (
     <button
+      {...rootProps}
       type="button"
       aria-label={label}
       className={cn(
@@ -22,6 +31,9 @@ export function RippleField({
         className,
       )}
       onClick={(e) => {
+        rootProps.onClick?.(e);
+        if (e.defaultPrevented) return;
+
         const r = e.currentTarget.getBoundingClientRect();
         setRipples((v) => [
           ...v.slice(-8),

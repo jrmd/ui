@@ -5,7 +5,7 @@ export function Separator({
   vertical = false,
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { vertical?: boolean }) {
+}: React.ComponentProps<"div"> & { vertical?: boolean }) {
   return (
     <div
       role="separator"

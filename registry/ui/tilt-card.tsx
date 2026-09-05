@@ -6,7 +6,15 @@ export function TiltCard({
   children,
   className,
   maxTilt = 8,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    children: React.ReactNode;
+    className?: string;
+    maxTilt?: number;
+  }
+> & {
   children: React.ReactNode;
   className?: string;
   maxTilt?: number;
@@ -26,8 +34,12 @@ export function TiltCard({
   }, [reduce, rotateX, rotateY]);
   return (
     <div
-      style={{ perspective: 1000 }}
+      {...rootProps}
+      style={{ perspective: 1000, ...rootProps.style }}
       onPointerMove={(e) => {
+        rootProps.onPointerMove?.(e);
+        if (e.defaultPrevented) return;
+
         if (reduce || e.pointerType !== "mouse") return;
         // Measure the stationary wrapper, not the surface being transformed.
         const r = e.currentTarget.getBoundingClientRect();
@@ -40,8 +52,14 @@ export function TiltCard({
             maxTilt,
         );
       }}
-      onPointerLeave={reset}
-      onPointerCancel={reset}
+      onPointerLeave={(event) => {
+        rootProps.onPointerLeave?.(event);
+        if (!event.defaultPrevented) reset();
+      }}
+      onPointerCancel={(event) => {
+        rootProps.onPointerCancel?.(event);
+        if (!event.defaultPrevented) reset();
+      }}
     >
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}

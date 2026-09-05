@@ -8,8 +8,9 @@ import {
   orbFragment,
   liquidFragment,
   distortionFragment,
-  terrainVertex,
   terrainFragment,
+  terrainVertex,
+  terrainReliefFragment,
   particleVertex,
   particleFragment,
 } from "./webgl-shaders";
@@ -23,6 +24,7 @@ export type SceneKind =
   | "ribbons"
   | "liquid"
   | "orb"
+  | "terrain-relief"
   | "terrain"
   | "distortion";
 export type SceneProps = {
@@ -96,15 +98,17 @@ function Surface({ kind, color, speed, imageSrc, text = "FORM" }: SceneProps) {
   const material = React.useMemo(
     () =>
       new THREE.ShaderMaterial({
-        vertexShader: kind === "terrain" ? terrainVertex : screenVertex,
+        vertexShader: kind === "terrain-relief" ? terrainVertex : screenVertex,
         fragmentShader:
           kind === "orb"
             ? orbFragment
             : kind === "liquid"
               ? liquidFragment
-              : kind === "terrain"
-                ? terrainFragment
-                : distortionFragment,
+              : kind === "terrain-relief"
+                ? terrainReliefFragment
+                : kind === "terrain"
+                  ? terrainFragment
+                  : distortionFragment,
         uniforms: {
           time: { value: 0 },
           aspect: { value: 1 },
@@ -168,23 +172,22 @@ function Surface({ kind, color, speed, imageSrc, text = "FORM" }: SceneProps) {
   useFrame(({ pointer }, d) => {
     material.uniforms.time.value += Math.min(d, 0.05) * speed;
     material.uniforms.pointer.value.lerp(pointer, 0.06);
-    if (kind === "terrain" && ref.current) {
-      ref.current.rotation.z = THREE.MathUtils.damp(
-        ref.current.rotation.z,
-        -0.16 + pointer.x * 0.08,
-        3,
-        d,
-      );
-    }
   });
   return (
     <mesh
       ref={ref}
       material={material}
-      rotation={kind === "terrain" ? [-0.58, 0, -0.16] : [0, 0, 0]}
+      rotation={kind === "terrain-relief" ? [-0.75, 0, 0] : [0, 0, 0]}
     >
-      {kind === "terrain" ? (
-        <planeGeometry args={[6.8, 4.2, 220, 160]} />
+      {kind === "terrain-relief" ? (
+        <planeGeometry
+          args={[
+            Math.max(14, (size.width / Math.max(size.height, 1)) * 7),
+            10,
+            280,
+            180,
+          ]}
+        />
       ) : (
         <planeGeometry args={[2, 2]} />
       )}

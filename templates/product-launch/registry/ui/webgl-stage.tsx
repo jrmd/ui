@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { WebGLScene, type SceneKind } from "./webgl-scenes";
 import { RibbonPoster } from "./webgl-ribbons";
 import { cn } from "./utils";
-export type WebGLProps = {
+export type WebGLProps = Omit<React.ComponentProps<"div">, "children"> & {
   className?: string;
   color?: string;
   speed?: number;
@@ -36,6 +36,8 @@ export function WebGLStage({
   imageSrc,
   composition = "fold",
   label = "Interactive WebGL artwork",
+  ref: forwardedRef,
+  ...rootProps
 }: WebGLProps & { kind: SceneKind }) {
   const colors = {
     silk: "#b7cdbb",
@@ -47,6 +49,7 @@ export function WebGLStage({
     liquid: "#737fd7",
     orb: "#eab89d",
     terrain: "#b2c08b",
+    "terrain-relief": "#b2c08b",
     distortion: "#d7dfcf",
   };
   const backgrounds = {
@@ -59,6 +62,7 @@ export function WebGLStage({
     liquid: "#1c2945",
     orb: "#241c2b",
     terrain: "#14221e",
+    "terrain-relief": "#14221e",
     distortion: "#d7dfcf",
   };
   const color = suppliedColor ?? colors[kind];
@@ -93,7 +97,7 @@ export function WebGLStage({
     >
       {kind === "ribbons" ? (
         <RibbonPoster color={color} />
-      ) : kind === "terrain" ? (
+      ) : kind === "terrain" || kind === "terrain-relief" ? (
         <svg
           viewBox="0 0 900 400"
           preserveAspectRatio="xMidYMid slice"
@@ -225,12 +229,14 @@ export function WebGLStage({
       )}
     </div>
   );
+  React.useImperativeHandle(forwardedRef, () => ref.current!, []);
   return (
     <div
+      {...rootProps}
       ref={ref}
       role="img"
       aria-label={label}
-      style={{ background: backgrounds[kind] }}
+      style={{ background: backgrounds[kind], ...rootProps.style }}
       className={cn(
         "relative h-[400px] w-full overflow-hidden rounded-xl",
         className,

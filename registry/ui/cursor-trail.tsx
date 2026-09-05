@@ -7,7 +7,16 @@ export function CursorTrail({
   className,
   color,
   duration = 650,
-}: {
+  ...rootProps
+}: Omit<
+  React.ComponentProps<"div">,
+  keyof {
+    children?: React.ReactNode;
+    className?: string;
+    color?: string;
+    duration?: number;
+  }
+> & {
   children?: React.ReactNode;
   className?: string;
   color?: string;
@@ -70,7 +79,11 @@ export function CursorTrail({
   }, [color, duration, reduce]);
   return (
     <div
+      {...rootProps}
       onPointerMove={(e) => {
+        rootProps.onPointerMove?.(e);
+        if (e.defaultPrevented) return;
+
         if (reduce || e.pointerType !== "mouse") return;
         const r = e.currentTarget.getBoundingClientRect();
         points.current.push({

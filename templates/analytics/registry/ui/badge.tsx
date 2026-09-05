@@ -5,7 +5,7 @@ export function Badge({
   className,
   tone = "neutral",
   ...props
-}: React.HTMLAttributes<HTMLSpanElement> & {
+}: React.ComponentProps<"span"> & {
   tone?: "neutral" | "accent" | "positive" | "warning";
 }) {
   return (

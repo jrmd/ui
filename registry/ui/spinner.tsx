@@ -5,7 +5,7 @@ export function Spinner({
   className,
   label = "Loading",
   ...props
-}: React.HTMLAttributes<HTMLSpanElement> & { label?: string }) {
+}: React.ComponentProps<"span"> & { label?: string }) {
   return (
     <span
       role="status"
