@@ -1,6 +1,6 @@
 # Release acceptance
 
-The current inventory is 90 components, 40 blocks, and eight templates, including the requested navigation expansion and terrain hero. Variants, helpers, and example files do not count separately. `scripts/catalogue-data.mjs` lists the inventory; `packages/catalogue/items.json` maps it to canonical source.
+The current inventory is 90 components, 67 blocks, and eight templates, including the requested navigation expansion and terrain hero. Variants, helpers, and example files do not count separately. `scripts/catalogue-data.mjs` lists the inventory; `packages/catalogue/items.json` maps it to canonical source.
 
 - [x] All inventory entries have actual source, props, examples, and dependency metadata.
 - [x] Official shadcn registry schema and local dependency closure checks.

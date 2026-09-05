@@ -10,9 +10,9 @@ export const groups = {
   charts:
     "Area Chart,Line Chart,Bar Chart,Stacked Bar Chart,Donut Chart,Radial Gauge,Heatmap,Sparkline,Live Line Chart,Scatter Chart",
   marketing:
-    "Editorial Hero,Product Demo Hero,WebGL Hero,Logo Wall,Feature Grid,Alternating Feature Story,Product Comparison,Metrics Strip,Testimonial Grid,Testimonial Carousel,Pricing Table,Pricing Comparison,FAQ,Newsletter Signup,Contact Form,CTA Section,Marketing Navigation,Mega Navigation,Floating Navigation,Terrain Hero,Marketing Footer",
+    "Editorial Hero,Product Demo Hero,WebGL Hero,Logo Wall,Feature Grid,Alternating Feature Story,Product Comparison,Metrics Strip,Testimonial Grid,Testimonial Carousel,Pricing Table,Pricing Comparison,FAQ,Newsletter Signup,Contact Form,CTA Section,Marketing Navigation,Mega Navigation,Floating Navigation,Terrain Hero,Marketing Footer,Particle Hero,Liquid Hero,Orb Hero,Silk Hero,Eclipse Hero,Tunnel Hero,Constellation Hero,Distortion Hero,Media Hero,Typographic Hero,Shape Hero,Studio Hero,Journal Hero,Poster Hero,Portfolio Hero,Collage Hero,Editorial Navigation,Commerce Navigation,Studio Navigation",
   workspace:
-    "Application Shell,Workspace Navigation,Analytics Overview,Activity Feed,Searchable Records Screen,Record Detail Panel,Kanban Board,Task List,Calendar Schedule,Onboarding Wizard,Sign In Form,Sign Up Form,Password Reset Form,Profile Settings,Team Management,Billing Settings,Notification Centre,Command Search,Chat Workspace",
+    "Application Shell,Workspace Navigation,Analytics Overview,Activity Feed,Searchable Records Screen,Record Detail Panel,Kanban Board,Task List,Calendar Schedule,Onboarding Wizard,Sign In Form,Sign Up Form,Password Reset Form,Profile Settings,Team Management,Billing Settings,Notification Centre,Command Search,Chat Workspace,Workspace Sidebar,Rail Sidebar,Inset Sidebar,User Switcher,Organization Switcher,SSO Login,Split Login,Workspace Login",
 };
 export const slugify = (s) => s.toLowerCase().replaceAll(" ", "-");
 export const templateSpecs = [
@@ -106,6 +106,60 @@ export const templateSpecs = [
   },
 ];
 export const descriptions = {
+  "particle-hero":
+    "A constellation of points beneath a centred headline, with a quiet split footer.",
+  "liquid-hero":
+    "A tall editorial headline beside a slowly moving liquid surface.",
+  "orb-hero":
+    "An illuminated, shader-shaped orb paired with an asymmetric headline.",
+  "silk-hero":
+    "Fine flowing waves behind restrained typography and a single invitation.",
+  "eclipse-hero":
+    "A luminous eclipse with pointer response, warm typography, and a split composition.",
+  "tunnel-hero":
+    "A perspective tunnel, oversized event typography, and a centred call to action.",
+  "constellation-hero":
+    "An animated network of connections beside a community-focused introduction.",
+  "distortion-hero":
+    "Interactive chromatic distortion turns a typographic wordmark into the main artwork.",
+  "media-hero":
+    "A full-height product photograph with editorial copy and a collection link.",
+  "typographic-hero":
+    "Oversized, staggered typography on a vivid vermilion canvas.",
+  "shape-hero": "Bold geometric objects balance a playful studio introduction.",
+  "studio-hero":
+    "A project-led studio introduction with a wide identity study and supporting copy.",
+  "journal-hero":
+    "An editorial cover, serif headline, and spacious introduction to a publication.",
+  "poster-hero":
+    "Poster-scale typography and a compact programme introduction in citrus and ink.",
+  "portfolio-hero":
+    "An independent practice introduction with a tilted project image.",
+  "collage-hero": "An image collage surrounds a centred, expressive headline.",
+  "workspace-sidebar":
+    "Organisation switching, pinned projects, collapsible navigation, and a bottom account menu.",
+  "rail-sidebar": "A compact icon rail with workspace and account popouts.",
+  "inset-sidebar":
+    "A framed workspace canvas beside softly recessed navigation and account controls.",
+  "user-switcher":
+    "Keyboard-accessible account switching, profile settings, and sign-out adapters.",
+  "organization-switcher":
+    "Switch organisations with plan context and a workspace creation adapter.",
+  "sso-login":
+    "A compact sign-in card with Google, GitHub, and email authentication adapters.",
+  "split-login":
+    "A full-screen split layout with a brand panel and social or email sign-in.",
+  "workspace-login":
+    "A focused enterprise sign-in screen with email-based SAML and social providers.",
+  "editorial-navigation":
+    "A publication masthead with numbered sections and a compact mobile menu.",
+  "commerce-navigation":
+    "A shop announcement, centred wordmark, collection links, and shopping bag.",
+  "studio-navigation":
+    "A restrained header opens a full-height navigation sheet with oversized links.",
+  "testimonial-carousel":
+    "Sliding customer stories with touch gestures, direct pagination, and reduced-motion support.",
+
   "product-demo-hero":
     "A full project preview with task details, completion, search, and timeline views.",
   "feature-grid":

@@ -110,13 +110,39 @@ for (const [group, names] of Object.entries(groups))
     if (group === "product") ex = productExample(slug, ex);
     if (group === "effects" && !slug.startsWith("webgl-"))
       ex = effectExample(slug, symbol) ?? ex;
-    cases.push(`case '${slug}': return ${ex};`);
-    entries.push({ slug, title, group, kind, file, symbol, example: ex });
+    const customizable =
+      source.includes(": HeroProps") ||
+      source.includes("LoginHandlers & LoginPresentation");
+    const customization = customizable
+      ? [
+          "title",
+          "description",
+          "actionLabel",
+          "brand",
+          "imageSrc",
+          "imageAlt",
+          "artwork",
+        ].filter((key) => new RegExp("\\b" + key + "\\b").test(source))
+      : [];
+    const live = customizable
+      ? ex.replace(`<${symbol}`, `<${symbol} {...customization}`)
+      : ex;
+    cases.push(`case '${slug}': return ${live};`);
+    entries.push({
+      slug,
+      title,
+      group,
+      kind,
+      file,
+      symbol,
+      customization,
+      example: ex,
+    });
   }
 fs.mkdirSync("apps/catalogue/components", { recursive: true });
 fs.writeFileSync(
   "apps/catalogue/components/demo.tsx",
-  `"use client";\nimport * as React from 'react';import {lazy,Suspense} from 'react';\n${imports.join("\n")}\nexport function Demo({slug}:{slug:string}){const [notice,setNotice]=React.useState('');const [scenePaused,setScenePaused]=React.useState(false);const [sceneSpeed,setSceneSpeed]=React.useState(1);const [sceneColor,setSceneColor]=React.useState<string|undefined>(undefined);const [count,setCount]=React.useState(128);const [draft,setDraft]=React.useState('');const [searchTerm,setSearchTerm]=React.useState('');const [buttonBusy,setButtonBusy]=React.useState(false);const [progress,setProgress]=React.useState(0);const [progressRunning,setProgressRunning]=React.useState(false);React.useEffect(()=>{if(!buttonBusy)return;const timer=setTimeout(()=>{setButtonBusy(false);setNotice('Project published.');},900);return()=>clearTimeout(timer);},[buttonBusy]);React.useEffect(()=>{if(!progressRunning)return;if(progress>=100){setProgressRunning(false);return;}const timer=setTimeout(()=>setProgress(v=>Math.min(100,v+4)),200);return()=>clearTimeout(timer);},[progressRunning,progress]);const actions=[{label:'Duplicate',onSelect:()=>setNotice('A copy is ready.')},{label:'Archive',onSelect:()=>setNotice('Moved to archive.')}];const tabs=[{value:'design',label:'Design',content:'Make it feel like something.'},{value:'build',label:'Build',content:'Give a good idea a useful shape.'},{value:'share',label:'Share',content:'Put it into the world.'}];function render(){switch(slug){${cases.join("\n")}default:return <p>Example not found.</p>}}return <Suspense fallback={<p className="p-8 text-sm">Loading example…</p>}><div className="w-full min-w-0">{render()}{notice&&<p role="status" className="mt-4 text-sm">{notice}</p>}</div></Suspense>}`,
+  `"use client";\nimport * as React from 'react';import {lazy,Suspense} from 'react';\n${imports.join("\n")}\nexport function Demo({slug,customization={}}:{slug:string;customization?:{title?:string;description?:string;actionLabel?:string;brand?:string;imageSrc?:string;imageAlt?:string;artwork?:{color?:string;speed?:number}}}){const [notice,setNotice]=React.useState('');const [scenePaused,setScenePaused]=React.useState(false);const [sceneSpeed,setSceneSpeed]=React.useState(1);const [sceneColor,setSceneColor]=React.useState<string|undefined>(undefined);const [count,setCount]=React.useState(128);const [draft,setDraft]=React.useState('');const [searchTerm,setSearchTerm]=React.useState('');const [buttonBusy,setButtonBusy]=React.useState(false);const [progress,setProgress]=React.useState(0);const [progressRunning,setProgressRunning]=React.useState(false);React.useEffect(()=>{if(!buttonBusy)return;const timer=setTimeout(()=>{setButtonBusy(false);setNotice('Project published.');},900);return()=>clearTimeout(timer);},[buttonBusy]);React.useEffect(()=>{if(!progressRunning)return;if(progress>=100){setProgressRunning(false);return;}const timer=setTimeout(()=>setProgress(v=>Math.min(100,v+4)),200);return()=>clearTimeout(timer);},[progressRunning,progress]);const actions=[{label:'Duplicate',onSelect:()=>setNotice('A copy is ready.')},{label:'Archive',onSelect:()=>setNotice('Moved to archive.')}];const tabs=[{value:'design',label:'Design',content:'Make it feel like something.'},{value:'build',label:'Build',content:'Give a good idea a useful shape.'},{value:'share',label:'Share',content:'Put it into the world.'}];function render(){switch(slug){${cases.join("\n")}default:return <p>Example not found.</p>}}return <Suspense fallback={<p className="p-8 text-sm">Loading example…</p>}><div className="w-full min-w-0">{render()}{notice&&<p role="status" className="mt-4 text-sm">{notice}</p>}</div></Suspense>}`,
 );
 fs.writeFileSync(
   "packages/catalogue/items.json",

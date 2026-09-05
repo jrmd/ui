@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { collectionFor, collectionNames } from "./collections";
 import { ComponentTile } from "./tiles";
 type Item = {
   slug: string;
@@ -15,10 +16,13 @@ export function CatalogueList({ items }: { items: Item[] }) {
     const c = new URLSearchParams(location.search).get("category");
     if (c) setCategory(c);
   }, []);
-  const categories = ["all", ...new Set(items.map((i) => i.group))];
+  const isBlocks = items.some((i) => i.kind === "block");
+  const categories = ["all", ...collectionNames(items)];
+  const inCategory = (i: Item) =>
+    category === "all" || i.group === category || collectionFor(i) === category;
   const visible = items.filter(
     (i) =>
-      (category === "all" || i.group === category) &&
+      inCategory(i) &&
       (i.title + " " + i.description)
         .toLowerCase()
         .includes(query.toLowerCase()),
@@ -49,15 +53,24 @@ export function CatalogueList({ items }: { items: Item[] }) {
           className="filter-search"
           type="search"
           aria-label="Search catalogue"
-          placeholder="Find your next component…"
+          placeholder={
+            isBlocks ? "Find your next block…" : "Find your next component…"
+          }
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
       <div className="component-grid">
-        {visible.map((i) => (
-          <ComponentTile key={i.slug} {...i} />
-        ))}
+        {[...visible]
+          .sort(
+            (a, b) =>
+              categories.indexOf(collectionFor(a)) -
+                categories.indexOf(collectionFor(b)) ||
+              a.title.localeCompare(b.title),
+          )
+          .map((i) => (
+            <ComponentTile key={i.slug} {...i} />
+          ))}
       </div>
       {!visible.length && (
         <div className="py-16 text-center">

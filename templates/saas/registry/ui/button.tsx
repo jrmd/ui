@@ -55,7 +55,7 @@ export function Button({
         <>
           <span
             className={cn(
-              "inline-flex min-w-0 flex-1 items-center justify-[inherit] gap-2",
+              "inline-flex min-w-0 flex-1 items-center justify-center gap-2",
               loading && "invisible",
             )}
           >

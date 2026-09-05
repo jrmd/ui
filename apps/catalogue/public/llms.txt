@@ -1,6 +1,6 @@
 # Jez UI
 
-90 source-owned React components, 40 blocks, eight templates.
+90 source-owned React components, 67 blocks, eight templates.
 
 - [Button](/components/button): foundations
 - [Icon Button](/components/icon-button): foundations
@@ -113,6 +113,25 @@
 - [Floating Navigation](/blocks/floating-navigation): marketing
 - [Terrain Hero](/blocks/terrain-hero): marketing
 - [Marketing Footer](/blocks/marketing-footer): marketing
+- [Particle Hero](/blocks/particle-hero): marketing
+- [Liquid Hero](/blocks/liquid-hero): marketing
+- [Orb Hero](/blocks/orb-hero): marketing
+- [Silk Hero](/blocks/silk-hero): marketing
+- [Eclipse Hero](/blocks/eclipse-hero): marketing
+- [Tunnel Hero](/blocks/tunnel-hero): marketing
+- [Constellation Hero](/blocks/constellation-hero): marketing
+- [Distortion Hero](/blocks/distortion-hero): marketing
+- [Media Hero](/blocks/media-hero): marketing
+- [Typographic Hero](/blocks/typographic-hero): marketing
+- [Shape Hero](/blocks/shape-hero): marketing
+- [Studio Hero](/blocks/studio-hero): marketing
+- [Journal Hero](/blocks/journal-hero): marketing
+- [Poster Hero](/blocks/poster-hero): marketing
+- [Portfolio Hero](/blocks/portfolio-hero): marketing
+- [Collage Hero](/blocks/collage-hero): marketing
+- [Editorial Navigation](/blocks/editorial-navigation): marketing
+- [Commerce Navigation](/blocks/commerce-navigation): marketing
+- [Studio Navigation](/blocks/studio-navigation): marketing
 - [Application Shell](/blocks/application-shell): workspace
 - [Workspace Navigation](/blocks/workspace-navigation): workspace
 - [Analytics Overview](/blocks/analytics-overview): workspace
@@ -132,3 +151,11 @@
 - [Notification Centre](/blocks/notification-centre): workspace
 - [Command Search](/blocks/command-search): workspace
 - [Chat Workspace](/blocks/chat-workspace): workspace
+- [Workspace Sidebar](/blocks/workspace-sidebar): workspace
+- [Rail Sidebar](/blocks/rail-sidebar): workspace
+- [Inset Sidebar](/blocks/inset-sidebar): workspace
+- [User Switcher](/blocks/user-switcher): workspace
+- [Organization Switcher](/blocks/organization-switcher): workspace
+- [SSO Login](/blocks/sso-login): workspace
+- [Split Login](/blocks/split-login): workspace
+- [Workspace Login](/blocks/workspace-login): workspace

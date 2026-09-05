@@ -7,8 +7,8 @@ const items = JSON.parse(
   fs.readFileSync("apps/catalogue/generated/catalogue.json", "utf8"),
 );
 assert.equal(items.filter((i) => i.kind === "component").length, 90);
-assert.equal(items.filter((i) => i.kind === "block").length, 40);
-assert.equal(new Set(items.map((i) => i.slug)).size, 130);
+assert.equal(items.filter((i) => i.kind === "block").length, 67);
+assert.equal(new Set(items.map((i) => i.slug)).size, 157);
 assert.equal(templateSpecs.length, 8);
 const ajv = new Ajv({ strict: false, allErrors: true });
 const schema = JSON.parse(
@@ -27,6 +27,8 @@ for (const item of items) {
   assert.ok(reg.files.length > 0);
   for (const f of reg.files) {
     assert.equal(f.content, fs.readFileSync(f.path, "utf8"));
+    if (f.path.startsWith("assets/"))
+      assert.equal(f.target, "public/" + f.path);
     assert.ok(!f.content.includes("TODO"), "Unfinished source " + f.path);
     for (const [, ref] of f.content.matchAll(/from ['"](\.[^'"]+)['"]/g)) {
       const resolved = path.normalize(path.join(path.dirname(f.path), ref));
@@ -59,5 +61,5 @@ for (const t of templateSpecs) {
     );
 }
 console.log(
-  "PASS: 90 components, 40 blocks, 8 templates; official registry schema; complete dependency closures; canonical source parity; local assets.",
+  "PASS: 90 components, 67 blocks, 8 templates; official registry schema; complete dependency closures; canonical source parity; local assets.",
 );

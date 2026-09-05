@@ -24,6 +24,11 @@ export function closure(file, seen = new Set()) {
       closure(resolved, seen);
     }
   }
+  for (const [, asset] of source.matchAll(/["']\/assets\/([^"']+\.svg)["']/g)) {
+    const assetPath = "assets/" + asset;
+    if (!fs.existsSync(assetPath)) throw Error("Missing artwork " + assetPath);
+    seen.add(assetPath);
+  }
   return seen;
 }
 function dependencies(files) {
@@ -67,7 +72,26 @@ function props(file, symbol) {
         s.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword),
     )
     .map((s) => s.getText(ast));
-  return [...exports, result].join("\n\n");
+  // Resolve shared presentation types so the props panel is useful on its own.
+  const shared = [];
+  for (const dependency of closure(file)) {
+    if (dependency === file || !/\.tsx?$/.test(dependency)) continue;
+    const dependencyAst = ts.createSourceFile(
+      dependency,
+      fs.readFileSync(dependency, "utf8"),
+      ts.ScriptTarget.Latest,
+      true,
+      ts.ScriptKind.TSX,
+    );
+    for (const declaration of dependencyAst.statements) {
+      if (
+        ts.isTypeAliasDeclaration(declaration) &&
+        new RegExp("\\b" + declaration.name.text + "\\b").test(result)
+      )
+        shared.push(declaration.getText(dependencyAst));
+    }
+  }
+  return [...exports, ...shared, result].join("\n\n");
 }
 const out = "apps/catalogue/public";
 fs.mkdirSync(out + "/r", { recursive: true });
@@ -180,8 +204,14 @@ for (const item of items) {
     ],
     files: files.map((file) => ({
       path: file,
-      type: file.includes("/blocks/") ? "registry:block" : "registry:component",
-      target: "components/jez-ui/" + file.replace("registry/", ""),
+      type: file.startsWith("assets/")
+        ? "registry:file"
+        : file.includes("/blocks/")
+          ? "registry:block"
+          : "registry:component",
+      target: file.startsWith("assets/")
+        ? "public/" + file
+        : "components/jez-ui/" + file.replace("registry/", ""),
       content: fs.readFileSync(file, "utf8"),
     })),
   };
@@ -448,7 +478,7 @@ fs.writeFileSync(
 );
 fs.writeFileSync(
   out + "/llms.txt",
-  `# Jez UI\n\n90 source-owned React components, 40 blocks, eight templates.\n\n${items.map((i) => `- [${i.title}](/${i.kind === "block" ? "blocks" : "components"}/${i.slug}): ${i.group}`).join("\n")}\n`,
+  `# Jez UI\n\n90 source-owned React components, 67 blocks, eight templates.\n\n${items.map((i) => `- [${i.title}](/${i.kind === "block" ? "blocks" : "components"}/${i.slug}): ${i.group}`).join("\n")}\n`,
 );
 console.log(
   `Generated ${items.length} registry entries, eight standalone templates and downloads.`,

@@ -36,6 +36,10 @@ export function WebGLStage({
   label = "Interactive WebGL artwork",
 }: WebGLProps & { kind: SceneKind }) {
   const colors = {
+    silk: "#b7cdbb",
+    eclipse: "#edbd79",
+    tunnel: "#a6bce4",
+    constellation: "#a6d0c0",
     particles: "#b9a4f8",
     ribbons: "#8daed1",
     liquid: "#737fd7",
@@ -44,6 +48,10 @@ export function WebGLStage({
     distortion: "#d7dfcf",
   };
   const backgrounds = {
+    silk: "#030405",
+    eclipse: "#030405",
+    tunnel: "#030405",
+    constellation: "#030405",
     particles: "#10101c",
     ribbons: "#10151d",
     liquid: "#1c2945",
@@ -135,6 +143,58 @@ export function WebGLStage({
                 />
               );
             })
+          ) : kind === "distortion" ? (
+            <>
+              <rect width="600" height="400" fill="#d7dfcf" />
+              <text
+                x="300"
+                y="235"
+                textAnchor="middle"
+                fill="#28352d"
+                fontFamily="sans-serif"
+                fontWeight="700"
+                fontSize="150"
+                letterSpacing="-9"
+              >
+                FORM
+              </text>
+              <path d="M 80 275 H 520" stroke="#c36943" strokeWidth="8" />
+            </>
+          ) : kind === "eclipse" || kind === "tunnel" ? (
+            <>
+              {Array.from({ length: kind === "eclipse" ? 8 : 18 }, (_, i) => (
+                <circle
+                  key={i}
+                  cx="300"
+                  cy="200"
+                  r={kind === "eclipse" ? 100 + i * 2 : 15 + i * i * 1.1}
+                  fill="none"
+                  stroke={color}
+                  opacity={kind === "eclipse" ? 0.8 / (i + 1) : 0.15 + i * 0.03}
+                  strokeWidth={kind === "eclipse" ? 1 : 1.5}
+                />
+              ))}
+            </>
+          ) : kind === "constellation" ? (
+            <>
+              {Array.from({ length: 30 }, (_, i) => {
+                const x = 300 + Math.sin(i * 19.1) * 240,
+                  y = 200 + Math.cos(i * 7.7) * 160;
+                return (
+                  <g key={i}>
+                    <line
+                      x1={x}
+                      y1={y}
+                      x2={300 + Math.sin((i + 1) * 19.1) * 240}
+                      y2={200 + Math.cos((i + 1) * 7.7) * 160}
+                      stroke={color}
+                      opacity=".15"
+                    />
+                    <circle cx={x} cy={y} r="2" fill={color} />
+                  </g>
+                );
+              })}
+            </>
           ) : kind === "orb" ? (
             <>
               <defs>

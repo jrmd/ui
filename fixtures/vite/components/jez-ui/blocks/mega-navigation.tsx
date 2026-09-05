@@ -63,7 +63,7 @@ export function MegaNavigation({
           {brand}
           <span className="text-primary">.</span>
         </a>
-        <N.Root className="hidden md:block">
+        <N.Root style={{ position: "static" }} className="hidden md:block">
           <N.List className="flex items-center gap-7">
             <N.Item>
               <N.Trigger className="group flex items-center gap-1.5 py-5 text-sm">
@@ -73,7 +73,7 @@ export function MegaNavigation({
                   className="transition-transform group-data-[state=open]:rotate-180"
                 />
               </N.Trigger>
-              <N.Content className="jez-popover absolute left-0 right-0 top-full mt-2 grid gap-2 rounded-xl border border-border bg-background p-3 shadow-xl md:grid-cols-3">
+              <N.Content className="grid gap-2 p-4 md:grid-cols-3">
                 {items.map((item) => {
                   const Icon = item.icon ?? Box;
                   return (
@@ -114,6 +114,7 @@ export function MegaNavigation({
               </N.Item>
             ))}
           </N.List>
+          <N.Viewport className="jez-popover absolute inset-x-0 top-full overflow-hidden rounded-xl border border-border bg-background shadow-xl" />
         </N.Root>
         <a
           href={items[0]?.href}

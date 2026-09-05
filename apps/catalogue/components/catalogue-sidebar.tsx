@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { collectionFor, collectionNames } from "./collections";
 import { useLayoutEffect, useRef } from "react";
 
 type Entry = { slug: string; title: string; group: string; kind: string };
@@ -44,11 +45,12 @@ export function CatalogueSidebar({
       aria-label="Catalogue navigation"
       onScroll={rememberPosition}
     >
-      {[...new Set(entries.map((entry) => entry.group))].map((group) => (
+      {collectionNames(entries).map((group) => (
         <div key={group}>
           <h3>{group}</h3>
           {entries
-            .filter((entry) => entry.group === group)
+            .filter((entry) => collectionFor(entry) === group)
+            .sort((a, b) => a.title.localeCompare(b.title))
             .map((entry) => (
               <Link
                 key={entry.slug}

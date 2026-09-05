@@ -13,7 +13,12 @@ import {
   particleVertex,
   particleFragment,
 } from "./webgl-shaders";
+import { AtmosphereScene } from "./webgl-atmospheres";
 export type SceneKind =
+  | "silk"
+  | "eclipse"
+  | "tunnel"
+  | "constellation"
   | "particles"
   | "ribbons"
   | "liquid"
@@ -184,6 +189,13 @@ function Surface({ kind, color, speed, imageSrc }: SceneProps) {
   );
 }
 export function WebGLScene(props: SceneProps) {
+  if (
+    props.kind === "silk" ||
+    props.kind === "eclipse" ||
+    props.kind === "tunnel" ||
+    props.kind === "constellation"
+  )
+    return <AtmosphereScene {...props} kind={props.kind} />;
   if (props.kind === "ribbons") return <RibbonScene {...props} />;
   if (props.kind === "particles") return <Field {...props} />;
   return <Surface {...props} />;

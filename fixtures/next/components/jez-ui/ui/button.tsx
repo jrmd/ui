@@ -37,7 +37,8 @@ export function Button({
             variant === "outline",
           "text-muted-foreground hover:bg-muted hover:text-foreground":
             variant === "ghost",
-          "bg-danger text-white hover:bg-danger/90": variant === "danger",
+          "bg-danger text-danger-foreground hover:bg-danger/90":
+            variant === "danger",
         },
         {
           "h-8 px-3 text-xs": size === "sm",
@@ -54,7 +55,7 @@ export function Button({
         <>
           <span
             className={cn(
-              "inline-flex min-w-0 flex-1 items-center justify-[inherit] gap-2",
+              "inline-flex min-w-0 flex-1 items-center justify-center gap-2",
               loading && "invisible",
             )}
           >

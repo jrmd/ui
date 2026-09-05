@@ -15,6 +15,7 @@
     --font-display: var(--font-heading);
     --font-interface: var(--font-interface);
     --font-heading: var(--font-heading);
+    --color-danger-foreground: var(--danger-foreground);
   @keyframes jez-shift {
   to {
     background-position: 200% 50%;
@@ -49,10 +50,11 @@
     --muted: #eeede7;
     --muted-foreground: #64665d;
     --border: #d6d7ce;
-    --primary: #343be8;
+    --primary: #36483e;
     --primary-foreground: #ffffff;
-    --accent: #d9fb61;
+    --accent: #d9e3cd;
     --danger: #b32335;
+    --danger-foreground: #ffffff;
     --font-heading: "Space Grotesk",sans-serif;
     --font-interface: "Geist",sans-serif;
 }
@@ -63,10 +65,11 @@
     --muted: #282b27;
     --muted-foreground: #b5baae;
     --border: #464b42;
-    --primary: #9aabff;
-    --primary-foreground: #111731;
-    --accent: #d9fb61;
+    --primary: #bdcfb8;
+    --primary-foreground: #17241b;
+    --accent: #d9e3cd;
     --danger: #ff9ba7;
+    --danger-foreground: #3a101b;
 }
 
 @media (prefers-reduced-motion: reduce) {

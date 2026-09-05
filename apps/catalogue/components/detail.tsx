@@ -1,4 +1,5 @@
 "use client";
+import items from "../../../packages/catalogue/items.json";
 import { useState, useEffect, useRef } from "react";
 import {
   Monitor,
@@ -51,6 +52,24 @@ export function Preview({
   slug: string;
   block?: boolean;
 }) {
+  const item = items.find((i) => i.slug === slug);
+  const fields = item?.customization ?? [];
+  const [customOpen, setCustomOpen] = useState(false);
+  const [options, setOptions] = useState<
+    Record<string, string | { color?: string; speed?: number }>
+  >({});
+  function sendOptions() {
+    ref.current?.contentWindow?.postMessage(
+      { type: "jez-customize", options },
+      location.origin,
+    );
+  }
+  useEffect(() => {
+    ref.current?.contentWindow?.postMessage(
+      { type: "jez-customize", options },
+      location.origin,
+    );
+  }, [options]);
   const [width, setWidth] = useState("100%");
   const [dark, setDark] = useState(false);
   const [key, setKey] = useState(0);
@@ -120,9 +139,125 @@ export function Preview({
           </button>
         </div>
       </div>
+      {fields.length > 0 && (
+        <div className="border-t border-border px-4 py-3">
+          <button
+            aria-expanded={customOpen}
+            onClick={() => setCustomOpen(!customOpen)}
+            className="text-xs font-medium"
+          >
+            {customOpen ? "Hide customisation" : "Customise this block"}
+          </button>
+          {customOpen && (
+            <div className="mt-4 grid gap-5">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {fields
+                  .filter((f) => f !== "artwork")
+                  .map((field) => (
+                    <label key={field} className="grid gap-2 text-xs">
+                      {{
+                        title: "Heading",
+                        description: "Description",
+                        actionLabel: "Button label",
+                        brand: "Brand",
+                        imageSrc: "Image URL",
+                        imageAlt: "Image description",
+                      }[field] ?? field}
+                      <input
+                        className="min-w-0 rounded-md border border-border bg-background px-3 py-2 text-sm"
+                        value={
+                          typeof options[field] === "string"
+                            ? String(options[field])
+                            : ""
+                        }
+                        placeholder="Use the original"
+                        onChange={(e) =>
+                          setOptions((prev) => {
+                            const next = { ...prev };
+                            if (e.target.value) next[field] = e.target.value;
+                            else delete next[field];
+                            return next;
+                          })
+                        }
+                      />
+                    </label>
+                  ))}
+                {fields.includes("artwork") && (
+                  <>
+                    <label className="grid gap-2 text-xs">
+                      Artwork colour
+                      <input
+                        type="color"
+                        className="h-9 w-full rounded-md border border-border bg-background p-1"
+                        value={
+                          typeof options.artwork === "object"
+                            ? (options.artwork.color ?? "#b7cdbb")
+                            : "#b7cdbb"
+                        }
+                        onChange={(e) =>
+                          setOptions((prev) => ({
+                            ...prev,
+                            artwork: {
+                              ...(typeof prev.artwork === "object"
+                                ? prev.artwork
+                                : {}),
+                              color: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </label>
+                    <label className="grid gap-2 text-xs">
+                      Animation speed
+                      <input
+                        type="range"
+                        className="accent-primary"
+                        min="0"
+                        max="2"
+                        step="0.05"
+                        value={
+                          typeof options.artwork === "object"
+                            ? (options.artwork.speed ?? 0.45)
+                            : 0.45
+                        }
+                        onChange={(e) =>
+                          setOptions((prev) => ({
+                            ...prev,
+                            artwork: {
+                              ...(typeof prev.artwork === "object"
+                                ? prev.artwork
+                                : {}),
+                              speed: Number(e.target.value),
+                            },
+                          }))
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+              </div>
+              <button
+                onClick={() => setOptions({})}
+                className="w-fit text-xs underline underline-offset-4"
+              >
+                Reset customisation
+              </button>
+              <details>
+                <summary className="cursor-pointer text-xs">
+                  Customised JSX
+                </summary>
+                <CodeBox
+                  code={`import { ${item?.symbol} } from '@/components/jez-ui/blocks/${slug}';\n\nexport default function Example() {\n  return <${item?.symbol} {...${JSON.stringify(options, null, 2)}} />;\n}`}
+                />
+              </details>
+            </div>
+          )}
+        </div>
+      )}
       <div className="preview-stage">
         <iframe
           ref={ref}
+          onLoad={sendOptions}
           key={key}
           title={slug + " live preview"}
           src={`/preview/${slug}?theme=${dark ? "dark" : "light"}`}
