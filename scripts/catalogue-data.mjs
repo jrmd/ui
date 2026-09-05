@@ -1,6 +1,6 @@
 export const groups = {
   foundations:
-    "Button,Icon Button,Badge,Avatar,Card,Separator,Skeleton,Spinner,Input,Textarea,Label,Checkbox,Radio Group,Switch,Select,Slider,Toggle Group,Tabs,Accordion,Collapsible,Dialog,Alert Dialog,Sheet,Popover,Tooltip,Dropdown Menu,Context Menu,Navigation Menu,Breadcrumb,Toast",
+    "Button,Icon Button,Badge,Avatar,Card,Separator,Skeleton,Spinner,Input,Textarea,Label,Checkbox,Radio Group,Switch,Select,Slider,Toggle Group,Tabs,Accordion,Collapsible,Dialog,Alert Dialog,Sheet,Popover,Tooltip,Dropdown Menu,Context Menu,Navigation Menu,Breadcrumb,Toast,Sidebar",
   product:
     "Combobox,Command Palette,Calendar,Date Picker,Date Range Picker,Time Picker,File Upload,OTP Input,Password Input,Search Input,Tag Input,Form Field,Pagination,Data Table,Tree View,Resizable Panels,Stepper,Empty State,Alert,Progress",
   motion:
@@ -102,7 +102,15 @@ export const templateSpecs = [
     title: "Ecommerce storefront",
     description: "Considered objects. A considered shopping experience.",
     color: "#b9a471",
-    routes: ["", "collection", "product/studio-lamp", "cart", "checkout"],
+    routes: [
+      "",
+      "collection",
+      "product/studio-lamp",
+      "product/form-vase",
+      "product/linen-throw",
+      "cart",
+      "checkout",
+    ],
   },
 ];
 export const descriptions = {

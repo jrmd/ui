@@ -1,31 +1,48 @@
 "use client";
 import * as React from "react";
+import { ToggleGroup as P } from "radix-ui";
 import { cn } from "./utils";
-import { ToggleGroup as Primitive } from "radix-ui";
 export function ToggleGroup({
   options,
+  children,
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Root> & {
-  options: { label: string; value: string }[];
+}: React.ComponentProps<typeof P.Root> & {
+  options?: { label: React.ReactNode; value: string; disabled?: boolean }[];
 }) {
   return (
-    <Primitive.Root
+    <P.Root
       className={cn(
-        "inline-flex rounded-xl border border-border p-1",
+        "inline-flex flex-wrap gap-1 rounded-xl border border-border p-1",
         className,
       )}
       {...props}
     >
-      {options.map((o) => (
-        <Primitive.Item
-          key={o.value}
-          value={o.value}
-          className="rounded-lg px-3 py-2 text-sm data-[state=on]:bg-muted"
-        >
-          {o.label}
-        </Primitive.Item>
-      ))}
-    </Primitive.Root>
+      {options
+        ? options.map((o) => (
+            <ToggleGroupItem
+              key={o.value}
+              value={o.value}
+              disabled={o.disabled}
+            >
+              {o.label}
+            </ToggleGroupItem>
+          ))
+        : children}
+    </P.Root>
+  );
+}
+export function ToggleGroupItem({
+  className,
+  ...props
+}: React.ComponentProps<typeof P.Item>) {
+  return (
+    <P.Item
+      className={cn(
+        "rounded-lg px-3 py-2 text-sm outline-none hover:bg-muted/60 focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 data-[state=on]:bg-muted data-[state=on]:text-foreground",
+        className,
+      )}
+      {...props}
+    />
   );
 }

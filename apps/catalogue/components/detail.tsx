@@ -54,9 +54,33 @@ export function Preview({
 }) {
   const item = items.find((i) => i.slug === slug);
   const fields = item?.customization ?? [];
+  const copyDefaults: Record<string, string | undefined> =
+    item?.copyDefaults ?? {};
+  const textFields = [
+    ...fields.filter((f) => f !== "artwork"),
+    ...Object.keys(copyDefaults).map((k) => "copy." + k),
+  ];
+  function fieldValue(field: string) {
+    const value =
+      field.startsWith("copy.") && typeof options.copy === "object"
+        ? options.copy[field.slice(5)]
+        : options[field];
+    return typeof value === "string" ? value : "";
+  }
+  function changeField(field: string, value: string) {
+    setOptions((prev) => {
+      const next = { ...prev };
+      if (field.startsWith("copy.")) {
+        const copy = { ...(typeof prev.copy === "object" ? prev.copy : {}) };
+        copy[field.slice(5)] = value;
+        next.copy = copy;
+      } else next[field] = value;
+      return next;
+    });
+  }
   const [customOpen, setCustomOpen] = useState(false);
   const [options, setOptions] = useState<
-    Record<string, string | { color?: string; speed?: number }>
+    Record<string, string | Record<string, string | number | undefined>>
   >({});
   function sendOptions() {
     ref.current?.contentWindow?.postMessage(
@@ -151,37 +175,32 @@ export function Preview({
           {customOpen && (
             <div className="mt-4 grid gap-5">
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {fields
-                  .filter((f) => f !== "artwork")
-                  .map((field) => (
-                    <label key={field} className="grid gap-2 text-xs">
-                      {{
-                        title: "Heading",
-                        description: "Description",
-                        actionLabel: "Button label",
-                        brand: "Brand",
-                        imageSrc: "Image URL",
-                        imageAlt: "Image description",
-                      }[field] ?? field}
-                      <input
-                        className="min-w-0 rounded-md border border-border bg-background px-3 py-2 text-sm"
-                        value={
-                          typeof options[field] === "string"
-                            ? String(options[field])
-                            : ""
-                        }
-                        placeholder="Use the original"
-                        onChange={(e) =>
-                          setOptions((prev) => {
-                            const next = { ...prev };
-                            if (e.target.value) next[field] = e.target.value;
-                            else delete next[field];
-                            return next;
-                          })
-                        }
-                      />
-                    </label>
-                  ))}
+                {textFields.map((field) => (
+                  <label key={field} className="grid gap-2 text-xs">
+                    {{
+                      artworkText: "Artwork wordmark",
+                      title: "Heading",
+                      description: "Description",
+                      actionLabel: "Button label",
+                      brand: "Brand",
+                      secondaryImageSrc: "Second image URL",
+                      secondaryImageAlt: "Second image description",
+                      imageSrc: "Image URL",
+                      imageAlt: "Image description",
+                    }[field] ??
+                      field.replace("copy.", "").replace(/([A-Z])/g, " $1")}
+                    <input
+                      className="min-w-0 rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={fieldValue(field)}
+                      placeholder={
+                        field.startsWith("copy.")
+                          ? copyDefaults[field.slice(5)]
+                          : "Use the original"
+                      }
+                      onChange={(e) => changeField(field, e.target.value)}
+                    />
+                  </label>
+                ))}
                 {fields.includes("artwork") && (
                   <>
                     <label className="grid gap-2 text-xs">

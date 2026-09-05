@@ -1,7 +1,10 @@
 "use client";
 import {Tabs} from '@/components/jez-ui/ui/tabs';
+import {TabsList} from '@/components/jez-ui/ui/tabs';
+import {TabsTrigger} from '@/components/jez-ui/ui/tabs';
+import {TabsContent} from '@/components/jez-ui/ui/tabs';
 
 export default function Example(){
-
-return <><div className="w-full max-w-md"><h3 className="mb-5 text-2xl">Room for the whole process.</h3><Tabs items={[{value:'design',label:'Design',content:<div className="py-5"><p className="text-3xl">Start with a question.</p><p className="mt-3 text-sm text-muted-foreground">Sketch the possibilities before you choose a direction.</p></div>},{value:'build',label:'Build',content:<div className="py-5"><p className="text-3xl">Give it a useful shape.</p><p className="mt-3 text-sm text-muted-foreground">Make the smallest version that tells you something.</p></div>},{value:'share',label:'Share',content:<div className="py-5"><p className="text-3xl">Let someone try it.</p><p className="mt-3 text-sm text-muted-foreground">The next good idea might come from them.</p></div>}]}/></div></>;
+const tabs=[{value:'design',label:'Design',content:'Make it feel like something.'},{value:'build',label:'Build',content:'Give a good idea a useful shape.'},{value:'share',label:'Share',content:'Put it into the world.'}];
+return <><Tabs defaultValue="design"><TabsList aria-label="Workflow">{tabs.map(t=><TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>)}</TabsList>{tabs.map(t=><TabsContent key={t.value} value={t.value}>{t.content}</TabsContent>)}</Tabs></>;
 }

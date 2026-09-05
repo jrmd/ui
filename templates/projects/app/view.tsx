@@ -27,7 +27,7 @@ function Marketing({
 }) {
   const items = nav.map((p) => ({ label: name(p), href: basePath + "/" + p }));
   return (
-    <div className="template-marketing mx-auto max-w-7xl px-5 md:px-10">
+    <div className="template-design template-design-projects template-marketing mx-auto max-w-7xl px-5 md:px-10">
       <MarketingNavigation brand={brand} home={basePath + "/"} items={items} />
       {children}
       <MarketingFooter brand={brand} items={items} />
@@ -47,6 +47,7 @@ function Workspace({
 }) {
   return (
     <ApplicationShell
+      className="template-design template-design-projects"
       brand={brand}
       items={[
         { label: "Overview", href: basePath + "/" },
@@ -157,14 +158,11 @@ export function TemplateView({ route = "", basePath = "" }: TemplateProps) {
         </form>
       ) : (
         <>
-          <div className="mb-10 grid gap-5 md:grid-cols-2">
+          <div className="template-project-shortcuts mb-10 grid gap-5 md:grid-cols-[1.4fr_1fr]">
             <a
               href={basePath + "/board"}
               className="group rounded-xl border border-border bg-background p-6 transition-colors hover:border-primary/50"
             >
-              <p className="mb-5 text-xs font-medium text-muted-foreground">
-                PRJ / 01
-              </p>
               <h2 className="text-xl font-medium">Website refresh</h2>
               <p className="mt-3 text-sm">
                 {tasks.filter((t) => t.status !== "Done").length} tasks in
@@ -175,9 +173,6 @@ export function TemplateView({ route = "", basePath = "" }: TemplateProps) {
               href={basePath + "/list"}
               className="group rounded-xl border border-border bg-background p-6 transition-colors hover:border-primary/50"
             >
-              <p className="mb-5 text-xs font-medium text-muted-foreground">
-                PERSONAL
-              </p>
               <h2 className="text-xl font-medium">Your task list</h2>
               <p className="mt-3 text-sm">A clear view of every next step →</p>
             </a>

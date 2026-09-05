@@ -27,7 +27,7 @@ function Marketing({
 }) {
   const items = nav.map((p) => ({ label: name(p), href: basePath + "/" + p }));
   return (
-    <div className="template-marketing mx-auto max-w-7xl px-5 md:px-10">
+    <div className="template-design template-design-saas template-marketing mx-auto max-w-7xl px-5 md:px-10">
       <MarketingNavigation brand={brand} home={basePath + "/"} items={items} />
       {children}
       <MarketingFooter brand={brand} items={items} />
@@ -47,6 +47,7 @@ function Workspace({
 }) {
   return (
     <ApplicationShell
+      className="template-design template-design-saas"
       brand={brand}
       items={[
         { label: "Overview", href: basePath + "/" },
@@ -60,7 +61,7 @@ function Workspace({
 function PageTitle({ title, text }: { title: string; text?: string }) {
   return (
     <header className="py-10 md:py-12">
-      <h1 className="text-4xl md:text-5xl">{title}</h1>
+      <h1 className="font-display text-4xl md:text-5xl">{title}</h1>
       {text && <p className="mt-4 max-w-2xl text-muted-foreground">{text}</p>}
     </header>
   );

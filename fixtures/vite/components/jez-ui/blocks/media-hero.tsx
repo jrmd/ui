@@ -2,7 +2,13 @@
 import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
+export const MediaHeroCopy = {
+  brand: "Objects for living.",
+  eyebrow: "THE EVERYDAY COLLECTION",
+  caption: "Studio lamp / Sand / No. 004",
+};
 export function MediaHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -20,10 +26,12 @@ export function MediaHero({
     >
       <div className="grid md:grid-cols-[1fr_1.1fr]">
         <div className="flex flex-col items-start justify-between gap-12 p-8 md:p-12">
-          <span className="font-serif text-2xl">Objects for living.</span>
+          <span className="font-serif text-2xl">
+            {copy.brand ?? "Objects for living."}
+          </span>
           <div>
             <p className="mb-5 text-xs tracking-widest">
-              THE EVERYDAY COLLECTION
+              {copy.eyebrow ?? "THE EVERYDAY COLLECTION"}
             </p>
             <h1 className="font-serif text-6xl leading-none tracking-tight md:text-7xl">
               {title ?? (
@@ -46,7 +54,9 @@ export function MediaHero({
               {actionLabel ?? <>Discover the collection</>}
             </HeroLink>
           </div>
-          <span className="text-xs">Studio lamp / Sand / No. 004</span>
+          <span className="text-xs">
+            {copy.caption ?? "Studio lamp / Sand / No. 004"}
+          </span>
         </div>
         <img
           src={imageSrc ?? "/assets/studio-lamp-cover.svg"}

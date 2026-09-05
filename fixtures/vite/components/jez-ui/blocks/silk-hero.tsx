@@ -3,7 +3,16 @@ import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
 import { HeroArt } from "./hero-art";
+export const SilkHeroCopy = {
+  playLabel: "Play artwork",
+  pauseLabel: "Pause artwork",
+  artworkLabel: "Interactive silk artwork",
+  brand: "Atelier No. 9",
+  meta: "Independent design practice",
+  eyebrow: "NOTHING EXTRA. EVERYTHING CONSIDERED.",
+};
 export function SilkHero({
+  copy = {},
   title,
   actionLabel,
   artwork,
@@ -18,16 +27,27 @@ export function SilkHero({
       )}
     >
       <div className="flex items-center justify-between p-7">
-        <span className="font-serif text-2xl italic">Atelier No. 9</span>
+        <span className="font-serif text-2xl italic">
+          {copy.brand ?? "Atelier No. 9"}
+        </span>
         <span className="text-xs text-white/50">
-          Independent design practice
+          {copy.meta ?? "Independent design practice"}
         </span>
       </div>
       <div className="relative">
-        <HeroArt options={artwork} kind="silk" className="h-[460px]" />
+        <HeroArt
+          options={{
+            ...artwork,
+            label: copy.artworkLabel ?? artwork?.label,
+            playLabel: copy.playLabel ?? artwork?.playLabel,
+            pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+          }}
+          kind="silk"
+          className="h-[460px]"
+        />
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p className="mb-7 text-xs tracking-[.35em]">
-            NOTHING EXTRA. EVERYTHING CONSIDERED.
+            {copy.eyebrow ?? "NOTHING EXTRA. EVERYTHING CONSIDERED."}
           </p>
           <h1 className="font-serif text-[clamp(2rem,8vw,6rem)] leading-none tracking-tight">
             {title ?? (

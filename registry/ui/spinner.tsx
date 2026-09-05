@@ -3,8 +3,9 @@ import * as React from "react";
 import { cn } from "./utils";
 export function Spinner({
   className,
+  label = "Loading",
   ...props
-}: React.HTMLAttributes<HTMLSpanElement>) {
+}: React.HTMLAttributes<HTMLSpanElement> & { label?: string }) {
   return (
     <span
       role="status"
@@ -12,7 +13,7 @@ export function Spinner({
       {...props}
     >
       <span className="size-4 rounded-full border-2 border-border border-t-primary motion-safe:animate-spin" />
-      <span className="sr-only">Loading</span>
+      <span className="sr-only">{label}</span>
     </span>
   );
 }

@@ -1,36 +1,78 @@
 "use client";
 import * as React from "react";
+import { Tabs as P } from "radix-ui";
 import { cn } from "./utils";
-import { Tabs as Primitive } from "radix-ui";
 export function Tabs({
   items,
+  children,
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Root> & {
-  items: { value: string; label: string; content: React.ReactNode }[];
+}: React.ComponentProps<typeof P.Root> & {
+  items?: { value: string; label: React.ReactNode; content: React.ReactNode }[];
 }) {
   return (
-    <Primitive.Root
-      defaultValue={items[0]?.value}
+    <P.Root
+      defaultValue={items?.[0]?.value}
       className={cn("w-full", className)}
       {...props}
     >
-      <Primitive.List className="flex gap-1 border-b border-border">
-        {items.map((i) => (
-          <Primitive.Trigger
-            key={i.value}
-            value={i.value}
-            className="border-b-2 border-transparent px-4 py-3 text-sm data-[state=active]:border-primary data-[state=active]:text-primary"
-          >
-            {i.label}
-          </Primitive.Trigger>
-        ))}
-      </Primitive.List>
-      {items.map((i) => (
-        <Primitive.Content key={i.value} value={i.value} className="py-5">
-          {i.content}
-        </Primitive.Content>
-      ))}
-    </Primitive.Root>
+      {items ? (
+        <>
+          <TabsList>
+            {items.map((i) => (
+              <TabsTrigger key={i.value} value={i.value}>
+                {i.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {items.map((i) => (
+            <TabsContent key={i.value} value={i.value}>
+              {i.content}
+            </TabsContent>
+          ))}
+        </>
+      ) : (
+        children
+      )}
+    </P.Root>
+  );
+}
+export function TabsList({
+  className,
+  ...props
+}: React.ComponentProps<typeof P.List>) {
+  return (
+    <P.List
+      className={cn("flex flex-wrap gap-1 border-b border-border", className)}
+      {...props}
+    />
+  );
+}
+export function TabsTrigger({
+  className,
+  ...props
+}: React.ComponentProps<typeof P.Trigger>) {
+  return (
+    <P.Trigger
+      className={cn(
+        "border-b-2 border-transparent px-4 py-3 text-sm outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 data-[state=active]:border-primary data-[state=active]:text-primary",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function TabsContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof P.Content>) {
+  return (
+    <P.Content
+      className={cn(
+        "py-5 text-sm leading-relaxed outline-none focus-visible:ring-2 focus-visible:ring-primary",
+        className,
+      )}
+      {...props}
+    />
   );
 }

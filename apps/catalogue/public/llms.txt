@@ -32,6 +32,7 @@
 - [Navigation Menu](/components/navigation-menu): foundations
 - [Breadcrumb](/components/breadcrumb): foundations
 - [Toast](/components/toast): foundations
+- [Sidebar](/components/sidebar): foundations
 - [Combobox](/components/combobox): product
 - [Command Palette](/components/command-palette): product
 - [Calendar](/components/calendar): product

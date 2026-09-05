@@ -2,7 +2,11 @@
 import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
+export const ShapeHeroCopy = {
+  brand: "Playroom.",
+};
 export function ShapeHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -18,7 +22,9 @@ export function ShapeHero({
     >
       <div className="grid md:grid-cols-2">
         <div className="p-8 md:p-12">
-          <span className="font-display text-xl font-semibold">Playroom.</span>
+          <span className="font-display text-xl font-semibold">
+            {copy.brand ?? "Playroom."}
+          </span>
           <h1 className="mt-16 font-display text-5xl leading-none tracking-tight md:text-6xl">
             {title ?? (
               <>

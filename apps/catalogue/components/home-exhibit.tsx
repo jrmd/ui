@@ -114,7 +114,7 @@ export function HomeExhibit() {
       </div>
       <div className="exhibit-bottom">
         <div className="stat-links">
-          <a href="/components">90 components ↗</a>
+          <a href="/components">91 components ↗</a>
           <a href="/blocks">67 blocks ↗</a>
           <a href="/templates">8 templates ↗</a>
         </div>

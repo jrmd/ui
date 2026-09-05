@@ -10,3 +10,5 @@ apps/catalogue/public/downloads/
 apps/catalogue/generated/
 fixtures/*/src/registry/
 fixtures/*/app/registry/
+
+.next-*/

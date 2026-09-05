@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { ArrowUpRight, PenLine, ListChecks, Lightbulb } from "lucide-react";
 import { MarketingNavigation } from "@registry/blocks/marketing-navigation";
 import { MarketingFooter } from "@registry/blocks/marketing-footer";
 import { ApplicationShell } from "@registry/blocks/application-shell";
@@ -27,7 +28,7 @@ function Marketing({
 }) {
   const items = nav.map((p) => ({ label: name(p), href: basePath + "/" + p }));
   return (
-    <div className="template-marketing mx-auto max-w-7xl px-5 md:px-10">
+    <div className="template-design template-design-ai-chat template-marketing mx-auto max-w-7xl px-5 md:px-10">
       <MarketingNavigation brand={brand} home={basePath + "/"} items={items} />
       {children}
       <MarketingFooter brand={brand} items={items} />
@@ -47,6 +48,7 @@ function Workspace({
 }) {
   return (
     <ApplicationShell
+      className="template-design template-design-ai-chat"
       brand={brand}
       items={[
         { label: "Overview", href: basePath + "/" },
@@ -94,20 +96,28 @@ export function TemplateView({ route = "", basePath = "" }: TemplateProps) {
               "Find a clearer way to explain an idea",
               "Break a big project into small steps",
               "Think through a difficult tradeoff",
-            ].map((t) => (
-              <a
-                key={t}
-                className="border-b border-border py-6 font-display text-2xl"
-                href={basePath + "/conversation/demo"}
-              >
-                {t} →
-              </a>
-            ))}
+            ].map((t, i) => {
+              const Icon = [PenLine, ListChecks, Lightbulb][i];
+              return (
+                <a
+                  key={t}
+                  className="template-prompt-link"
+                  href={basePath + "/conversation/demo"}
+                >
+                  <Icon aria-hidden="true" />
+                  <span>{t}</span>
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+              );
+            })}
           </div>
         </>
       ) : (
         <div className="mx-auto max-w-3xl py-3">
-          <ChatWorkspace conversationId={route ? "demo" : "new"} />
+          <ChatWorkspace
+            className="template-chat"
+            conversationId={route ? "demo" : "new"}
+          />
         </div>
       )}
     </Workspace>

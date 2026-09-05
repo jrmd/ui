@@ -3,7 +3,14 @@ import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
 import { HeroArt } from "./hero-art";
+export const ParticleHeroCopy = {
+  playLabel: "Play artwork",
+  pauseLabel: "Pause artwork",
+  artworkLabel: "Interactive particles artwork",
+  eyebrow: "ATLAS / COLLECTIVE INTELLIGENCE",
+};
 export function ParticleHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -20,7 +27,7 @@ export function ParticleHero({
     >
       <div className="relative z-10 px-7 pt-9 text-center">
         <p className="text-xs tracking-[.3em] text-[#b9a4f8]">
-          ATLAS / COLLECTIVE INTELLIGENCE
+          {copy.eyebrow ?? "ATLAS / COLLECTIVE INTELLIGENCE"}
         </p>
         <h1 className="mx-auto mt-8 max-w-2xl font-display text-5xl leading-[.95] tracking-tight md:text-7xl">
           {title ?? (
@@ -33,7 +40,12 @@ export function ParticleHero({
         </h1>
       </div>
       <HeroArt
-        options={artwork}
+        options={{
+          ...artwork,
+          label: copy.artworkLabel ?? artwork?.label,
+          playLabel: copy.playLabel ?? artwork?.playLabel,
+          pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+        }}
         kind="particles"
         className="-mt-6 h-80 md:h-96"
       />

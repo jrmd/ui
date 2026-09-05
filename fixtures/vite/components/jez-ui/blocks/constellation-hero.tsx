@@ -3,7 +3,15 @@ import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
 import { HeroArt } from "./hero-art";
+export const ConstellationHeroCopy = {
+  playLabel: "Play artwork",
+  pauseLabel: "Pause artwork",
+  artworkLabel: "Interactive constellation artwork",
+  brand: "COMMON ORBIT",
+  footerNote: "Different disciplines. Shared curiosity.",
+};
 export function ConstellationHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -20,7 +28,9 @@ export function ConstellationHero({
     >
       <div className="grid md:grid-cols-[1.1fr_1fr]">
         <div className="p-8 md:p-12">
-          <p className="text-xs tracking-widest text-[#91b6a4]">COMMON ORBIT</p>
+          <p className="text-xs tracking-widest text-[#91b6a4]">
+            {copy.brand ?? "COMMON ORBIT"}
+          </p>
           <h1 className="mt-16 font-display text-5xl leading-[1.02] tracking-tight md:text-6xl">
             {title ?? (
               <>
@@ -46,12 +56,17 @@ export function ConstellationHero({
         </div>
         <div>
           <HeroArt
-            options={artwork}
+            options={{
+              ...artwork,
+              label: copy.artworkLabel ?? artwork?.label,
+              playLabel: copy.playLabel ?? artwork?.playLabel,
+              pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+            }}
             kind="constellation"
             className="h-80 md:h-[470px]"
           />
           <p className="border-t border-white/15 p-6 text-xs text-white/50">
-            Different disciplines. Shared curiosity.
+            {copy.footerNote ?? "Different disciplines. Shared curiosity."}
           </p>
         </div>
       </div>

@@ -6,7 +6,7 @@ Considered objects. A considered shopping experience.
 
 Use Node 22.12+ and pnpm 11. Run `pnpm install`, then `pnpm dev`. Run `pnpm build` and `pnpm start` for production. No environment variables are needed.
 
-Routes: `/`, `/collection`, `/product/studio-lamp`, `/cart`, `/checkout`.
+Routes: `/`, `/collection`, `/product/studio-lamp`, `/product/form-vase`, `/product/linen-throw`, `/cart`, `/checkout`.
 
 ## Make it yours
 

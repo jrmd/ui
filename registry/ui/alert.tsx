@@ -7,8 +7,8 @@ export function Alert({
   variant = "info",
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
-  title: string;
+}: Omit<React.ComponentProps<"div">, "title"> & {
+  title?: React.ReactNode;
   variant?: "info" | "error" | "success";
 }) {
   return (
@@ -21,8 +21,42 @@ export function Alert({
       )}
       {...props}
     >
-      <p className="text-sm font-medium">{title}</p>
-      <div className="mt-1 text-sm">{children}</div>
+      {title !== undefined ? (
+        <>
+          <AlertTitle>{title}</AlertTitle>
+          <AlertDescription>{children}</AlertDescription>
+        </>
+      ) : (
+        children
+      )}
     </div>
+  );
+}
+export function AlertTitle({
+  className,
+  ...props
+}: React.ComponentProps<"h4">) {
+  return <h4 className={cn("text-sm font-medium", className)} {...props} />;
+}
+export function AlertDescription({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "mt-1 text-sm leading-relaxed text-muted-foreground",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function AlertAction({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div className={cn("mt-4 flex flex-wrap gap-2", className)} {...props} />
   );
 }

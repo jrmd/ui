@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { ArrowUpRight } from "lucide-react";
 import { MarketingNavigation } from "@registry/blocks/marketing-navigation";
 import { MarketingFooter } from "@registry/blocks/marketing-footer";
 import { ApplicationShell } from "@registry/blocks/application-shell";
@@ -27,9 +28,15 @@ function Marketing({
 }) {
   const items = nav.map((p) => ({ label: name(p), href: basePath + "/" + p }));
   return (
-    <div className="template-marketing mx-auto max-w-7xl px-5 md:px-10">
+    <div className="template-design template-design-agency template-marketing mx-auto max-w-7xl px-5 md:px-10">
       <MarketingNavigation brand={brand} home={basePath + "/"} items={items} />
       {children}
+      <section className="template-closing" aria-label="Start a conversation">
+        <h2>Have something in mind?</h2>
+        <a href={basePath + "/contact"}>
+          Tell us about it <ArrowUpRight aria-hidden="true" />
+        </a>
+      </section>
       <MarketingFooter brand={brand} items={items} />
     </div>
   );
@@ -47,6 +54,7 @@ function Workspace({
 }) {
   return (
     <ApplicationShell
+      className="template-design template-design-agency"
       brand={brand}
       items={[
         { label: "Overview", href: basePath + "/" },
@@ -60,7 +68,7 @@ function Workspace({
 function PageTitle({ title, text }: { title: string; text?: string }) {
   return (
     <header className="py-10 md:py-12">
-      <h1 className="text-4xl md:text-5xl">{title}</h1>
+      <h1 className="font-display text-4xl md:text-5xl">{title}</h1>
       {text && <p className="mt-4 max-w-2xl text-muted-foreground">{text}</p>}
     </header>
   );
@@ -107,6 +115,7 @@ export function TemplateView({
   const [filter, setFilter] = React.useState("All");
   const link = (p: string) => basePath + "/" + p;
   const project = work.find((w) => route === "work/" + w.slug) ?? work[0];
+  const nextProject = work[(work.indexOf(project) + 1) % work.length];
   return (
     <Marketing
       brand="OTHER"
@@ -170,6 +179,15 @@ export function TemplateView({
                 {project.detail}
               </p>
             </div>
+            <a
+              className="template-next-project"
+              href={link("work/" + nextProject.slug)}
+            >
+              <span>
+                Next project<strong>{nextProject.title}</strong>
+              </span>
+              <ArrowUpRight aria-hidden="true" />
+            </a>
           </>
         ) : (
           <>

@@ -1,13 +1,22 @@
 "use client";
 import * as React from "react";
 import { cn } from "./utils";
-export function RippleField({ className }: { className?: string }) {
+export function RippleField({
+  className,
+  children = "Click anywhere. Make a little wave.",
+  label = "Create a ripple",
+}: {
+  className?: string;
+  children?: React.ReactNode;
+  label?: string;
+}) {
   const [ripples, setRipples] = React.useState<
     { id: number; x: number; y: number }[]
   >([]);
   return (
     <button
-      aria-label="Create a ripple"
+      type="button"
+      aria-label={label}
       className={cn(
         "relative block h-64 w-full overflow-hidden rounded-xl bg-muted",
         className,
@@ -24,9 +33,7 @@ export function RippleField({ className }: { className?: string }) {
         ]);
       }}
     >
-      <span className="relative z-10 text-sm">
-        Click anywhere. Make a little wave.
-      </span>
+      <span className="relative z-10 text-sm">{children}</span>
       {ripples.map((r) => (
         <span
           key={r.id}

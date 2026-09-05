@@ -35,7 +35,12 @@ export function Calendar({
     offset = (new Date(y, m, 1).getDay() + 6) % 7;
   const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
   return (
-    <div className={cn("w-72 max-w-full rounded-xl border border-border p-4", className)}>
+    <div
+      className={cn(
+        "w-72 max-w-full rounded-xl border border-border p-4",
+        className,
+      )}
+    >
       <div className="mb-4 flex items-center justify-between">
         <Button
           variant="ghost"
@@ -75,6 +80,7 @@ export function Calendar({
           const key = dateKey(new Date(y, m, i + 1));
           return (
             <button
+              type="button"
               key={key}
               ref={(el) => {
                 refs.current[i] = el;

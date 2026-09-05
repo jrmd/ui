@@ -2,6 +2,11 @@ import { notFound } from "next/navigation";
 import { Shell } from "../../../components/shell";
 import { CodeBox, InstallCommand } from "../../../components/detail";
 const pages = {
+  composition: {
+    title: "Build from styled parts.",
+    intro:
+      "Use complete defaults, compose with children, and override only what your project needs.",
+  },
   installation: {
     title: "A good place to start.",
     intro:
@@ -53,7 +58,107 @@ export default async function Page({
         </nav>
         <h1>{page.title}</h1>
         <p>{page.intro}</p>
-        {slug === "installation" ? (
+        {slug === "composition" && (
+          <>
+            <h2>Styled defaults, optional overrides</h2>
+            <p>
+              Install Card once to get every Card part. Content, typography,
+              spacing, and actions already have styles. Native props and
+              className pass through to each part.
+            </p>
+            <InstallCommand slug="card" />
+            <CodeBox
+              code={`import {Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from "@/components/jez-ui/ui/card";
+import {Button} from "@/components/jez-ui/ui/button";
+
+<Card>
+  <CardHeader>
+    <CardTitle>Your workspace</CardTitle>
+    <CardDescription>A shared home for your projects.</CardDescription>
+  </CardHeader>
+  <CardContent>Invite your team when you are ready.</CardContent>
+  <CardFooter><Button>Invite teammates</Button></CardFooter>
+</Card>`}
+            />
+            <h2>Choose a shortcut or compose children</h2>
+            <p>
+              Tabs, Accordion, Select, menus, overlays, and other structural
+              components include named child parts. Existing items, options, and
+              trigger shortcuts still work. A component’s page lists every
+              export included in its install.
+            </p>
+            <CodeBox
+              code={`<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="activity">Activity</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">Your overview</TabsContent>
+  <TabsContent value="activity">Your activity</TabsContent>
+</Tabs>`}
+            />
+            <h2>Forms without spacing utilities</h2>
+            <p>
+              FormField connects a label, hint, and error to one input
+              automatically. FieldGroup spaces several fields. FieldRow aligns a
+              checkbox or switch with its label. For custom layouts use Field,
+              FieldLabel, FieldDescription, and FieldError with matching IDs.
+            </p>
+            <CodeBox
+              code={`<FieldGroup>
+  <FormField label="Project" hint="Choose a memorable name.">
+    <Input name="project" />
+  </FormField>
+  <FieldRow><Switch name="notifications" /> Email notifications</FieldRow>
+</FieldGroup>`}
+            />
+            <h2>Sidebars with your own hierarchy</h2>
+            <p>
+              Use SidebarHeader for an organisation switcher, SidebarContent for
+              groups and nested menus, and SidebarFooter for an account popout.
+              Menu buttons accept asChild so your router links keep their
+              behaviour. Add as many SidebarMenuItem and SidebarMenuSubItem
+              children as needed.
+            </p>
+            <CodeBox
+              code={`<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader>Your organisation switcher</SidebarHeader>
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Projects</SidebarGroupLabel>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild><a href="/projects">All projects</a></SidebarMenuButton>
+            <SidebarMenuSub>
+              <SidebarMenuSubItem>
+                <SidebarMenuSubButton asChild><a href="/projects/design">Design system</a></SidebarMenuSubButton>
+              </SidebarMenuSubItem>
+            </SidebarMenuSub>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
+    </SidebarContent>
+    <SidebarFooter>Your account menu</SidebarFooter>
+  </Sidebar>
+  <SidebarInset><SidebarTrigger />Your page</SidebarInset>
+</SidebarProvider>`}
+            />
+            <h2>Every hero’s words are yours</h2>
+            <p>
+              All twenty heroes expose their headings, descriptions, action
+              labels, and supporting copy. Use the exported Copy defaults to
+              discover a hero’s named slots. Distortion Hero’s artworkText
+              changes its rendered wordmark, including its static fallback.
+              Product Demo Hero accepts children to replace the sample product
+              interface.
+            </p>
+            <CodeBox
+              code={`<DistortionHero title="Make a mark." description="An independent studio." actionLabel="Our work" artworkText="NORTH" copy={{brand:"NORTH STUDIO",meta:"EST. 2026"}} />`}
+            />
+          </>
+        )}
+        {slug === "composition" ? null : slug === "installation" ? (
           <>
             <h2>Prepare your project</h2>
             <p>
@@ -81,10 +186,10 @@ export default async function Page({
             </p>
             <h2>Fonts</h2>
             <p>
-              The catalogue and template downloads bundle Space Grotesk and
-              Geist. Component installations inherit your app’s fonts; install
-              the Fontsource packages or use your own display and interface
-              faces.
+              The catalogue and template downloads bundle Instrument Sans.
+              Component installations inherit your app’s fonts; install
+              @fontsource-variable/instrument-sans or use your own display and
+              interface faces.
             </p>
             <h2>Start with a template</h2>
             <p>
@@ -103,7 +208,7 @@ export default async function Page({
               themes.
             </p>
             <CodeBox
-              code={`:root {\n  --primary: #405746;\n  --primary-foreground: #ffffff;\n  --accent: #d7e0c4;\n  --font-heading: 'Space Grotesk', sans-serif;\n  --font-interface: 'Geist', sans-serif;\n}`}
+              code={`:root {\n  --primary: #405746;\n  --primary-foreground: #ffffff;\n  --accent: #d7e0c4;\n  --font-heading: 'Instrument Sans Variable', system-ui, sans-serif;\n  --font-interface: 'Instrument Sans Variable', system-ui, sans-serif;\n}`}
             />
             <h2>Keep the relationships</h2>
             <p>

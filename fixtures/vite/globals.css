@@ -55,8 +55,8 @@
     --accent: #d9e3cd;
     --danger: #b32335;
     --danger-foreground: #ffffff;
-    --font-heading: "Space Grotesk",sans-serif;
-    --font-interface: "Geist",sans-serif;
+    --font-heading: "Instrument Sans Variable",ui-sans-serif,system-ui,sans-serif;
+    --font-interface: "Instrument Sans Variable",ui-sans-serif,system-ui,sans-serif;
 }
 
 .dark {

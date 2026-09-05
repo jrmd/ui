@@ -25,21 +25,17 @@ test("upload rejects oversized files and accepts valid files", async ({
 }) => {
   await page.goto("/preview/file-upload");
   await page.waitForLoadState("networkidle");
-  await page
-    .getByLabel("Choose files")
-    .setInputFiles({
-      name: "large.pdf",
-      mimeType: "application/pdf",
-      buffer: Buffer.alloc(6 * 1024 * 1024),
-    });
+  await page.getByLabel("Choose files").setInputFiles({
+    name: "large.pdf",
+    mimeType: "application/pdf",
+    buffer: Buffer.alloc(6 * 1024 * 1024),
+  });
   await expect(page.locator("p[role=alert]")).toContainText("under 5 MB");
-  await page
-    .getByLabel("Choose files")
-    .setInputFiles({
-      name: "notes.pdf",
-      mimeType: "application/pdf",
-      buffer: Buffer.from("demo"),
-    });
+  await page.getByLabel("Choose files").setInputFiles({
+    name: "notes.pdf",
+    mimeType: "application/pdf",
+    buffer: Buffer.from("demo"),
+  });
   await expect(
     page.getByRole("button", { name: "Remove notes.pdf" }),
   ).toBeVisible();
@@ -81,9 +77,12 @@ test("chat stream can stop, retry, persist and reset", async ({ page }) => {
   ).toBeVisible();
   await page.getByRole("button", { name: "Stop response" }).click();
   await page.getByRole("button", { name: "Retry response" }).click();
-  await expect(page.getByRole("log")).toContainText("when the work is finished?", {
-    timeout: 15000,
-  });
+  await expect(page.getByRole("log")).toContainText(
+    "when the work is finished?",
+    {
+      timeout: 15000,
+    },
+  );
   await page.reload();
   await expect(page.getByRole("log")).toContainText("Plan a launch");
   await page.getByRole("button", { name: "New conversation" }).click();
@@ -94,13 +93,13 @@ test("storefront selection, cart persistence and checkout validation", async ({
 }) => {
   await page.goto("/templates/storefront/preview/product/studio-lamp");
   await page.waitForLoadState("networkidle");
-  await page.getByLabel("Finish").selectOption("Ink");
+  await page.getByRole("combobox", { name: "Finish" }).selectOption("Ink");
   await page.getByLabel("Quantity", { exact: true }).fill("2");
   await page.getByRole("button", { name: "Add to bag" }).click();
   await page.getByRole("link", { name: "View bag" }).click();
   await expect(page.getByLabel("Quantity Ink")).toHaveValue("2");
   await page.reload();
-  await expect(page.getByText("£290", { exact: true })).toBeVisible();
+  await expect(page.locator(".objects-total")).toContainText("£290");
   await page.getByRole("link", { name: /Continue to demo checkout/ }).click();
   await page.getByRole("button", { name: "Complete demo" }).click();
   await expect(page.getByRole("status")).toHaveCount(0);

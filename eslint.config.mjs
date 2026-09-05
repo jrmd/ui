@@ -3,6 +3,7 @@ export default tseslint.config(
   {
     ignores: [
       "**/.next/**",
+      "**/.next-*/**",
       "**/node_modules/**",
       "**/public/**",
       "**/generated/**",

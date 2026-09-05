@@ -24,14 +24,23 @@ export function PreviewFrame({ slug }: { slug: string }) {
       if (!raw || typeof raw !== "object") return;
       const next: NonNullable<Parameters<typeof Demo>[0]["customization"]> = {};
       for (const key of [
+        "artworkText",
         "title",
         "description",
         "actionLabel",
         "brand",
+        "secondaryImageSrc",
+        "secondaryImageAlt",
         "imageSrc",
         "imageAlt",
       ] as const)
         if (typeof raw[key] === "string") next[key] = raw[key];
+      if (raw.copy && typeof raw.copy === "object")
+        next.copy = Object.fromEntries(
+          Object.entries(raw.copy).filter(
+            (entry): entry is [string, string] => typeof entry[1] === "string",
+          ),
+        );
       if (raw.artwork && typeof raw.artwork === "object")
         next.artwork = {
           ...(typeof raw.artwork.color === "string"

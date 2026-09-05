@@ -1,3 +1,4 @@
+import ts from "typescript";
 import fs from "node:fs";
 import {
   sceneExamples,
@@ -23,16 +24,16 @@ const examples = {
   checkbox: `<label className="flex items-center gap-3"><Checkbox defaultChecked/>Keep a little room for play</label>`,
   "radio-group": `<RadioGroup defaultValue="balanced" aria-label="Density" options={[{label:'Comfortable',value:'comfortable'},{label:'Balanced',value:'balanced'},{label:'Compact',value:'compact'}]}/>`,
   switch: `<label className="flex items-center gap-3"><Switch defaultChecked/>Notifications</label>`,
-  select: `<Select label="Choose a discipline" options={[{label:'Design',value:'design'},{label:'Engineering',value:'engineering'},{label:'Everything in between',value:'both'}]}/>`,
+  select: `<Select><SelectTrigger aria-label="Choose a discipline"><SelectValue placeholder="Choose a discipline"/></SelectTrigger><SelectContent><SelectItem value="design">Design</SelectItem><SelectItem value="engineering">Engineering</SelectItem><SelectItem value="both">Everything in between</SelectItem></SelectContent></Select>`,
   slider: `<Slider label="Volume"/>`,
   "toggle-group": `<ToggleGroup type="single" defaultValue="week" aria-label="Period" options={[{label:'Day',value:'day'},{label:'Week',value:'week'},{label:'Month',value:'month'}]}/>`,
-  tabs: `<Tabs items={tabs}/>`,
+  tabs: `<Tabs defaultValue="design"><TabsList aria-label="Workflow">{tabs.map(t=><TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>)}</TabsList>{tabs.map(t=><TabsContent key={t.value} value={t.value}>{t.content}</TabsContent>)}</Tabs>`,
   accordion: `<Accordion type="single" collapsible items={[{value:'one',title:'What makes a good component?',content:'A clear purpose, thoughtful defaults, and room to make it yours.'},{value:'two',title:'Can I change it?',content:'The source is yours to adapt under your distribution licence.'}]}/>`,
   collapsible: `<div className="w-full max-w-md"><Collapsible title="Changed files · 3" defaultOpen>{["components/button.tsx","styles/theme.css","tests/controls.spec.ts"].map((file,i)=><div key={file} className="flex items-center gap-2 py-2 text-sm"><FileCode2 size={15} className="shrink-0 text-muted-foreground"/><span className="min-w-0 flex-1 truncate font-mono text-xs">{file}</span><span className="text-xs text-primary">+{[24,8,16][i]}</span></div>)}</Collapsible></div>`,
-  dialog: `<Dialog trigger={<Button>Open dialog</Button>} title="Make it yours." description="Give your project a name before you begin."><Input aria-label="Project name" placeholder="Field notes"/></Dialog>`,
+  dialog: `<Dialog><DialogTrigger asChild><Button>Open dialog</Button></DialogTrigger><DialogContent showClose={false}><DialogHeader><DialogTitle>Make it yours.</DialogTitle><DialogDescription>Give your project a name before you begin.</DialogDescription></DialogHeader><FormField label="Project name"><Input placeholder="Field notes"/></FormField><DialogFooter><DialogClose asChild><Button variant="outline">Close</Button></DialogClose></DialogFooter></DialogContent></Dialog>`,
   "alert-dialog": `<AlertDialog trigger={<Button variant="danger">Delete draft</Button>} title="Delete this draft?" description="This example asks for confirmation. No real data is deleted."/>`,
   sheet: `<Sheet trigger={<Button variant="outline">Open details</Button>} title="Project details" description="Website refresh · PRJ-102"><div className="grid gap-6"><FormField label="Project name"><Input defaultValue="Website refresh"/></FormField><FormField label="Status"><Select label="Status" defaultValue="progress" options={[{label:"In progress",value:"progress"},{label:"In review",value:"review"},{label:"Complete",value:"complete"}]}/></FormField><FormField label="Notes"><Textarea defaultValue="Explore a clearer homepage direction and bring the component previews up to date."/></FormField><Button onClick={()=>setNotice("Project details saved.")}>Save changes</Button></div></Sheet>`,
-  popover: `<Popover trigger={<Button variant="outline">Project notes</Button>}><h3 className="font-medium">A small reminder</h3><p className="mt-2 text-sm">Leave room for the unexpected.</p></Popover>`,
+  popover: `<Popover><PopoverTrigger asChild><Button variant="outline">Project notes</Button></PopoverTrigger><PopoverContent><PopoverHeader><PopoverTitle>A small reminder</PopoverTitle><PopoverDescription>Leave room for the unexpected.</PopoverDescription></PopoverHeader></PopoverContent></Popover>`,
   tooltip: `<Tooltip content="Save your current work"><Button variant="outline">Hover or focus me</Button></Tooltip>`,
   "dropdown-menu": `<DropdownMenu trigger={<Button variant="outline">Project actions ↓</Button>} items={actions}/>`,
   "context-menu": `<ContextMenu trigger={<div tabIndex={0} className="rounded-xl border border-dashed border-border p-10 text-sm">Right-click for actions</div>} items={actions}/>`,
@@ -88,13 +89,35 @@ for (const [group, names] of Object.entries(groups))
       folder = kind === "block" ? "blocks" : "ui",
       file = `registry/${folder}/${slug}.tsx`,
       source = fs.readFileSync(file, "utf8");
-    const symbol = [
-      ...source.matchAll(/export function (\w+)(?:<[^>]+>)?\(/g),
-    ].at(-1)?.[1];
+    const exported = [
+      ...source.matchAll(/export (?:function|const) (\w+)/g),
+    ].map((m) => m[1]);
+    const symbol =
+      exported.find(
+        (name) =>
+          name.toLowerCase() === title.replace(/[^a-z0-9]/gi, "").toLowerCase(),
+      ) ?? exported.at(-1);
     imports.push(
       `const ${symbol}=lazy(()=>import('../../../${file.replace(".tsx", "")}').then(m=>({default:m.${symbol}})));`,
     );
+    for (const part of exported.filter(
+      (name) =>
+        /^[A-Z]/.test(name) && name !== symbol && !name.endsWith("Copy"),
+    ))
+      imports.push(
+        `import {${part}} from '../../../${file.replace(".tsx", "")}';`,
+      );
     let ex = sceneExamples[slug] ?? examples[slug];
+    if (slug === "sidebar")
+      ex = `<SidebarProvider className="overflow-hidden rounded-xl border border-border"><Sidebar><SidebarHeader><span className="block truncate px-3 py-2 font-semibold">North Studio</span></SidebarHeader><SidebarContent><SidebarGroup><SidebarGroupLabel>Workspace</SidebarGroupLabel><SidebarMenu><SidebarMenuItem><SidebarMenuButton asChild isActive><a href="#overview"><Folder/><span>Overview</span></a></SidebarMenuButton></SidebarMenuItem><SidebarMenuItem><SidebarMenuButton asChild><a href="#projects"><FileCode2/><span>Projects</span></a></SidebarMenuButton><SidebarMenuSub>{["Website refresh","Design system","Mobile app"].map(name=><SidebarMenuSubItem key={name}><SidebarMenuSubButton asChild><a href={"#"+name.toLowerCase().replaceAll(" ","-")}><span>{name}</span></a></SidebarMenuSubButton></SidebarMenuSubItem>)}</SidebarMenuSub></SidebarMenuItem></SidebarMenu></SidebarGroup><SidebarGroup><SidebarGroupLabel>Resources</SidebarGroupLabel><SidebarMenu>{["Documentation","Team","Settings"].map(name=><SidebarMenuItem key={name}><SidebarMenuButton asChild><a href={"#"+name.toLowerCase()}><Folder/><span>{name}</span></a></SidebarMenuButton></SidebarMenuItem>)}</SidebarMenu></SidebarGroup></SidebarContent><SidebarFooter><span className="block truncate px-3 text-xs">alex@north.example</span></SidebarFooter></Sidebar><SidebarInset><header className="flex items-center gap-3 border-b border-border p-4"><SidebarTrigger/><span className="text-sm">Workspace</span></header><div className="p-6"><h1 className="text-2xl">Built from your own pieces.</h1><p className="mt-3 text-sm text-muted-foreground">Add groups, nested links, custom headers, and account controls using children.</p></div></SidebarInset></SidebarProvider>`;
+
+    if (["tabs", "select"].includes(slug)) ex = examples[slug];
+    if (slug === "dropdown-menu")
+      ex = `<DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline">Project actions ↓</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuLabel>Project</DropdownMenuLabel>{actions.map(action=><DropdownMenuItem key={action.label} onSelect={action.onSelect}>{action.label}</DropdownMenuItem>)}<DropdownMenuSeparator/><DropdownMenuCheckboxItem checked={showArchived} onCheckedChange={setShowArchived}>Show archived</DropdownMenuCheckboxItem><DropdownMenuSub><DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger><DropdownMenuSubContent><DropdownMenuItem onSelect={()=>setNotice("Moved to Personal.")}>Personal</DropdownMenuItem><DropdownMenuItem onSelect={()=>setNotice("Moved to Team.")}>Team</DropdownMenuItem></DropdownMenuSubContent></DropdownMenuSub></DropdownMenuContent></DropdownMenu>`;
+    if (slug === "resizable-panels")
+      ex = `<ResizablePanelGroup><ResizablePanel defaultSize={25} minSize={15}>Navigation</ResizablePanel><ResizableHandle aria-label="Resize navigation"/><ResizablePanel defaultSize={50} minSize={20}>Your workspace. Drag a divider or focus it and use arrow keys.</ResizablePanel><ResizableHandle aria-label="Resize inspector"/><ResizablePanel defaultSize={25} minSize={15}>Inspector</ResizablePanel></ResizablePanelGroup>`;
+    if (slug === "card")
+      ex = `<Card><CardHeader><CardTitle>A little room to think.</CardTitle><CardDescription>A considered surface for whatever comes next.</CardDescription><CardAction><Badge>Draft</Badge></CardAction></CardHeader><CardContent><FormField label="Project name"><Input placeholder="Field notes"/></FormField></CardContent><CardFooter><Button onClick={()=>setNotice("Project created.")}>Create project</Button><Button variant="outline">Cancel</Button></CardFooter></Card>`;
     if (group === "charts") ex = chartExample(slug, symbol);
     if (kind === "component" && slug.startsWith("webgl-"))
       ex = webglExample(slug, symbol);
@@ -113,16 +136,40 @@ for (const [group, names] of Object.entries(groups))
     const customizable =
       source.includes(": HeroProps") ||
       source.includes("LoginHandlers & LoginPresentation");
+    const copyMatch = source.match(/export const \w+Copy = (\{[\s\S]*?\});/);
+    const copyDefaults = {};
+    if (copyMatch) {
+      const ast = ts.createSourceFile(
+        "copy.ts",
+        `const copy=${copyMatch[1]}`,
+        ts.ScriptTarget.Latest,
+        true,
+      );
+      const init =
+        ast.statements[0].declarationList.declarations[0].initializer;
+      for (const prop of init.properties)
+        if (
+          ts.isPropertyAssignment(prop) &&
+          ts.isStringLiteral(prop.initializer)
+        )
+          copyDefaults[prop.name.getText(ast).replaceAll('"', "")] =
+            prop.initializer.text;
+    }
+    const parameterSource =
+      source.match(/export function \w+\(\{([\s\S]*?)\}\s*:/)?.[1] ?? "";
     const customization = customizable
       ? [
+          "artworkText",
           "title",
           "description",
           "actionLabel",
           "brand",
+          "secondaryImageSrc",
+          "secondaryImageAlt",
           "imageSrc",
           "imageAlt",
           "artwork",
-        ].filter((key) => new RegExp("\\b" + key + "\\b").test(source))
+        ].filter((key) => new RegExp("\\b" + key + "\\b").test(parameterSource))
       : [];
     const live = customizable
       ? ex.replace(`<${symbol}`, `<${symbol} {...customization}`)
@@ -136,13 +183,32 @@ for (const [group, names] of Object.entries(groups))
       file,
       symbol,
       customization,
+      copyDefaults,
       example: ex,
     });
   }
 fs.mkdirSync("apps/catalogue/components", { recursive: true });
 fs.writeFileSync(
   "apps/catalogue/components/demo.tsx",
-  `"use client";\nimport * as React from 'react';import {lazy,Suspense} from 'react';\n${imports.join("\n")}\nexport function Demo({slug,customization={}}:{slug:string;customization?:{title?:string;description?:string;actionLabel?:string;brand?:string;imageSrc?:string;imageAlt?:string;artwork?:{color?:string;speed?:number}}}){const [notice,setNotice]=React.useState('');const [scenePaused,setScenePaused]=React.useState(false);const [sceneSpeed,setSceneSpeed]=React.useState(1);const [sceneColor,setSceneColor]=React.useState<string|undefined>(undefined);const [count,setCount]=React.useState(128);const [draft,setDraft]=React.useState('');const [searchTerm,setSearchTerm]=React.useState('');const [buttonBusy,setButtonBusy]=React.useState(false);const [progress,setProgress]=React.useState(0);const [progressRunning,setProgressRunning]=React.useState(false);React.useEffect(()=>{if(!buttonBusy)return;const timer=setTimeout(()=>{setButtonBusy(false);setNotice('Project published.');},900);return()=>clearTimeout(timer);},[buttonBusy]);React.useEffect(()=>{if(!progressRunning)return;if(progress>=100){setProgressRunning(false);return;}const timer=setTimeout(()=>setProgress(v=>Math.min(100,v+4)),200);return()=>clearTimeout(timer);},[progressRunning,progress]);const actions=[{label:'Duplicate',onSelect:()=>setNotice('A copy is ready.')},{label:'Archive',onSelect:()=>setNotice('Moved to archive.')}];const tabs=[{value:'design',label:'Design',content:'Make it feel like something.'},{value:'build',label:'Build',content:'Give a good idea a useful shape.'},{value:'share',label:'Share',content:'Put it into the world.'}];function render(){switch(slug){${cases.join("\n")}default:return <p>Example not found.</p>}}return <Suspense fallback={<p className="p-8 text-sm">Loading example…</p>}><div className="w-full min-w-0">{render()}{notice&&<p role="status" className="mt-4 text-sm">{notice}</p>}</div></Suspense>}`,
+  `"use client";\nimport * as React from 'react';import {lazy,Suspense} from 'react';\n${imports
+    .filter(
+      (line) =>
+        !line.startsWith("const ") ||
+        new RegExp("<" + line.match(/const (\w+)/)[1] + "(?:[\\s/>])").test(
+          cases.join("\n"),
+        ),
+    )
+    .filter(
+      (line) =>
+        !line.startsWith("import {") ||
+        !line.includes("../../../") ||
+        new RegExp("<" + line.match(/import \{(\w+)/)[1] + "(?:[\\s/>])").test(
+          cases.join("\n"),
+        ),
+    )
+    .join(
+      "\n",
+    )}\nexport function Demo({slug,customization={}}:{slug:string;customization?:{secondaryImageSrc?:string;secondaryImageAlt?:string;copy?:Record<string,string>;artworkText?:string;title?:string;description?:string;actionLabel?:string;brand?:string;imageSrc?:string;imageAlt?:string;artwork?:{color?:string;speed?:number}}}){const [showArchived,setShowArchived]=React.useState<boolean|"indeterminate">(true);const [notice,setNotice]=React.useState('');const [scenePaused,setScenePaused]=React.useState(false);const [sceneSpeed,setSceneSpeed]=React.useState(1);const [sceneColor,setSceneColor]=React.useState<string|undefined>(undefined);const [count,setCount]=React.useState(128);const [draft,setDraft]=React.useState('');const [searchTerm,setSearchTerm]=React.useState('');const [buttonBusy,setButtonBusy]=React.useState(false);const [progress,setProgress]=React.useState(0);const [progressRunning,setProgressRunning]=React.useState(false);React.useEffect(()=>{if(!buttonBusy)return;const timer=setTimeout(()=>{setButtonBusy(false);setNotice('Project published.');},900);return()=>clearTimeout(timer);},[buttonBusy]);React.useEffect(()=>{if(!progressRunning)return;if(progress>=100){setProgressRunning(false);return;}const timer=setTimeout(()=>setProgress(v=>Math.min(100,v+4)),200);return()=>clearTimeout(timer);},[progressRunning,progress]);const actions=[{label:'Duplicate',onSelect:()=>setNotice('A copy is ready.')},{label:'Archive',onSelect:()=>setNotice('Moved to archive.')}];const tabs=[{value:'design',label:'Design',content:'Make it feel like something.'},{value:'build',label:'Build',content:'Give a good idea a useful shape.'},{value:'share',label:'Share',content:'Put it into the world.'}];function render(){switch(slug){${cases.join("\n")}default:return <p>Example not found.</p>}}return <Suspense fallback={<p className="p-8 text-sm">Loading example…</p>}><div className="w-full min-w-0">{render()}{notice&&<p role="status" className="mt-4 text-sm">{notice}</p>}</div></Suspense>}`,
 );
 fs.writeFileSync(
   "packages/catalogue/items.json",

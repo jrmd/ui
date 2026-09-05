@@ -3,7 +3,16 @@ import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
 import { HeroArt } from "./hero-art";
+export const DistortionHeroCopy = {
+  playLabel: "Play artwork",
+  pauseLabel: "Pause artwork",
+  artworkLabel: "Interactive distortion artwork",
+  brand: "FORM / EXPERIMENTAL DESIGN OFFICE",
+  meta: "EST. 2026",
+};
 export function DistortionHero({
+  artworkText,
+  copy = {},
   title,
   actionLabel,
   description,
@@ -19,10 +28,20 @@ export function DistortionHero({
       )}
     >
       <div className="flex items-center justify-between border-b border-[#28352d]/20 p-7 text-xs">
-        <span>FORM / EXPERIMENTAL DESIGN OFFICE</span>
-        <span>EST. 2026</span>
+        <span>{copy.brand ?? "FORM / EXPERIMENTAL DESIGN OFFICE"}</span>
+        <span>{copy.meta ?? "EST. 2026"}</span>
       </div>
-      <HeroArt options={artwork} kind="distortion" className="h-72 md:h-96" />
+      <HeroArt
+        text={artworkText}
+        options={{
+          ...artwork,
+          label: copy.artworkLabel ?? artwork?.label,
+          playLabel: copy.playLabel ?? artwork?.playLabel,
+          pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+        }}
+        kind="distortion"
+        className="h-72 md:h-96"
+      />
       <div className="grid gap-6 border-t border-[#28352d]/20 p-8 md:grid-cols-2">
         <h1 className="font-display text-4xl leading-tight tracking-tight">
           {title ?? (

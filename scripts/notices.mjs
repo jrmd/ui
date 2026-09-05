@@ -31,7 +31,7 @@ for (const name of Object.keys(pkg.dependencies)) {
   }
 }
 text +=
-  "\n## Assets\n\nSpace Grotesk and Geist are bundled via Fontsource under the SIL Open Font License; full notices are in licenses/. Geometric SVG artwork was authored for Jez UI. studio-lamp.png and its Ink and Sand variants are original AI-generated fictional product still lifes, generated for this project on 2026-09-05; it is not a photograph of an actual product. Sample names, metrics, and quotes are fictional.\n";
+  "\n## Assets\n\nInstrument Sans is bundled via Fontsource under the SIL Open Font License; full notices are in licenses/. Geometric SVG artwork was authored for Jez UI. studio-lamp.png and its Ink and Sand variants are original AI-generated fictional product still lifes, generated for this project on 2026-09-05; it is not a photograph of an actual product. Sample names, metrics, and quotes are fictional.\n";
 fs.writeFileSync("THIRD_PARTY_NOTICES.md", text);
 for (const t of templateSpecs) {
   fs.copyFileSync(

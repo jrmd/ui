@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
+import { format } from "prettier";
 import { execFileSync } from "node:child_process";
 import { descriptions, templateSpecs } from "./catalogue-data.mjs";
 const items = JSON.parse(
@@ -126,8 +127,10 @@ const theme = {
       accent: "#d9e3cd",
       danger: "#b32335",
       "danger-foreground": "#ffffff",
-      "font-heading": '"Space Grotesk",sans-serif',
-      "font-interface": '"Geist",sans-serif',
+      "font-heading":
+        '"Instrument Sans Variable",ui-sans-serif,system-ui,sans-serif',
+      "font-interface":
+        '"Instrument Sans Variable",ui-sans-serif,system-ui,sans-serif',
     },
     dark: {
       background: "#191b19",
@@ -192,7 +195,15 @@ for (const item of items) {
       ...[
         ...new Set([...item.example.matchAll(/<([A-Z]\w*)/g)].map((m) => m[1])),
       ]
-        .map((symbol) => items.find((i) => i.symbol === symbol))
+        .map((symbol) =>
+          items.find(
+            (i) =>
+              i.symbol === symbol ||
+              new RegExp(
+                "export (?:function|const) " + symbol + "(?:[<(=\\s])",
+              ).test(fs.readFileSync(i.file, "utf8")),
+          ),
+        )
         .filter((dep) => dep && dep.slug !== item.slug)
         .map(
           (dep) =>
@@ -222,9 +233,16 @@ for (const item of items) {
   const symbols = [
     ...new Set([...item.example.matchAll(/<([A-Z]\w*)/g)].map((m) => m[1])),
   ];
-  const usageImports = symbols
+  const importGroups = new Map();
+  const individualImports = symbols
     .map((symbol) => {
-      const dep = items.find((i) => i.symbol === symbol);
+      const dep = items.find(
+        (i) =>
+          i.symbol === symbol ||
+          new RegExp(
+            "export (?:function|const) " + symbol + "(?:[<(=\\s])",
+          ).test(fs.readFileSync(i.file, "utf8")),
+      );
       return dep
         ? `import {${symbol}} from '@/components/jez-ui/${dep.kind === "block" ? "blocks" : "ui"}/${dep.slug}';`
         : [
@@ -242,7 +260,23 @@ for (const item of items) {
     })
     .filter(Boolean)
     .join("\n");
+  for (const [, names, module] of individualImports.matchAll(
+    /import \{([^}]+)\} from '([^']+)';/g,
+  )) {
+    const group = importGroups.get(module) ?? new Set();
+    names.split(",").forEach((name) => group.add(name.trim()));
+    importGroups.set(module, group);
+  }
+  const usageImports = [...importGroups]
+    .map(
+      ([module, names]) =>
+        `import { ${[...names].join(", ")} } from '${module}';`,
+    )
+    .join("\n");
   const setup = [
+    item.example.includes("showArchived")
+      ? `const [showArchived,setShowArchived]=useState<boolean|"indeterminate">(true);`
+      : "",
     item.example.includes("setDraft")
       ? `const [draft,setDraft]=useState('');`
       : "",
@@ -267,19 +301,34 @@ for (const item of items) {
     item.example.includes("actions")
       ? `const actions=[{label:'Duplicate',onSelect:()=>setNotice('A copy is ready.')},{label:'Archive',onSelect:()=>setNotice('Moved to archive.')}];`
       : "",
-    item.example.includes("items={tabs}")
+    /\btabs\b/.test(item.example)
       ? `const tabs=[{value:'design',label:'Design',content:'Make it feel like something.'},{value:'build',label:'Build',content:'Give a good idea a useful shape.'},{value:'share',label:'Share',content:'Put it into the world.'}];`
       : "",
   ]
     .filter(Boolean)
     .join("\n");
-  const usage = `"use client";\n${setup.includes("useState") ? `import {useState${setup.includes("useEffect") ? ",useEffect" : ""}} from 'react';\n` : ""}${usageImports}\n\nexport default function Example(){\n${setup}\nreturn <>${item.example}${/setNotice|actions/.test(item.example) ? '<p role="status">{notice}</p>' : ""}</>;\n}`;
+  const usage = await format(
+    `"use client";\n${setup.includes("useState") ? `import {useState${setup.includes("useEffect") ? ",useEffect" : ""}} from 'react';\n` : ""}${usageImports}\n\nexport default function Example(){\n${setup}\nreturn <>${item.example}${/setNotice|actions/.test(item.example) ? '<p role="status">{notice}</p>' : ""}</>;\n}`,
+    {
+      parser: "typescript",
+      printWidth: 80,
+      tabWidth: 2,
+      singleAttributePerLine: true,
+    },
+  );
   const manifest = {
     ...item,
     description,
     dependencies: deps,
     accessibility: a11y,
     props: props(item.file, item.symbol),
+    parts: [
+      ...fs
+        .readFileSync(item.file, "utf8")
+        .matchAll(/export (?:function|const) ([A-Z]\w*)/g),
+    ]
+      .map((m) => m[1])
+      .filter((name) => name !== item.symbol && !name.endsWith("Copy")),
     usage,
     source: fs.readFileSync(item.file, "utf8"),
     files: files.map((f) => ({ path: f, source: fs.readFileSync(f, "utf8") })),
@@ -358,9 +407,10 @@ for (const spec of templateSpecs) {
     fs.copyFileSync(file, target);
   }
   fs.copyFileSync("registry/theme.css", dir + "/app/theme.css");
+  fs.copyFileSync("templates/styles.css", dir + "/app/template.css");
   fs.writeFileSync(
     dir + "/app/globals.css",
-    `@import "./theme.css";\n@import "@fontsource/space-grotesk/latin-400.css";\n@import "@fontsource/space-grotesk/latin-500.css";\n@import "@fontsource/space-grotesk/latin-700.css";\n@import "@fontsource/geist/latin-400.css";\n@import "@fontsource/geist/latin-500.css";\n@source "../registry";\n:root{${themes[spec.slug]}}\n`,
+    `@import "./theme.css";\n@import "./template.css";\n@import "@fontsource-variable/instrument-sans/wght.css";\n@import "@fontsource-variable/instrument-sans/wght-italic.css";\n@source "../registry";\n:root{${themes[spec.slug]}}\n`,
   );
   fs.writeFileSync(
     dir + "/app/layout.tsx",
@@ -378,8 +428,7 @@ for (const spec of templateSpecs) {
       "react-dom",
       "tailwindcss",
       "@tailwindcss/postcss",
-      "@fontsource/space-grotesk",
-      "@fontsource/geist",
+      "@fontsource-variable/instrument-sans",
       ...dependencies(needed).map((d) => d.slice(0, d.lastIndexOf("@"))),
     ].map((n) => [n, pkg.dependencies[n]]),
   );
@@ -474,7 +523,9 @@ fs.writeFileSync(
   "apps/catalogue/generated/template-themes.css",
   Object.entries(themes)
     .map(([slug, css]) => `.template-${slug}{${css}}`)
-    .join("\n"),
+    .join("\n") +
+    "\n" +
+    fs.readFileSync("templates/styles.css", "utf8"),
 );
 fs.writeFileSync(
   out + "/llms.txt",

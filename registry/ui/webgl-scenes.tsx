@@ -29,6 +29,7 @@ export type SceneProps = {
   kind: SceneKind;
   color: string;
   speed: number;
+  text?: string;
   imageSrc?: string;
   composition?: "fold" | "orbit";
 };
@@ -89,7 +90,7 @@ function Field({ color, speed }: { color: string; speed: number }) {
     />
   );
 }
-function Surface({ kind, color, speed, imageSrc }: SceneProps) {
+function Surface({ kind, color, speed, imageSrc, text = "FORM" }: SceneProps) {
   const { size, invalidate } = useThree();
   const ref = React.useRef<THREE.Mesh>(null);
   const material = React.useMemo(
@@ -132,7 +133,9 @@ function Surface({ kind, color, speed, imageSrc }: SceneProps) {
     ctx.fillRect(0, 0, 900, 600);
     ctx.fillStyle = "#28352d";
     ctx.font = "bold 190px sans-serif";
-    ctx.fillText("FORM", 105, 350);
+    const width = ctx.measureText(text).width;
+    ctx.font = `bold ${Math.min(190, (190 * 680) / Math.max(width, 1))}px sans-serif`;
+    ctx.fillText(text, 105, 350);
     ctx.fillStyle = "#c36943";
     ctx.fillRect(105, 405, 680, 14);
     let texture: THREE.Texture = new THREE.CanvasTexture(canvas);
@@ -161,7 +164,7 @@ function Surface({ kind, color, speed, imageSrc }: SceneProps) {
       cancelled = true;
       texture.dispose();
     };
-  }, [kind, imageSrc, material, invalidate]);
+  }, [kind, imageSrc, text, material, invalidate]);
   useFrame(({ pointer }, d) => {
     material.uniforms.time.value += Math.min(d, 0.05) * speed;
     material.uniforms.pointer.value.lerp(pointer, 0.06);

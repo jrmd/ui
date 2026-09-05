@@ -27,7 +27,7 @@ function Marketing({
 }) {
   const items = nav.map((p) => ({ label: name(p), href: basePath + "/" + p }));
   return (
-    <div className="template-marketing mx-auto max-w-7xl px-5 md:px-10">
+    <div className="template-design template-design-analytics template-marketing mx-auto max-w-7xl px-5 md:px-10">
       <MarketingNavigation brand={brand} home={basePath + "/"} items={items} />
       {children}
       <MarketingFooter brand={brand} items={items} />
@@ -47,6 +47,7 @@ function Workspace({
 }) {
   return (
     <ApplicationShell
+      className="template-design template-design-analytics"
       brand={brand}
       items={[
         { label: "Overview", href: basePath + "/" },
@@ -145,7 +146,7 @@ export function TemplateView({ route = "", basePath = "" }: TemplateProps) {
         <ProfileSettings />
       ) : (
         <>
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-4 rounded-xl border border-border bg-muted/20 p-4">
+          <div className="mb-7 flex flex-wrap items-end justify-between gap-4 border-y border-border py-4">
             <DateRangePicker value={range} onValueChange={setRange} />
             <Button variant="outline" onClick={csv}>
               Export CSV ↓

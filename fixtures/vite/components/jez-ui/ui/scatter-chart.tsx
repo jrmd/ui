@@ -15,6 +15,7 @@ export function ScatterChart({
   data = sampleChartData,
   label = "Current vs previous",
   className,
+  color = "var(--primary)",
 }: ChartProps) {
   return (
     <ChartFrame data={data} label={label} className={cn("", className)}>
@@ -34,11 +35,7 @@ export function ScatterChart({
             tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
           />
           <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-          <Scatter
-            data={data}
-            fill="var(--primary)"
-            isAnimationActive={false}
-          />
+          <Scatter data={data} fill={color} isAnimationActive={false} />
         </Plot>
       </ResponsiveContainer>
     </ChartFrame>

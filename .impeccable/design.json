@@ -389,7 +389,7 @@
     "overview": "Jez UI makes a generous, warm-white work surface for building interfaces, then interrupts it with concentrated mineral colour and a few playful moving exhibits. The catalogue stays calm enough to scan: ink typography, hairline divisions, roomy grids, and compact controls make the product source easy to assess.\n\nExpression is deliberate rather than ambient. The home exhibit is the place for expressive ribbons, olive-charcoal controls, motion, and dark stages; documentation and component inventory return to quiet surfaces.",
     "keyCharacteristics": [
       "Warm white paper and near-black ink establish the default reading environment.",
-      "Space Grotesk gives headings a large, close-set editorial voice; Geist keeps controls and supporting copy direct.",
+      "Instrument Sans carries both confident headings and clear interface text; size, weight, and spacing establish the hierarchy.",
       "Soft sage and olive charcoal identify interaction, selection, and the live exhibit rather than filling whole screens.",
       "Borders and tonal surface changes organize information; shadows appear only on contained previews and elevated overlays."
     ],
@@ -400,8 +400,8 @@
         "section": "colors"
       },
       {
-        "name": "The Two-Voice Rule",
-        "body": "Use Space Grotesk for headings only. Keep UI controls, navigation, code, and supporting text in Geist unless a component explicitly needs a different functional face.",
+        "name": "The Shared-Family Rule",
+        "body": "Use Instrument Sans for headings, controls, navigation, and supporting text. Use monospace for code; preserve deliberate template-specific serif overrides.",
         "section": "typography"
       },
       {
@@ -418,7 +418,7 @@
     "dos": [
       "Do use the warm-white, ink, and hairline-stone foundation for catalogue, documentation, and component previews.",
       "Do reserve soft sage for highlights, selection, or a deliberate exhibit panel, and olive charcoal for active controls and direct action.",
-      "Do keep display type in Space Grotesk with close tracking and use Geist for interface work.",
+      "Do keep display type in Instrument Sans with close tracking and use Instrument Sans for interface work.",
       "Do retain the shared focus treatment on every interactive primitive.",
       "Do collapse exhibit and catalogue grids at the established breakpoints rather than squeezing desktop arrangements on mobile."
     ],

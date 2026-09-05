@@ -2,7 +2,12 @@
 import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
+export const PortfolioHeroCopy = {
+  brand: "ALEX RIVERS / DESIGN ENGINEER",
+  meta: "Independent practice",
+};
 export function PortfolioHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -19,10 +24,10 @@ export function PortfolioHero({
       )}
     >
       <div className="flex items-center justify-between p-7 text-xs">
-        <span>ALEX RIVERS / DESIGN ENGINEER</span>
+        <span>{copy.brand ?? "ALEX RIVERS / DESIGN ENGINEER"}</span>
         <span className="flex items-center gap-2">
           <span className="size-1.5 rounded-full bg-[#557746]" />
-          Independent practice
+          {copy.meta ?? "Independent practice"}
         </span>
       </div>
       <div className="grid gap-10 px-7 py-12 md:grid-cols-[1.4fr_1fr] md:px-12">

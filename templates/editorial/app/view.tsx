@@ -27,7 +27,7 @@ function Marketing({
 }) {
   const items = nav.map((p) => ({ label: name(p), href: basePath + "/" + p }));
   return (
-    <div className="template-marketing mx-auto max-w-7xl px-5 md:px-10">
+    <div className="template-design template-design-editorial template-marketing mx-auto max-w-7xl px-5 md:px-10">
       <MarketingNavigation brand={brand} home={basePath + "/"} items={items} />
       {children}
       <MarketingFooter brand={brand} items={items} />
@@ -47,6 +47,7 @@ function Workspace({
 }) {
   return (
     <ApplicationShell
+      className="template-design template-design-editorial"
       brand={brand}
       items={[
         { label: "Overview", href: basePath + "/" },
@@ -60,7 +61,7 @@ function Workspace({
 function PageTitle({ title, text }: { title: string; text?: string }) {
   return (
     <header className="py-10 md:py-12">
-      <h1 className="text-4xl md:text-5xl">{title}</h1>
+      <h1 className="font-display text-4xl md:text-5xl">{title}</h1>
       {text && <p className="mt-4 max-w-2xl text-muted-foreground">{text}</p>}
     </header>
   );
@@ -156,6 +157,17 @@ export function TemplateView({
                 {p}
               </p>
             ))}
+            <section className="template-related" aria-label="Related stories">
+              <h2>Stay a little longer.</h2>
+              {stories
+                .filter((item) => item.slug !== story.slug)
+                .map((item) => (
+                  <a key={item.slug} href={link("article/" + item.slug)}>
+                    {item.title}
+                    <span>{item.category}</span>
+                  </a>
+                ))}
+            </section>
           </article>
         ) : (
           <>

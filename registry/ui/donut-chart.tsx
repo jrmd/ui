@@ -11,7 +11,9 @@ export function DonutChart({
   ],
   label = "Traffic sources",
   className,
-}: ChartProps) {
+  color,
+  colors = ["var(--primary)", "#9eb95f", "#e29366", "#8498bb"],
+}: ChartProps & { colors?: string[] }) {
   return (
     <ChartFrame data={data} label={label} className={cn("", className)}>
       <ResponsiveContainer initialDimension={{ width: 600, height: 240 }}>
@@ -28,7 +30,7 @@ export function DonutChart({
             {data.map((_, i) => (
               <Cell
                 key={i}
-                fill={["#525be3", "#9eb95f", "#e29366", "#8498bb"][i % 4]}
+                fill={color ?? colors[i % colors.length] ?? "var(--primary)"}
               />
             ))}
           </Pie>

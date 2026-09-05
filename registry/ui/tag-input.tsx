@@ -31,6 +31,7 @@ export function TagInput({
           >
             {t}
             <button
+              type="button"
               aria-label={`Remove ${t}`}
               onClick={() => setTags(tags.filter((v) => v !== t))}
             >

@@ -2,7 +2,12 @@
 import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
+export const TypographicHeroCopy = {
+  brand: "OTHER® — DESIGN & DIRECTION",
+  meta: "OPEN TO GOOD PROBLEMS",
+};
 export function TypographicHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -17,8 +22,8 @@ export function TypographicHero({
       )}
     >
       <div className="flex items-center justify-between border-b border-black/20 p-7 text-xs font-medium">
-        <span>OTHER® — DESIGN &amp; DIRECTION</span>
-        <span>OPEN TO GOOD PROBLEMS</span>
+        <span>{copy.brand ?? "OTHER® — DESIGN & DIRECTION"}</span>
+        <span>{copy.meta ?? "OPEN TO GOOD PROBLEMS"}</span>
       </div>
       <div className="p-7 md:p-12">
         <h1 className="font-display text-[clamp(4rem,12vw,9rem)] font-bold leading-[.82] tracking-[-.075em]">

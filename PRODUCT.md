@@ -18,7 +18,7 @@ A complete reusable collection of 90 components, 36 composed blocks, and eight m
 Accessible foundations, optional animation and WebGL, charts, searchable live examples, responsive previews, and editable source. Demo journeys do not connect to live auth, AI, billing, or order services. Commerce and public deployment are deferred. Original source is private; no open-source licence is granted.
 
 ## Brand Commitments
-Jez UI. Clean, fun, expressive. Warm white and ink, large confident Space Grotesk typography, Geist interface text, concentrated electric colour. Eight distinct template identities. No fabricated endorsements.
+Jez UI. Clean, fun, expressive. Warm white and ink, confident Instrument Sans typography across headings and interface text, concentrated electric colour. Eight distinct template identities. No fabricated endorsements.
 
 ## Product Principles
 - Distribute the same source used by the examples.

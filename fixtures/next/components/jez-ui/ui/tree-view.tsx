@@ -7,10 +7,14 @@ export function TreeView({
   nodes,
   onSelect,
   className,
+  label = "Files",
+  renderLabel,
 }: {
   nodes: TreeNode[];
   onSelect?: (node: TreeNode) => void;
   className?: string;
+  label?: string;
+  renderLabel?: (node: TreeNode) => React.ReactNode;
 }) {
   const [closed, setClosed] = React.useState<Set<string>>(new Set());
   const [selected, setSelected] = React.useState<string>();
@@ -46,7 +50,7 @@ export function TreeView({
     <ul
       ref={root}
       role="tree"
-      aria-label="Files"
+      aria-label={label}
       className={cn("grid w-full gap-0.5 text-sm", className)}
     >
       {visible.map(({ node, depth, parent }, index) => (
@@ -119,7 +123,7 @@ export function TreeView({
           ) : (
             <FileCode2 size={16} className="text-muted-foreground" />
           )}
-          <span className="truncate">{node.label}</span>
+          <span className="truncate">{renderLabel?.(node) ?? node.label}</span>
           {node.children && (
             <span className="ml-auto text-xs text-muted-foreground">
               {node.children.length}

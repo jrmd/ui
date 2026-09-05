@@ -2,7 +2,14 @@
 import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
+export const PosterHeroCopy = {
+  brand: "ASSEMBLY / A GATHERING OF IDEAS",
+  meta: "ONLINE & EVERYWHERE",
+  tagline: "Design. Culture.",
+  taglineEnd: "Whatever comes next.",
+};
 export function PosterHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -18,8 +25,8 @@ export function PosterHero({
     >
       <div className="p-7 md:p-12">
         <div className="flex justify-between text-xs font-medium">
-          <span>ASSEMBLY / A GATHERING OF IDEAS</span>
-          <span>ONLINE &amp; EVERYWHERE</span>
+          <span>{copy.brand ?? "ASSEMBLY / A GATHERING OF IDEAS"}</span>
+          <span>{copy.meta ?? "ONLINE & EVERYWHERE"}</span>
         </div>
         <div className="my-12 border-y-2 border-[#243022] py-6">
           <h1 className="font-display text-[clamp(3.5rem,10vw,8rem)] font-bold leading-[.86] tracking-[-.065em]">
@@ -38,9 +45,9 @@ export function PosterHero({
         </div>
         <div className="grid gap-7 md:grid-cols-[1fr_1fr_auto]">
           <p className="text-sm font-medium">
-            Design. Culture.
+            {copy.tagline ?? "Design. Culture."}
             <br />
-            Whatever comes next.
+            {copy.taglineEnd ?? "Whatever comes next."}
           </p>
           <p className="max-w-xs text-sm leading-relaxed">
             {description ?? (

@@ -9,18 +9,24 @@ export function DateRangePicker({
   defaultValue = { from: "", to: "" },
   onValueChange,
   className,
+  label = "Date range",
+  fromLabel = "From",
+  toLabel = "To",
 }: {
   value?: DateRange;
   defaultValue?: DateRange;
   onValueChange?: (range: DateRange) => void;
   className?: string;
+  label?: string;
+  fromLabel?: string;
+  toLabel?: string;
 }) {
   const [range, setRange] = useControllable(value, defaultValue, onValueChange);
   return (
     <fieldset className={cn("flex flex-wrap gap-3", className)}>
-      <legend className="mb-2 text-sm font-medium">Date range</legend>
+      <legend className="mb-2 text-sm font-medium">{label}</legend>
       <label className="grid gap-1 text-xs">
-        From
+        {fromLabel}
         <Input
           type="date"
           value={range.from}
@@ -29,7 +35,7 @@ export function DateRangePicker({
         />
       </label>
       <label className="grid gap-1 text-xs">
-        To
+        {toLabel}
         <Input
           type="date"
           value={range.to}

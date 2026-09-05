@@ -1,9 +1,6 @@
 @import "../../../registry/theme.css";
-@import "@fontsource/space-grotesk/latin-400.css";
-@import "@fontsource/space-grotesk/latin-500.css";
-@import "@fontsource/space-grotesk/latin-700.css";
-@import "@fontsource/geist/latin-400.css";
-@import "@fontsource/geist/latin-500.css";
+@import "@fontsource-variable/instrument-sans/wght.css";
+@import "@fontsource-variable/instrument-sans/wght-italic.css";
 @import "../generated/template-themes.css";
 @source "../../../registry";
 @source "../../../templates";
@@ -862,5 +859,9 @@
   padding-top: 60px;
 }
 
-.demo-root > div > :first-child { margin-inline: auto; }
-.demo-root[data-slug="mega-navigation"] { min-height: 400px; }
+.demo-root > div > :first-child {
+  margin-inline: auto;
+}
+.demo-root[data-slug="mega-navigation"] {
+  min-height: 400px;
+}

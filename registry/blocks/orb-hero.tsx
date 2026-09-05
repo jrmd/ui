@@ -3,7 +3,15 @@ import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
 import { HeroArt } from "./hero-art";
+export const OrbHeroCopy = {
+  playLabel: "Play artwork",
+  pauseLabel: "Pause artwork",
+  artworkLabel: "Interactive orb artwork",
+  brand: "SOMA / OBJECTS OF POSSIBILITY",
+  meta: "01—03",
+};
 export function OrbHero({
+  copy = {},
   title,
   actionLabel,
   artwork,
@@ -18,12 +26,19 @@ export function OrbHero({
       )}
     >
       <div className="flex items-center justify-between p-7 text-xs">
-        <span className="tracking-widest">SOMA / OBJECTS OF POSSIBILITY</span>
-        <span>01—03</span>
+        <span className="tracking-widest">
+          {copy.brand ?? "SOMA / OBJECTS OF POSSIBILITY"}
+        </span>
+        <span>{copy.meta ?? "01—03"}</span>
       </div>
       <div className="relative">
         <HeroArt
-          options={artwork}
+          options={{
+            ...artwork,
+            label: copy.artworkLabel ?? artwork?.label,
+            playLabel: copy.playLabel ?? artwork?.playLabel,
+            pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+          }}
           kind="orb"
           color="#dfaa84"
           className="h-[400px] md:ml-[25%] md:h-[510px]"

@@ -13,7 +13,14 @@ export function Combobox({
   onValueChange,
   label = "Choose item",
   className,
-}: {
+  id: inputId,
+  name,
+  disabled,
+  ...triggerProps
+}: Omit<
+  React.ComponentProps<typeof Button>,
+  "value" | "defaultValue" | "onChange" | "children"
+> & {
   options: { label: string; value: string; description?: string }[];
   value?: string;
   defaultValue?: string;
@@ -55,8 +62,14 @@ export function Combobox({
         }
       }}
     >
+      {name && (
+        <input type="hidden" name={name} value={selected} disabled={disabled} />
+      )}
       <P.Trigger asChild>
         <Button
+          {...triggerProps}
+          id={inputId}
+          disabled={disabled}
           variant="outline"
           className={cn("min-w-48 justify-between", className)}
           aria-label={label}

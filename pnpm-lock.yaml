@@ -8,12 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@react-three/fiber':
         specifier: 9.7.0
         version: 9.7.0(@types/react@19.2.14)(immer@11.1.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(three@0.183.2)
@@ -242,12 +239,9 @@ importers:
 
   templates/agency:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -291,12 +285,9 @@ importers:
 
   templates/ai-chat:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -340,12 +331,9 @@ importers:
 
   templates/analytics:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -395,12 +383,9 @@ importers:
 
   templates/editorial:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -447,12 +432,9 @@ importers:
 
   templates/portfolio:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -496,12 +478,9 @@ importers:
 
   templates/projects:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -545,12 +524,9 @@ importers:
 
   templates/saas:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -597,12 +573,9 @@ importers:
 
   templates/storefront:
     dependencies:
-      '@fontsource/geist':
-        specifier: 5.2.8
-        version: 5.2.8
-      '@fontsource/space-grotesk':
-        specifier: 5.2.10
-        version: 5.2.10
+      '@fontsource-variable/instrument-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -1022,11 +995,8 @@ packages:
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
 
-  '@fontsource/geist@5.2.8':
-    resolution: {integrity: sha512-pI54klK6vz8fVpAVyV+iODGLEzw73cs1XJqV9PIXgW8MYMmBcwK6lKKaWqJrNHwEx8ppz9cuhussb6arXQ/PVQ==}
-
-  '@fontsource/space-grotesk@5.2.10':
-    resolution: {integrity: sha512-XNXEbT74OIITPqw2H6HXwPDp85fy43uxfBwFR5PU+9sLnjuLj12KlhVM9nZVN6q6dlKjkuN8JisW/OBxwxgUew==}
+  '@fontsource-variable/instrument-sans@5.3.0':
+    resolution: {integrity: sha512-u4gKbDBTNFGkg997tfQn3eHOhHuquWUFTRT/rwzuKtrxX5P2ekfs2x+LgBPP4P32+cC+vUwF1Cr+IdRoPQbrGw==}
 
   '@hono/node-server@2.1.1':
     resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
@@ -4841,9 +4811,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
-  '@fontsource/geist@5.2.8': {}
-
-  '@fontsource/space-grotesk@5.2.10': {}
+  '@fontsource-variable/instrument-sans@5.3.0': {}
 
   '@hono/node-server@2.1.1(hono@4.13.5)':
     dependencies:

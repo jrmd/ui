@@ -3,12 +3,16 @@ import * as React from "react";
 import { cn } from "./utils";
 import { useControllable } from "./use-controllable";
 export function OtpInput({
+  label = "Verification code",
+  inputLabel,
   value,
   defaultValue = "",
   onValueChange,
   length = 6,
   className,
 }: {
+  label?: string;
+  inputLabel?: string;
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -18,9 +22,9 @@ export function OtpInput({
   const [code, setCode] = useControllable(value, defaultValue, onValueChange);
   return (
     <label className={cn("grid gap-2 text-sm", className)}>
-      Verification code
+      {label}
       <input
-        aria-label={`${length}-digit verification code`}
+        aria-label={inputLabel ?? `${length}-digit verification code`}
         inputMode="numeric"
         autoComplete="one-time-code"
         pattern={`[0-9]{${length}}`}

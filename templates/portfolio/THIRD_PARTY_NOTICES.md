@@ -2,8 +2,6 @@
 
 Original Jez UI source is all rights reserved. Dependencies retain their respective licences.
 
-- @fontsource/geist 5.2.8: OFL-1.1
-- @fontsource/space-grotesk 5.2.10: OFL-1.1
 - @react-three/fiber 9.7.0: MIT
 - @tailwindcss/postcss 4.3.3: MIT
 - @tanstack/react-table 8.21.3: MIT
@@ -18,7 +16,8 @@ Original Jez UI source is all rights reserved. Dependencies retain their respect
 - tailwind-merge 3.5.0: MIT
 - tailwindcss 4.3.3: MIT
 - three 0.183.2: MIT
+- @fontsource-variable/instrument-sans 5.3.0: OFL-1.1
 
 ## Assets
 
-Space Grotesk and Geist are bundled via Fontsource under the SIL Open Font License; full notices are in licenses/. Geometric SVG artwork was authored for Jez UI. studio-lamp.png and its Ink and Sand variants are original AI-generated fictional product still lifes, generated for this project on 2026-09-05; it is not a photograph of an actual product. Sample names, metrics, and quotes are fictional.
+Instrument Sans is bundled via Fontsource under the SIL Open Font License; full notices are in licenses/. Geometric SVG artwork was authored for Jez UI. studio-lamp.png and its Ink and Sand variants are original AI-generated fictional product still lifes, generated for this project on 2026-09-05; it is not a photograph of an actual product. Sample names, metrics, and quotes are fictional.

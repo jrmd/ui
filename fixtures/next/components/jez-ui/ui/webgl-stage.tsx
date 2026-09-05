@@ -10,6 +10,7 @@ export type WebGLProps = {
   speed?: number;
   paused?: boolean;
   label?: string;
+  text?: string;
   imageSrc?: string;
   composition?: "fold" | "orbit";
 };
@@ -31,6 +32,7 @@ export function WebGLStage({
   color: suppliedColor,
   speed = 1,
   paused = false,
+  text = "FORM",
   imageSrc,
   composition = "fold",
   label = "Interactive WebGL artwork",
@@ -153,10 +155,10 @@ export function WebGLStage({
                 fill="#28352d"
                 fontFamily="sans-serif"
                 fontWeight="700"
-                fontSize="150"
+                fontSize={Math.min(150, 480 / Math.max(text.length * 0.65, 1))}
                 letterSpacing="-9"
               >
-                FORM
+                {text}
               </text>
               <path d="M 80 275 H 520" stroke="#c36943" strokeWidth="8" />
             </>
@@ -253,6 +255,7 @@ export function WebGLStage({
               kind={kind}
               color={color}
               speed={speed}
+              text={text}
               imageSrc={imageSrc}
               composition={composition}
             />

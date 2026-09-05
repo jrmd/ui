@@ -1,38 +1,57 @@
 "use client";
 import * as React from "react";
+import { Avatar as P } from "radix-ui";
 import { cn } from "./utils";
 export function Avatar({
   src,
   alt,
   fallback = "JU",
+  children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLSpanElement> & {
+}: React.ComponentProps<typeof P.Root> & {
   src?: string;
-  alt: string;
-  fallback?: string;
+  alt?: string;
+  fallback?: React.ReactNode;
 }) {
-  const [failed, setFailed] = React.useState(false);
   return (
-    <span
-      role={src && !failed ? undefined : "img"}
-      aria-label={src && !failed ? undefined : alt}
+    <P.Root
       className={cn(
-        "inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-accent text-[#171817] text-sm font-medium",
+        "relative inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-accent text-sm font-medium text-[#171817]",
         className,
       )}
       {...props}
     >
-      {src && !failed ? (
-        <img
-          src={src}
-          alt={alt}
-          onError={() => setFailed(true)}
-          className="size-full object-cover"
-        />
-      ) : (
-        fallback
+      {children ?? (
+        <>
+          <AvatarImage src={src} alt={alt} />
+          <AvatarFallback role={alt ? "img" : undefined} aria-label={alt}>
+            {fallback}
+          </AvatarFallback>
+        </>
       )}
-    </span>
+    </P.Root>
+  );
+}
+export function AvatarImage({
+  className,
+  ...props
+}: React.ComponentProps<typeof P.Image>) {
+  return (
+    <P.Image className={cn("size-full object-cover", className)} {...props} />
+  );
+}
+export function AvatarFallback({
+  className,
+  ...props
+}: React.ComponentProps<typeof P.Fallback>) {
+  return (
+    <P.Fallback
+      className={cn(
+        "flex size-full items-center justify-center rounded-full bg-accent",
+        className,
+      )}
+      {...props}
+    />
   );
 }

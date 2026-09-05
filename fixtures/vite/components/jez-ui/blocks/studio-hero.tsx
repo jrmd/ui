@@ -2,7 +2,13 @@
 import * as React from "react";
 import { cn } from "../ui/utils";
 import { HeroLink, type HeroProps } from "./hero-parts";
+export const StudioHeroCopy = {
+  brand: "FIELDWORK / BRAND & DIGITAL",
+  meta: "INDEPENDENT BY DESIGN",
+  caption: "Featured project — Fieldwork",
+};
 export function StudioHero({
+  copy = {},
   title,
   actionLabel,
   description,
@@ -19,8 +25,8 @@ export function StudioHero({
       )}
     >
       <div className="flex justify-between p-7 text-xs tracking-widest">
-        <span>FIELDWORK / BRAND &amp; DIGITAL</span>
-        <span>INDEPENDENT BY DESIGN</span>
+        <span>{copy.brand ?? "FIELDWORK / BRAND & DIGITAL"}</span>
+        <span>{copy.meta ?? "INDEPENDENT BY DESIGN"}</span>
       </div>
       <h1 className="px-7 pt-9 font-display text-5xl leading-none tracking-tight md:px-12 md:text-7xl">
         {title ?? (
@@ -52,7 +58,7 @@ export function StudioHero({
             {actionLabel ?? <>Explore our practice</>}
           </HeroLink>
           <span className="text-xs text-white/40">
-            Featured project — Fieldwork
+            {copy.caption ?? "Featured project — Fieldwork"}
           </span>
         </div>
       </div>

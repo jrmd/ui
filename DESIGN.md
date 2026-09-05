@@ -23,23 +23,23 @@ colors:
   dark-danger-foreground: "#3a101b"
 typography:
   display:
-    fontFamily: "Space Grotesk, sans-serif"
+    fontFamily: "Instrument Sans, sans-serif"
     fontSize: "clamp(56px, 5.6vw, 80px)"
     fontWeight: 500
     lineHeight: 1.01
     letterSpacing: "-0.035em"
   heading:
-    fontFamily: "Space Grotesk, sans-serif"
+    fontFamily: "Instrument Sans, sans-serif"
     fontSize: "36px"
     fontWeight: 500
     lineHeight: 1.1
     letterSpacing: "-0.035em"
   body:
-    fontFamily: "Geist, sans-serif"
+    fontFamily: "Instrument Sans, sans-serif"
     fontSize: "15px"
     lineHeight: 1.75
   label:
-    fontFamily: "Geist, sans-serif"
+    fontFamily: "Instrument Sans, sans-serif"
     fontSize: "12px"
 rounded:
   base: "12px"
@@ -109,7 +109,7 @@ Expression is deliberate rather than ambient. The home exhibit is the place for 
 
 **Key Characteristics:**
 - Warm white paper and near-black ink establish the default reading environment.
-- Space Grotesk gives headings a large, close-set editorial voice; Geist keeps controls and supporting copy direct.
+- Instrument Sans carries both confident headings and clear interface text; size, weight, and spacing establish the hierarchy.
 - Soft sage and olive charcoal identify interaction, selection, and the live exhibit rather than filling whole screens.
 - Borders and tonal surface changes organize information; shadows appear only on contained previews and elevated overlays.
 
@@ -136,10 +136,11 @@ The light palette is paper, ink, and soft mineral neutrals, with olive charcoal 
 
 ## Typography
 
-**Display Font:** Space Grotesk, sans-serif  
-**Body Font:** Geist, sans-serif
+**Display Font:** Instrument Sans, sans-serif
 
-**Character:** Space Grotesk carries the confident, close-set statement type. Geist is the quieter interface voice for navigation, labels, descriptions, and utility controls.
+**Body Font:** Instrument Sans, sans-serif
+
+**Character:** Instrument Sans unifies statement type, navigation, labels, descriptions, and utility controls. Use scale and weight to distinguish expressive headings from compact interface text.
 
 ### Hierarchy
 
@@ -148,7 +149,7 @@ The light palette is paper, ink, and soft mineral neutrals, with olive charcoal 
 - **Body:** Catalogue introductions and descriptions use the body token, with muted foreground for supporting copy.
 - **Label:** Navigation, filters, preview toolbars, and metadata use the label token or smaller compact interface sizes.
 
-**The Two-Voice Rule.** Use Space Grotesk for headings only. Keep UI controls, navigation, code, and supporting text in Geist unless a component explicitly needs a different functional face.
+**The Shared-Family Rule.** Use Instrument Sans for headings, controls, navigation, and supporting text. Use monospace for code; preserve deliberate template-specific serif overrides.
 
 ## Layout
 
@@ -183,7 +184,7 @@ The button family is compact, medium-weight, and clearly functional.
 
 ### Inputs / Fields
 
-- **Style:** Warm-white fill, stone one-pixel border, 12px corners, 44px height, and compact Geist text.
+- **Style:** Warm-white fill, stone one-pixel border, 12px corners, 44px height, and compact Instrument Sans text.
 - **Focus:** The shared olive charcoal focus outline carries interaction; the caret is olive charcoal and placeholder text uses muted foreground.
 - **Disabled:** Fields reduce to 50% opacity.
 
@@ -203,7 +204,7 @@ The button family is compact, medium-weight, and clearly functional.
 
 ### Navigation
 
-The shared top navigation is an 88px, border-separated line inside the page shell. It uses compact Geist text and plain links; hover changes link colour to olive charcoal. On narrow screens it shortens the link set and hides the end action before content becomes crowded.
+The shared top navigation is an 88px, border-separated line inside the page shell. It uses compact Instrument Sans text and plain links; hover changes link colour to olive charcoal. On narrow screens it shortens the link set and hides the end action before content becomes crowded.
 
 ## Do's and Don'ts
 
@@ -211,7 +212,7 @@ The shared top navigation is an 88px, border-separated line inside the page shel
 
 - **Do** use the warm-white, ink, and hairline-stone foundation for catalogue, documentation, and component previews.
 - **Do** reserve soft sage for highlights, selection, or a deliberate exhibit panel, and olive charcoal for active controls and direct action.
-- **Do** keep display type in Space Grotesk with close tracking and use Geist for interface work.
+- **Do** keep display type in Instrument Sans with close tracking and use Instrument Sans for interface work.
 - **Do** retain the shared focus treatment on every interactive primitive.
 - **Do** collapse exhibit and catalogue grids at the established breakpoints rather than squeezing desktop arrangements on mobile.
 
