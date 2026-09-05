@@ -1,0 +1,134 @@
+# Jez UI
+
+90 source-owned React components, 40 blocks, eight templates.
+
+- [Button](/components/button): foundations
+- [Icon Button](/components/icon-button): foundations
+- [Badge](/components/badge): foundations
+- [Avatar](/components/avatar): foundations
+- [Card](/components/card): foundations
+- [Separator](/components/separator): foundations
+- [Skeleton](/components/skeleton): foundations
+- [Spinner](/components/spinner): foundations
+- [Input](/components/input): foundations
+- [Textarea](/components/textarea): foundations
+- [Label](/components/label): foundations
+- [Checkbox](/components/checkbox): foundations
+- [Radio Group](/components/radio-group): foundations
+- [Switch](/components/switch): foundations
+- [Select](/components/select): foundations
+- [Slider](/components/slider): foundations
+- [Toggle Group](/components/toggle-group): foundations
+- [Tabs](/components/tabs): foundations
+- [Accordion](/components/accordion): foundations
+- [Collapsible](/components/collapsible): foundations
+- [Dialog](/components/dialog): foundations
+- [Alert Dialog](/components/alert-dialog): foundations
+- [Sheet](/components/sheet): foundations
+- [Popover](/components/popover): foundations
+- [Tooltip](/components/tooltip): foundations
+- [Dropdown Menu](/components/dropdown-menu): foundations
+- [Context Menu](/components/context-menu): foundations
+- [Navigation Menu](/components/navigation-menu): foundations
+- [Breadcrumb](/components/breadcrumb): foundations
+- [Toast](/components/toast): foundations
+- [Combobox](/components/combobox): product
+- [Command Palette](/components/command-palette): product
+- [Calendar](/components/calendar): product
+- [Date Picker](/components/date-picker): product
+- [Date Range Picker](/components/date-range-picker): product
+- [Time Picker](/components/time-picker): product
+- [File Upload](/components/file-upload): product
+- [OTP Input](/components/otp-input): product
+- [Password Input](/components/password-input): product
+- [Search Input](/components/search-input): product
+- [Tag Input](/components/tag-input): product
+- [Form Field](/components/form-field): product
+- [Pagination](/components/pagination): product
+- [Data Table](/components/data-table): product
+- [Tree View](/components/tree-view): product
+- [Resizable Panels](/components/resizable-panels): product
+- [Stepper](/components/stepper): product
+- [Empty State](/components/empty-state): product
+- [Alert](/components/alert): product
+- [Progress](/components/progress): product
+- [Text Reveal](/components/text-reveal): motion
+- [Split Text](/components/split-text): motion
+- [Rotating Text](/components/rotating-text): motion
+- [Scramble Text](/components/scramble-text): motion
+- [Number Ticker](/components/number-ticker): motion
+- [Animated Counter](/components/animated-counter): motion
+- [Marquee](/components/marquee): motion
+- [Scroll Reveal](/components/scroll-reveal): motion
+- [Stagger Group](/components/stagger-group): motion
+- [Magnetic Button](/components/magnetic-button): motion
+- [Tilt Card](/components/tilt-card): motion
+- [Spotlight Card](/components/spotlight-card): motion
+- [Animated Tabs Indicator](/components/animated-tabs-indicator): motion
+- [Shared Layout Transition](/components/shared-layout-transition): motion
+- [Scroll Progress](/components/scroll-progress): motion
+- [Grain Overlay](/components/grain-overlay): effects
+- [Dot Grid](/components/dot-grid): effects
+- [Animated Grid](/components/animated-grid): effects
+- [Gradient Mesh](/components/gradient-mesh): effects
+- [Aurora Background](/components/aurora-background): effects
+- [Spotlight Background](/components/spotlight-background): effects
+- [Border Beam](/components/border-beam): effects
+- [Ripple Field](/components/ripple-field): effects
+- [Cursor Trail](/components/cursor-trail): effects
+- [WebGL Particle Field](/components/webgl-particle-field): effects
+- [WebGL Ribbon Field](/components/webgl-ribbon-field): effects
+- [WebGL Liquid Surface](/components/webgl-liquid-surface): effects
+- [WebGL Orb](/components/webgl-orb): effects
+- [WebGL Terrain](/components/webgl-terrain): effects
+- [WebGL Image Distortion](/components/webgl-image-distortion): effects
+- [Area Chart](/components/area-chart): charts
+- [Line Chart](/components/line-chart): charts
+- [Bar Chart](/components/bar-chart): charts
+- [Stacked Bar Chart](/components/stacked-bar-chart): charts
+- [Donut Chart](/components/donut-chart): charts
+- [Radial Gauge](/components/radial-gauge): charts
+- [Heatmap](/components/heatmap): charts
+- [Sparkline](/components/sparkline): charts
+- [Live Line Chart](/components/live-line-chart): charts
+- [Scatter Chart](/components/scatter-chart): charts
+- [Editorial Hero](/blocks/editorial-hero): marketing
+- [Product Demo Hero](/blocks/product-demo-hero): marketing
+- [WebGL Hero](/blocks/webgl-hero): marketing
+- [Logo Wall](/blocks/logo-wall): marketing
+- [Feature Grid](/blocks/feature-grid): marketing
+- [Alternating Feature Story](/blocks/alternating-feature-story): marketing
+- [Product Comparison](/blocks/product-comparison): marketing
+- [Metrics Strip](/blocks/metrics-strip): marketing
+- [Testimonial Grid](/blocks/testimonial-grid): marketing
+- [Testimonial Carousel](/blocks/testimonial-carousel): marketing
+- [Pricing Table](/blocks/pricing-table): marketing
+- [Pricing Comparison](/blocks/pricing-comparison): marketing
+- [FAQ](/blocks/faq): marketing
+- [Newsletter Signup](/blocks/newsletter-signup): marketing
+- [Contact Form](/blocks/contact-form): marketing
+- [CTA Section](/blocks/cta-section): marketing
+- [Marketing Navigation](/blocks/marketing-navigation): marketing
+- [Mega Navigation](/blocks/mega-navigation): marketing
+- [Floating Navigation](/blocks/floating-navigation): marketing
+- [Terrain Hero](/blocks/terrain-hero): marketing
+- [Marketing Footer](/blocks/marketing-footer): marketing
+- [Application Shell](/blocks/application-shell): workspace
+- [Workspace Navigation](/blocks/workspace-navigation): workspace
+- [Analytics Overview](/blocks/analytics-overview): workspace
+- [Activity Feed](/blocks/activity-feed): workspace
+- [Searchable Records Screen](/blocks/searchable-records-screen): workspace
+- [Record Detail Panel](/blocks/record-detail-panel): workspace
+- [Kanban Board](/blocks/kanban-board): workspace
+- [Task List](/blocks/task-list): workspace
+- [Calendar Schedule](/blocks/calendar-schedule): workspace
+- [Onboarding Wizard](/blocks/onboarding-wizard): workspace
+- [Sign In Form](/blocks/sign-in-form): workspace
+- [Sign Up Form](/blocks/sign-up-form): workspace
+- [Password Reset Form](/blocks/password-reset-form): workspace
+- [Profile Settings](/blocks/profile-settings): workspace
+- [Team Management](/blocks/team-management): workspace
+- [Billing Settings](/blocks/billing-settings): workspace
+- [Notification Centre](/blocks/notification-centre): workspace
+- [Command Search](/blocks/command-search): workspace
+- [Chat Workspace](/blocks/chat-workspace): workspace

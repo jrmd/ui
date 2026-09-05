@@ -1,0 +1,1 @@
+import './globals.css';import type {Metadata} from 'next';export const metadata:Metadata={title:"Objects — Ecommerce storefront",description:"Considered objects. A considered shopping experience."};export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}

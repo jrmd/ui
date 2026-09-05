@@ -1,0 +1,425 @@
+{
+  "findings": 52,
+  "fixed": 0,
+  "suppressed": 52,
+  "leftStanding": 0,
+  "exceptions": 35,
+  "review": [
+    {
+      "file": "registry/ui/webgl-stage.tsx",
+      "line": 129,
+      "rule": "design-system-color",
+      "value": "#e6edcc",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional contrasting ribbon material within the configurable WebGL art demo; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 39,
+      "rule": "design-system-radius",
+      "value": "7px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional rotated brand mark, miniature template frame, isolated preview frame; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 303,
+      "rule": "design-system-radius",
+      "value": "7px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional rotated brand mark, miniature template frame, isolated preview frame; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 486,
+      "rule": "design-system-radius",
+      "value": "7px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional rotated brand mark, miniature template frame, isolated preview frame; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 45,
+      "rule": "design-system-font-size",
+      "value": "13px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional catalogue navigation, section navigation, catalogue search input, template route list, template route links; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 205,
+      "rule": "design-system-font-size",
+      "value": "13px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional catalogue navigation, section navigation, catalogue search input, template route list, template route links; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 397,
+      "rule": "design-system-font-size",
+      "value": "13px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional catalogue navigation, section navigation, catalogue search input, template route list, template route links; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 572,
+      "rule": "design-system-font-size",
+      "value": "13px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional catalogue navigation, section navigation, catalogue search input, template route list, template route links; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 586,
+      "rule": "design-system-font-size",
+      "value": "13px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional catalogue navigation, section navigation, catalogue search input, template route list, template route links; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 102,
+      "rule": "design-system-color",
+      "value": "#182022",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional dark WebGL exhibit stage; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 118,
+      "rule": "design-system-font-size",
+      "value": "25px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional exhibit heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 124,
+      "rule": "design-system-color",
+      "value": "#bdc9b5",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional secondary exhibit caption; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 146,
+      "rule": "design-system-font-size",
+      "value": "28px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional fluid animated type exhibit, mobile section heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 699,
+      "rule": "design-system-font-size",
+      "value": "28px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional fluid animated type exhibit, mobile section heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 158,
+      "rule": "design-system-color",
+      "value": "#e9e7f0",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional lavender control exhibit surface; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 163,
+      "rule": "design-system-color",
+      "value": "#2c2a39",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional control exhibit ink; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 201,
+      "rule": "design-system-font-size",
+      "value": "14px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional section supporting text, thumbnail caption, button specimen type, template supporting copy, mobile introduction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 232,
+      "rule": "design-system-font-size",
+      "value": "14px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional section supporting text, thumbnail caption, button specimen type, template supporting copy, mobile introduction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 244,
+      "rule": "design-system-font-size",
+      "value": "14px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional section supporting text, thumbnail caption, button specimen type, template supporting copy, mobile introduction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 567,
+      "rule": "design-system-font-size",
+      "value": "14px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional section supporting text, thumbnail caption, button specimen type, template supporting copy, mobile introduction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 660,
+      "rule": "design-system-font-size",
+      "value": "14px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional section supporting text, thumbnail caption, button specimen type, template supporting copy, mobile introduction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 235,
+      "rule": "design-system-font-size",
+      "value": "11px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional thumbnail metadata, code copy control, mobile navigation, mobile section link; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 513,
+      "rule": "design-system-font-size",
+      "value": "11px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional thumbnail metadata, code copy control, mobile navigation, mobile section link; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 646,
+      "rule": "design-system-font-size",
+      "value": "11px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional thumbnail metadata, code copy control, mobile navigation, mobile section link; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 705,
+      "rule": "design-system-font-size",
+      "value": "11px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional thumbnail metadata, code copy control, mobile navigation, mobile section link; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 240,
+      "rule": "design-system-color",
+      "value": "#e1fa92",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional illustrative button specimen accent; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 248,
+      "rule": "design-system-color",
+      "value": "#cbcfc0",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional illustrative card specimen border; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 262,
+      "rule": "design-system-color",
+      "value": "#8d9f6c",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional illustrative chart specimen bars; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 263,
+      "rule": "design-system-radius",
+      "value": "5px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional chart specimen bar corners, miniature template art corners; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 334,
+      "rule": "design-system-radius",
+      "value": "5px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional chart specimen bar corners, miniature template art corners; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 272,
+      "rule": "design-system-color",
+      "value": "#9fa595",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional dot-pattern specimen; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 278,
+      "rule": "design-system-color",
+      "value": "#96b379",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional shape specimen outline; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 313,
+      "rule": "design-system-font-size",
+      "value": "9px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional miniature template header; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 314,
+      "rule": "design-system-color",
+      "value": "#deded4",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional miniature template separator; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 318,
+      "rule": "design-system-font-size",
+      "value": "30px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional miniature template heading, mobile type exhibit; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 679,
+      "rule": "design-system-font-size",
+      "value": "30px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional miniature template heading, mobile type exhibit; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 327,
+      "rule": "design-system-color",
+      "value": "#e7e9e0",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional miniature template text lines; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 333,
+      "rule": "design-system-color",
+      "value": "#d8e1b6",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional miniature template art surface; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 436,
+      "rule": "design-system-font-size",
+      "value": "46px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional component detail heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 493,
+      "rule": "design-system-radius",
+      "value": "10px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional code panel; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 521,
+      "rule": "design-system-font-size",
+      "value": "48px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional documentation heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 527,
+      "rule": "design-system-font-size",
+      "value": "26px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional documentation section heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 564,
+      "rule": "design-system-font-size",
+      "value": "44px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional template launch heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 638,
+      "rule": "design-system-font-size",
+      "value": "22px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile brand; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 656,
+      "rule": "design-system-font-size",
+      "value": "54px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile homepage display; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 682,
+      "rule": "design-system-font-size",
+      "value": "10px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile exhibit label, horizontal-scroll instruction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 787,
+      "rule": "design-system-font-size",
+      "value": "10px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile exhibit label, horizontal-scroll instruction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 725,
+      "rule": "design-system-font-size",
+      "value": "23px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile type specimen; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 740,
+      "rule": "design-system-font-size",
+      "value": "43px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile catalogue heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 758,
+      "rule": "design-system-font-size",
+      "value": "37px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile component heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/app/globals.css",
+      "line": 771,
+      "rule": "design-system-font-size",
+      "value": "39px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional mobile documentation heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    },
+    {
+      "file": "apps/catalogue/components/home-exhibit.tsx",
+      "line": 100,
+      "rule": "design-system-font-size",
+      "value": "11px",
+      "outcome": "suppressed exact value in this file",
+      "reason": "Agent review: intentional compact scene-speed label in the interactive homepage exhibit; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+    }
+  ]
+}

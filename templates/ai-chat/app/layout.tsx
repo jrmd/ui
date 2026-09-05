@@ -1,0 +1,1 @@
+import './globals.css';import type {Metadata} from 'next';export const metadata:Metadata={title:"Margin — AI chat workspace",description:"A quiet space for questions, drafts, and new directions."};export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}

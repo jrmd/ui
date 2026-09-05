@@ -1,0 +1,12 @@
+node_modules/
+.next/
+dist/
+.turbo/
+*.tsbuildinfo
+playwright-report/
+test-results/
+apps/catalogue/public/r/
+apps/catalogue/public/downloads/
+apps/catalogue/generated/
+fixtures/*/src/registry/
+fixtures/*/app/registry/

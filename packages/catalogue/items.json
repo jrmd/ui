@@ -1,0 +1,1172 @@
+[
+  {
+    "slug": "button",
+    "title": "Button",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/button.tsx",
+    "symbol": "Button",
+    "example": "<div className=\"grid w-full max-w-lg gap-6\"><div className=\"flex items-center justify-between border-b border-border pb-5\"><div><h3 className=\"text-lg font-semibold\">Project actions</h3><p className=\"mt-1 text-sm text-muted-foreground\">Website refresh · Draft</p></div><Badge>Draft</Badge></div><div className=\"flex flex-wrap items-center gap-3\"><Button loading={buttonBusy} onClick={()=>setButtonBusy(true)}><Plus size={16}/>Publish project</Button><Button variant=\"outline\" onClick={()=>setNotice('Draft saved.')}>Save draft</Button><Button variant=\"ghost\" onClick={()=>setNotice('Preview selected.')}>Preview <ArrowUpRight size={15}/></Button></div><div className=\"flex flex-wrap items-center gap-3\"><Button size=\"sm\" variant=\"secondary\" onClick={()=>setNotice('Invitation link copied in this example.')}>Invite member</Button><Button size=\"sm\" variant=\"danger\" onClick={()=>setNotice('Archive action selected.')}>Archive</Button><Button size=\"sm\" disabled>Up to date <Check size={14}/></Button></div></div>"
+  },
+  {
+    "slug": "icon-button",
+    "title": "Icon Button",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/icon-button.tsx",
+    "symbol": "IconButton",
+    "example": "<div className=\"flex items-center gap-5\"><IconButton label=\"Add item\" onClick={()=>setNotice('Item added')}><Plus size={18}/></IconButton><div><p className=\"font-medium\">One small action.</p><p className=\"mt-1 text-sm text-muted-foreground\">A new idea starts here.</p></div></div>"
+  },
+  {
+    "slug": "badge",
+    "title": "Badge",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/badge.tsx",
+    "symbol": "Badge",
+    "example": "<div className=\"grid max-w-md gap-7\"><h3 className=\"text-2xl\">A status worth noticing.</h3><div className=\"flex flex-wrap gap-3\"><Badge tone=\"positive\">● Live</Badge><Badge tone=\"accent\">In review</Badge><Badge tone=\"warning\">Needs attention</Badge><Badge>Draft</Badge></div><p className=\"text-sm text-muted-foreground\">Small signals. Clear next steps.</p></div>"
+  },
+  {
+    "slug": "avatar",
+    "title": "Avatar",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/avatar.tsx",
+    "symbol": "Avatar",
+    "example": "<div className=\"grid justify-items-center gap-6\"><div className=\"flex -space-x-3\">{['AM','JL','SK','RT'].map((person,i)=><Avatar key={person} alt={['Alex Morgan','Jamie Lee','Sam Kim','Rory Tate'][i]} fallback={person} className=\"size-14 border-4 border-background bg-muted text-base\"/>)}</div><div className=\"text-center\"><h3 className=\"text-2xl\">Better, together.</h3><p className=\"mt-2 text-sm text-muted-foreground\">Four people. One shared idea.</p></div></div>"
+  },
+  {
+    "slug": "card",
+    "title": "Card",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/card.tsx",
+    "symbol": "Card",
+    "example": "<Card className=\"w-full max-w-sm overflow-hidden p-0\"><div className=\"flex h-40 items-end justify-between bg-accent p-6 text-foreground\"><span className=\"text-5xl font-medium tracking-tight\">Field<br/>notes.</span><span className=\"text-3xl\">↗</span></div><div className=\"p-6\"><div className=\"flex items-center justify-between\"><h3 className=\"text-xl\">An idea taking shape</h3><Badge tone=\"positive\">Active</Badge></div><p className=\"mt-3 text-sm leading-relaxed text-muted-foreground\">A shared space for the discoveries, sketches, and small details that make the work better.</p><div className=\"mt-6 flex items-center justify-between border-t border-border pt-4\"><span className=\"text-xs text-muted-foreground\">Updated a moment ago</span><Button size=\"sm\" variant=\"ghost\" onClick={()=>setNotice('Project opened.')}>Open project ↗</Button></div></div></Card>"
+  },
+  {
+    "slug": "separator",
+    "title": "Separator",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/separator.tsx",
+    "symbol": "Separator",
+    "example": "<div className=\"grid w-full max-w-sm gap-5\"><div className=\"flex justify-between\"><h3 className=\"text-xl\">Your workspace</h3><Badge>Personal</Badge></div><Separator/><div className=\"flex justify-between text-sm\"><span>Projects</span><span className=\"text-muted-foreground\">12</span></div><div className=\"flex justify-between text-sm\"><span>Collaborators</span><span className=\"text-muted-foreground\">4</span></div></div>"
+  },
+  {
+    "slug": "skeleton",
+    "title": "Skeleton",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/skeleton.tsx",
+    "symbol": "Skeleton",
+    "example": "<div className=\"grid w-full max-w-sm gap-5\"><Skeleton className=\"h-40 rounded-xl\"/><div className=\"flex items-center gap-4\"><Skeleton className=\"size-11 rounded-full\"/><div className=\"grid flex-1 gap-3\"><Skeleton className=\"w-3/4\"/><Skeleton className=\"w-1/2\"/></div></div><p className=\"text-xs text-muted-foreground\">Making room for the next good thing.</p></div>"
+  },
+  {
+    "slug": "spinner",
+    "title": "Spinner",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/spinner.tsx",
+    "symbol": "Spinner",
+    "example": "<div className=\"flex items-center gap-5\"><Spinner className=\"size-8\"/><div><h3 className=\"text-xl\">Bringing it together.</h3><p className=\"mt-1 text-sm text-muted-foreground\">Your workspace is getting ready.</p></div></div>"
+  },
+  {
+    "slug": "input",
+    "title": "Input",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/input.tsx",
+    "symbol": "Input",
+    "example": "<div className=\"grid w-full max-w-sm gap-6\"><h3 className=\"text-2xl\">Give it a name.</h3><FormField label=\"Project name\" hint=\"You can change this whenever you like.\"><Input placeholder=\"e.g. The next chapter\"/></FormField><FormField label=\"Workspace URL\"><div className=\"flex items-center rounded-lg border border-border px-3\"><span className=\"shrink-0 whitespace-nowrap text-sm text-muted-foreground\">studio.app /</span><Input className=\"border-0 bg-transparent shadow-none focus-visible:ring-0\" aria-label=\"Workspace slug\" defaultValue=\"field-notes\"/></div></FormField></div>"
+  },
+  {
+    "slug": "textarea",
+    "title": "Textarea",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/textarea.tsx",
+    "symbol": "Textarea",
+    "example": "<div className=\"w-full max-w-lg\"><div className=\"mb-4 flex items-center gap-3\"><Avatar alt=\"Alex Morgan\" fallback=\"AM\" className=\"size-8\"/><div><h3 className=\"text-sm font-semibold\">Add a project update</h3><p className=\"text-xs text-muted-foreground\">Shared with your team</p></div></div><div className=\"overflow-hidden rounded-xl border border-border focus-within:border-primary/50 focus-within:ring-3 focus-within:ring-primary/8\"><Textarea aria-label=\"Project description\" placeholder=\"What changed? What’s next?\" maxLength={500} value={draft} onChange={e=>setDraft(e.target.value)} className=\"min-h-36 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0\"/><div className=\"flex items-center justify-between border-t border-border/50 bg-muted/20 px-3 py-2\"><span className=\"text-xs text-muted-foreground tabular-nums\">{draft.length} / 500</span><Button size=\"sm\" disabled={!draft.trim()} onClick={()=>{setNotice('Update posted: '+draft);setDraft('');}}>Post update <ArrowUpRight size={14}/></Button></div></div></div>"
+  },
+  {
+    "slug": "label",
+    "title": "Label",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/label.tsx",
+    "symbol": "Label",
+    "example": "<div className=\"grid gap-2\"><Label htmlFor=\"example-label\">Project name</Label><input id=\"example-label\" className=\"rounded border border-border p-2\" placeholder=\"Field notes\"/></div>"
+  },
+  {
+    "slug": "checkbox",
+    "title": "Checkbox",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/checkbox.tsx",
+    "symbol": "Checkbox",
+    "example": "<div className=\"grid w-full max-w-sm gap-5\"><h3 className=\"text-2xl\">Before we go live.</h3>{['Add the finishing touches','Check the small screen','Share it with the team'].map((text,i)=><label key={text} className=\"flex items-center gap-3 border-b border-border pb-4 text-sm\"><Checkbox defaultChecked={i===0}/>{text}</label>)}</div>"
+  },
+  {
+    "slug": "radio-group",
+    "title": "Radio Group",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/radio-group.tsx",
+    "symbol": "RadioGroup",
+    "example": "<RadioGroup defaultValue=\"balanced\" aria-label=\"Density\" options={[{label:'Comfortable',value:'comfortable'},{label:'Balanced',value:'balanced'},{label:'Compact',value:'compact'}]}/>"
+  },
+  {
+    "slug": "switch",
+    "title": "Switch",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/switch.tsx",
+    "symbol": "Switch",
+    "example": "<div className=\"grid w-full max-w-sm gap-6\"><div><h3 className=\"text-2xl\">Keep your focus.</h3><p className=\"mt-2 text-sm text-muted-foreground\">A quieter workspace, on your terms.</p></div>{[{name:'Focus mode',hint:'Make a little room to think.',on:true},{name:'Project updates',hint:'Only the changes that matter.',on:true},{name:'Weekly roundup',hint:'The whole picture, once a week.',on:false}].map(o=><label key={o.name} className=\"flex items-center justify-between gap-6 border-b border-border pb-5\"><div><span className=\"text-sm font-medium\">{o.name}</span><p className=\"mt-1 text-xs text-muted-foreground\">{o.hint}</p></div><Switch defaultChecked={o.on}/></label>)}</div>"
+  },
+  {
+    "slug": "select",
+    "title": "Select",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/select.tsx",
+    "symbol": "Select",
+    "example": "<div className=\"grid w-full max-w-sm gap-6\"><h3 className=\"text-2xl\">Find your people.</h3><FormField label=\"Your discipline\"><Select label=\"Choose a discipline\" options={[{label:'Design',value:'design'},{label:'Engineering',value:'engineering'},{label:'Everything in between',value:'both'}]}/></FormField><p className=\"text-sm text-muted-foreground\">Different perspectives make better work.</p></div>"
+  },
+  {
+    "slug": "slider",
+    "title": "Slider",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/slider.tsx",
+    "symbol": "Slider",
+    "example": "<div className=\"grid min-w-0 w-full max-w-sm gap-8\"><div className=\"flex items-end justify-between\"><h3 className=\"text-3xl\">Set the tone.</h3><span className=\"text-xs text-muted-foreground\">Ambient radio</span></div><div className=\"flex h-20 min-w-0 items-center justify-center gap-1 sm:gap-1.5\" aria-hidden=\"true\">{Array.from({length:32},(_,i)=><span key={i} className=\"w-1.5 rounded-full bg-primary\" style={{height:12+Math.abs(Math.sin(i*.8))*55}}/>)}</div><Slider label=\"Volume\" defaultValue={[65]}/><div className=\"flex justify-between text-xs text-muted-foreground\"><span>A little quieter</span><span>Turn it up</span></div></div>"
+  },
+  {
+    "slug": "toggle-group",
+    "title": "Toggle Group",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/toggle-group.tsx",
+    "symbol": "ToggleGroup",
+    "example": "<ToggleGroup type=\"single\" defaultValue=\"week\" aria-label=\"Period\" options={[{label:'Day',value:'day'},{label:'Week',value:'week'},{label:'Month',value:'month'}]}/>"
+  },
+  {
+    "slug": "tabs",
+    "title": "Tabs",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/tabs.tsx",
+    "symbol": "Tabs",
+    "example": "<div className=\"w-full max-w-md\"><h3 className=\"mb-5 text-2xl\">Room for the whole process.</h3><Tabs items={[{value:'design',label:'Design',content:<div className=\"py-5\"><p className=\"text-3xl\">Start with a question.</p><p className=\"mt-3 text-sm text-muted-foreground\">Sketch the possibilities before you choose a direction.</p></div>},{value:'build',label:'Build',content:<div className=\"py-5\"><p className=\"text-3xl\">Give it a useful shape.</p><p className=\"mt-3 text-sm text-muted-foreground\">Make the smallest version that tells you something.</p></div>},{value:'share',label:'Share',content:<div className=\"py-5\"><p className=\"text-3xl\">Let someone try it.</p><p className=\"mt-3 text-sm text-muted-foreground\">The next good idea might come from them.</p></div>}]}/></div>"
+  },
+  {
+    "slug": "accordion",
+    "title": "Accordion",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/accordion.tsx",
+    "symbol": "Accordion",
+    "example": "<Accordion type=\"single\" collapsible items={[{value:'one',title:'What makes a good component?',content:'A clear purpose, thoughtful defaults, and room to make it yours.'},{value:'two',title:'Can I change it?',content:'The source is yours to adapt under your distribution licence.'}]}/>"
+  },
+  {
+    "slug": "collapsible",
+    "title": "Collapsible",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/collapsible.tsx",
+    "symbol": "Collapsible",
+    "example": "<div className=\"w-full max-w-md\"><Collapsible title=\"Changed files · 3\" defaultOpen>{[\"components/button.tsx\",\"styles/theme.css\",\"tests/controls.spec.ts\"].map((file,i)=><div key={file} className=\"flex items-center gap-2 py-2 text-sm\"><FileCode2 size={15} className=\"shrink-0 text-muted-foreground\"/><span className=\"min-w-0 flex-1 truncate font-mono text-xs\">{file}</span><span className=\"text-xs text-primary\">+{[24,8,16][i]}</span></div>)}</Collapsible></div>"
+  },
+  {
+    "slug": "dialog",
+    "title": "Dialog",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/dialog.tsx",
+    "symbol": "Dialog",
+    "example": "<Dialog trigger={<Button>Open dialog</Button>} title=\"Make it yours.\" description=\"Give your project a name before you begin.\"><Input aria-label=\"Project name\" placeholder=\"Field notes\"/></Dialog>"
+  },
+  {
+    "slug": "alert-dialog",
+    "title": "Alert Dialog",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/alert-dialog.tsx",
+    "symbol": "AlertDialog",
+    "example": "<AlertDialog trigger={<Button variant=\"danger\">Delete draft</Button>} title=\"Delete this draft?\" description=\"This example asks for confirmation. No real data is deleted.\"/>"
+  },
+  {
+    "slug": "sheet",
+    "title": "Sheet",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/sheet.tsx",
+    "symbol": "Sheet",
+    "example": "<Sheet trigger={<Button variant=\"outline\">Open details</Button>} title=\"Project details\" description=\"Website refresh · PRJ-102\"><div className=\"grid gap-6\"><FormField label=\"Project name\"><Input defaultValue=\"Website refresh\"/></FormField><FormField label=\"Status\"><Select label=\"Status\" defaultValue=\"progress\" options={[{label:\"In progress\",value:\"progress\"},{label:\"In review\",value:\"review\"},{label:\"Complete\",value:\"complete\"}]}/></FormField><FormField label=\"Notes\"><Textarea defaultValue=\"Explore a clearer homepage direction and bring the component previews up to date.\"/></FormField><Button onClick={()=>setNotice(\"Project details saved.\")}>Save changes</Button></div></Sheet>"
+  },
+  {
+    "slug": "popover",
+    "title": "Popover",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/popover.tsx",
+    "symbol": "Popover",
+    "example": "<Popover trigger={<Button variant=\"outline\">Project notes</Button>}><h3 className=\"font-medium\">A small reminder</h3><p className=\"mt-2 text-sm\">Leave room for the unexpected.</p></Popover>"
+  },
+  {
+    "slug": "tooltip",
+    "title": "Tooltip",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/tooltip.tsx",
+    "symbol": "Tooltip",
+    "example": "<Tooltip content=\"Save your current work\"><Button variant=\"outline\">Hover or focus me</Button></Tooltip>"
+  },
+  {
+    "slug": "dropdown-menu",
+    "title": "Dropdown Menu",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/dropdown-menu.tsx",
+    "symbol": "DropdownMenu",
+    "example": "<DropdownMenu trigger={<Button variant=\"outline\">Project actions ↓</Button>} items={actions}/>"
+  },
+  {
+    "slug": "context-menu",
+    "title": "Context Menu",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/context-menu.tsx",
+    "symbol": "ContextMenu",
+    "example": "<ContextMenu trigger={<div tabIndex={0} className=\"rounded-xl border border-dashed border-border p-10 text-sm\">Right-click for actions</div>} items={actions}/>"
+  },
+  {
+    "slug": "navigation-menu",
+    "title": "Navigation Menu",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/navigation-menu.tsx",
+    "symbol": "NavigationMenu",
+    "example": "<NavigationMenu items={[{label:'Components',href:'/components'},{label:'Blocks',href:'/blocks'},{label:'Templates',href:'/templates'}]}/>"
+  },
+  {
+    "slug": "breadcrumb",
+    "title": "Breadcrumb",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/breadcrumb.tsx",
+    "symbol": "Breadcrumb",
+    "example": "<Breadcrumb items={[{label:'Library',href:'/components'},{label:'Foundations',href:'/components?category=foundations'},{label:'Breadcrumb'}]}/>"
+  },
+  {
+    "slug": "toast",
+    "title": "Toast",
+    "group": "foundations",
+    "kind": "component",
+    "file": "registry/ui/toast.tsx",
+    "symbol": "Toast",
+    "example": "<Toast title=\"Changes saved\" description=\"Your project is ready for its next chapter.\"/>"
+  },
+  {
+    "slug": "combobox",
+    "title": "Combobox",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/combobox.tsx",
+    "symbol": "Combobox",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Choose your starting point.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">The right tools for the way you work.</p></div><Combobox options={[{label:'React',value:'react',description:'Build interactive interfaces'},{label:'Next.js',value:'next',description:'React with server rendering'},{label:'Vite',value:'vite',description:'A fast development toolchain'},{label:'Astro',value:'astro',description:'Content-driven websites'},{label:'Remix',value:'remix',description:'Full-stack web applications'}]} label=\"Choose framework\"/></div>"
+  },
+  {
+    "slug": "command-palette",
+    "title": "Command Palette",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/command-palette.tsx",
+    "symbol": "CommandPalette",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">One shortcut away.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Find your next action without losing your place.</p></div><CommandPalette items={[{label:\"Create a project\",group:\"Workspace\",shortcut:\"⌘ N\",onSelect:()=>setNotice(\"Create project selected.\")},{label:\"Find a teammate\",group:\"Workspace\",onSelect:()=>setNotice(\"Team search selected.\")},{label:\"Open settings\",group:\"Navigation\",shortcut:\"⌘ ,\",onSelect:()=>setNotice(\"Settings selected.\")},{label:\"View archive\",group:\"Navigation\",onSelect:()=>setNotice(\"Archive selected.\")}]}/></div>"
+  },
+  {
+    "slug": "calendar",
+    "title": "Calendar",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/calendar.tsx",
+    "symbol": "Calendar",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Make a little time.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">A day for the next good idea.</p></div><Calendar defaultValue=\"2026-09-08\"/></div>"
+  },
+  {
+    "slug": "date-picker",
+    "title": "Date Picker",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/date-picker.tsx",
+    "symbol": "DatePicker",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Put it on the calendar.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Set a launch date you can work toward.</p></div><DatePicker/></div>"
+  },
+  {
+    "slug": "date-range-picker",
+    "title": "Date Range Picker",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/date-range-picker.tsx",
+    "symbol": "DateRangePicker",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">See the whole stretch.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Choose the window for your next project.</p></div><DateRangePicker/></div>"
+  },
+  {
+    "slug": "time-picker",
+    "title": "Time Picker",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/time-picker.tsx",
+    "symbol": "TimePicker",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Meet in the morning.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Find a time that works for everyone.</p></div><TimePicker defaultValue=\"09:30\"/></div>"
+  },
+  {
+    "slug": "file-upload",
+    "title": "File Upload",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/file-upload.tsx",
+    "symbol": "FileUpload",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Bring your ideas.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Drop in your reference images, sketches, or brief.</p></div><FileUpload accept=\"image/*,.pdf\" multiple/></div>"
+  },
+  {
+    "slug": "otp-input",
+    "title": "OTP Input",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/otp-input.tsx",
+    "symbol": "OtpInput",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">A quick check.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Enter the six-digit code to continue this demo.</p></div><OtpInput/></div>"
+  },
+  {
+    "slug": "password-input",
+    "title": "Password Input",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/password-input.tsx",
+    "symbol": "PasswordInput",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Keep it between us.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">A strong password is a good place to start.</p></div><PasswordInput placeholder=\"Your password\"/></div>"
+  },
+  {
+    "slug": "search-input",
+    "title": "Search Input",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/search-input.tsx",
+    "symbol": "SearchInput",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Find the thing.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Projects, notes, and the details you nearly forgot.</p></div><div><SearchInput value={searchTerm} onValueChange={setSearchTerm} placeholder=\"Search projects…\"/><div className=\"mt-3 overflow-hidden rounded-lg border border-border\">{[\"Website refresh\",\"Brand guidelines\",\"Component library\"].filter(t=>t.toLowerCase().includes(searchTerm.toLowerCase())).map(t=><button key={t} onClick={()=>setNotice(t+\" opened.\")} className=\"flex w-full items-center gap-3 border-b border-border/50 px-3 py-3 text-left text-sm last:border-0 hover:bg-muted\"><Folder size={15} className=\"text-muted-foreground\"/>{t}<ArrowUpRight size={13} className=\"ml-auto text-muted-foreground\"/></button>)}{![\"Website refresh\",\"Brand guidelines\",\"Component library\"].some(t=>t.toLowerCase().includes(searchTerm.toLowerCase()))&&<p className=\"p-5 text-sm text-muted-foreground\">No projects found.</p>}</div></div></div>"
+  },
+  {
+    "slug": "tag-input",
+    "title": "Tag Input",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/tag-input.tsx",
+    "symbol": "TagInput",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">A little more organised.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Give your next idea a few useful labels.</p></div><TagInput defaultValue={['Design','Play']}/></div>"
+  },
+  {
+    "slug": "form-field",
+    "title": "Form Field",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/form-field.tsx",
+    "symbol": "FormField",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Start something new.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Give your workspace a name you will remember.</p></div><FormField label=\"Project name\" hint=\"Something you’ll recognise later.\"><Input placeholder=\"Field notes\"/></FormField></div>"
+  },
+  {
+    "slug": "pagination",
+    "title": "Pagination",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/pagination.tsx",
+    "symbol": "Pagination",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">There is more to explore.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Browse the whole collection, at your own pace.</p></div><Pagination totalPages={8}/></div>"
+  },
+  {
+    "slug": "data-table",
+    "title": "Data Table",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/data-table.tsx",
+    "symbol": "DataTable",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Work in motion.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Three projects, from first thoughts to finished details.</p></div><DataTable selectable data={[{name:'Field notes',status:'Active',tasks:12},{name:'New perspective',status:'In review',tasks:8},{name:'Little things',status:'Done',tasks:24}]} columns={[{accessorKey:'name',header:'Project'},{accessorKey:'status',header:'Status',cell:c=><Badge tone={c.getValue()==='Done'?'positive':c.getValue()==='Active'?'accent':'neutral'}>{String(c.getValue())}</Badge>},{accessorKey:'tasks',header:'Tasks'}]}/></div>"
+  },
+  {
+    "slug": "tree-view",
+    "title": "Tree View",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/tree-view.tsx",
+    "symbol": "TreeView",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Everything in its place.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">A clear path through your source.</p></div><TreeView nodes={[{id:'src',label:'Source',children:[{id:'components',label:'Components',children:[{id:'button',label:'button.tsx'},{id:'card',label:'card.tsx'}]},{id:'theme',label:'theme.css'}]}]} onSelect={n=>setNotice(n.label+' selected')}/></div>"
+  },
+  {
+    "slug": "resizable-panels",
+    "title": "Resizable Panels",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/resizable-panels.tsx",
+    "symbol": "ResizablePanels",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Space that works for you.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Adjust the balance with a pointer or the arrow keys.</p></div><ResizablePanels left={<p className=\"text-sm\">Drag the divider, or focus it and use arrow keys.</p>} right={<p className=\"text-sm\">Room for your work.</p>}/></div>"
+  },
+  {
+    "slug": "stepper",
+    "title": "Stepper",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/stepper.tsx",
+    "symbol": "Stepper",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">One thing at a time.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">A few small steps to make yourself at home.</p></div><Stepper steps={['Your details','Workspace','Ready']} current={1}/></div>"
+  },
+  {
+    "slug": "empty-state",
+    "title": "Empty State",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/empty-state.tsx",
+    "symbol": "EmptyState",
+    "example": "<EmptyState action={<Button onClick={()=>setNotice('Your first idea starts here.')}>Create an idea</Button>}/>"
+  },
+  {
+    "slug": "alert",
+    "title": "Alert",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/alert.tsx",
+    "symbol": "Alert",
+    "example": "<Alert title=\"Everything is up to date.\">Your changes have been saved on this device.</Alert>"
+  },
+  {
+    "slug": "progress",
+    "title": "Progress",
+    "group": "product",
+    "kind": "component",
+    "file": "registry/ui/progress.tsx",
+    "symbol": "Progress",
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Getting there.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">The next release is taking shape.</p></div><div className=\"grid gap-4\"><div className=\"flex items-center justify-between text-sm\"><span>{progress===100?\"Export complete\":progressRunning?\"Preparing export…\":progress>0?\"Export paused\":\"Ready to export\"}</span><span className=\"font-mono tabular-nums\">{progress}%</span></div><Progress value={progress} label=\"Export progress\" showLabel={false}/><div className=\"flex gap-2\"><Button size=\"sm\" disabled={progress===100} onClick={()=>setProgressRunning(v=>!v)}>{progressRunning?<Pause size={14}/>:<Play size={14}/>} {progressRunning?\"Pause\":progress>0?\"Resume\":\"Start export\"}</Button><Button size=\"sm\" variant=\"ghost\" aria-label=\"Reset progress\" onClick={()=>{setProgressRunning(false);setProgress(0);}}><RotateCcw size={14}/></Button></div><p className=\"text-xs text-muted-foreground\">Simulated export · try pausing halfway through.</p></div></div>"
+  },
+  {
+    "slug": "text-reveal",
+    "title": "Text Reveal",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/text-reveal.tsx",
+    "symbol": "TextReveal",
+    "example": "<div className=\"w-full rounded-xl bg-accent px-7 py-14 text-foreground md:px-12 md:py-20\"><TextReveal className=\"block max-w-xl font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-7xl\">Less noise. More feeling.</TextReveal><p className=\"mt-8 text-sm\">A new perspective, one word at a time.</p></div>"
+  },
+  {
+    "slug": "split-text",
+    "title": "Split Text",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/split-text.tsx",
+    "symbol": "SplitText",
+    "example": "<div className=\"w-full rounded-xl bg-foreground px-7 py-14 text-background md:px-12 md:py-20\"><SplitText className=\"block font-display text-5xl font-medium leading-none tracking-tight md:text-7xl\">Stay curious.</SplitText><p className=\"mt-8 text-sm opacity-70\">Good ideas start with a little movement.</p></div>"
+  },
+  {
+    "slug": "rotating-text",
+    "title": "Rotating Text",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/rotating-text.tsx",
+    "symbol": "RotatingText",
+    "example": "<div className=\"w-full rounded-xl bg-muted p-8 md:p-14\"><div className=\"font-display text-5xl font-medium leading-tight tracking-tight md:text-6xl\">A place for<br/><RotatingText words={['bold ideas.','small details.','your next thing.']} className=\"text-primary\"/></div><p className=\"mt-9 text-sm text-muted-foreground\">Keep making room.</p></div>"
+  },
+  {
+    "slug": "scramble-text",
+    "title": "Scramble Text",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/scramble-text.tsx",
+    "symbol": "ScrambleText",
+    "example": "<div className=\"w-full rounded-xl bg-foreground p-8 text-accent md:p-14\"><ScrambleText className=\"font-display text-4xl font-medium tracking-tight md:text-6xl\">Expect the unexpected.</ScrambleText><div className=\"mt-10 flex justify-between border-t border-current pt-4 text-xs\"><span>Order from a little chaos.</span><span>Jez / Motion</span></div></div>"
+  },
+  {
+    "slug": "number-ticker",
+    "title": "Number Ticker",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/number-ticker.tsx",
+    "symbol": "NumberTicker",
+    "example": "<div className=\"grid w-full max-w-md gap-7\"><div className=\"flex items-center justify-between\"><h3 className=\"text-2xl\">A growing idea.</h3><Badge tone=\"positive\">Live demo</Badge></div><NumberTicker value={count} className=\"font-display text-8xl tracking-tight\"/><div className=\"flex items-center justify-between border-t border-border pt-5\"><p className=\"text-sm text-muted-foreground\">People on the list</p><Button variant=\"outline\" onClick={()=>setCount(c=>c+17)}>Add 17 <Plus size={14}/></Button></div></div>"
+  },
+  {
+    "slug": "animated-counter",
+    "title": "Animated Counter",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/animated-counter.tsx",
+    "symbol": "AnimatedCounter",
+    "example": "<div className=\"w-full rounded-xl bg-accent p-9 text-foreground md:p-14\"><AnimatedCounter target={2048} className=\"font-display text-7xl tracking-tight md:text-8xl\"/><h3 className=\"mt-6 text-2xl\">Small steps. Real progress.</h3><p className=\"mt-2 text-sm\">Counts into view, once you're here.</p></div>"
+  },
+  {
+    "slug": "marquee",
+    "title": "Marquee",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/marquee.tsx",
+    "symbol": "Marquee",
+    "example": "<Marquee><span className=\"font-display text-4xl\">MAKE ROOM.</span><span className=\"font-display text-4xl\">MAKE SOMETHING.</span><span className=\"font-display text-4xl\">MAKE IT YOURS.</span></Marquee>"
+  },
+  {
+    "slug": "scroll-reveal",
+    "title": "Scroll Reveal",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/scroll-reveal.tsx",
+    "symbol": "ScrollReveal",
+    "example": "<ScrollReveal><Card><h3 className=\"text-3xl\">Here when you arrive.</h3></Card></ScrollReveal>"
+  },
+  {
+    "slug": "stagger-group",
+    "title": "Stagger Group",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/stagger-group.tsx",
+    "symbol": "StaggerGroup",
+    "example": "<StaggerGroup className=\"w-full max-w-md\">{['A thought worth keeping.','A shape worth exploring.','Something worth sharing.'].map((t,i)=><div key={t} className=\"flex items-center gap-5 border-b border-border py-5\"><span className=\"grid size-10 shrink-0 place-items-center rounded-full bg-accent text-lg text-foreground\">{i+1}</span><p className=\"text-lg\">{t}</p></div>)}</StaggerGroup>"
+  },
+  {
+    "slug": "magnetic-button",
+    "title": "Magnetic Button",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/magnetic-button.tsx",
+    "symbol": "MagneticButton",
+    "example": "<MagneticButton>Come a little closer →</MagneticButton>"
+  },
+  {
+    "slug": "tilt-card",
+    "title": "Tilt Card",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/tilt-card.tsx",
+    "symbol": "TiltCard",
+    "example": "<TiltCard className=\"w-full max-w-sm border-0 bg-primary p-0 text-primary-foreground\"><div className=\"flex min-h-80 flex-col justify-between p-8\"><div className=\"flex justify-between text-sm\"><span>Jez Studio</span><span>↗</span></div><h3 className=\"text-5xl font-medium leading-[1.05] tracking-tight\">A different<br/>perspective.</h3><div className=\"flex justify-between border-t border-white/30 pt-5 text-xs\"><span>Move your pointer.</span><span>Make it yours.</span></div></div></TiltCard>"
+  },
+  {
+    "slug": "spotlight-card",
+    "title": "Spotlight Card",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/spotlight-card.tsx",
+    "symbol": "SpotlightCard",
+    "example": "<SpotlightCard className=\"w-full max-w-sm border-0 bg-foreground p-8 text-background\"><div className=\"flex min-h-64 flex-col justify-between\"><Plus size={32}/><h3 className=\"text-4xl leading-tight tracking-tight\">The detail<br/>is the difference.</h3><p className=\"text-xs opacity-70\">Follow your curiosity. And the light.</p></div></SpotlightCard>"
+  },
+  {
+    "slug": "animated-tabs-indicator",
+    "title": "Animated Tabs Indicator",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/animated-tabs-indicator.tsx",
+    "symbol": "AnimatedTabsIndicator",
+    "example": "<AnimatedTabsIndicator items={tabs}/>"
+  },
+  {
+    "slug": "shared-layout-transition",
+    "title": "Shared Layout Transition",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/shared-layout-transition.tsx",
+    "symbol": "SharedLayoutTransition",
+    "example": "<SharedLayoutTransition items={[{id:'one',title:'Explore the idea',description:'Open a little space for the unexpected. This panel expands while its neighbours move naturally.'},{id:'two',title:'Find the next step',description:'A small, clear action is often all you need.'}]}/>"
+  },
+  {
+    "slug": "scroll-progress",
+    "title": "Scroll Progress",
+    "group": "motion",
+    "kind": "component",
+    "file": "registry/ui/scroll-progress.tsx",
+    "symbol": "ScrollProgress",
+    "example": "<div className=\"h-96\"><ScrollProgress/><h3 className=\"text-2xl\">A sense of where you are.</h3><p className=\"mt-4 text-sm\">The thin line at the top tracks this page as you scroll.</p></div>"
+  },
+  {
+    "slug": "grain-overlay",
+    "title": "Grain Overlay",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/grain-overlay.tsx",
+    "symbol": "GrainOverlay",
+    "example": "<GrainOverlay className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">Tactile, by nature.</h3><p className=\"mt-8 text-sm\">A quiet layer of texture.</p></div></GrainOverlay>"
+  },
+  {
+    "slug": "dot-grid",
+    "title": "Dot Grid",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/dot-grid.tsx",
+    "symbol": "DotGrid",
+    "example": "<DotGrid className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">A starting point.</h3><p className=\"mt-8 text-sm\">Space to connect your ideas.</p></div></DotGrid>"
+  },
+  {
+    "slug": "animated-grid",
+    "title": "Animated Grid",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/animated-grid.tsx",
+    "symbol": "AnimatedGrid",
+    "example": "<AnimatedGrid className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">Always in motion.</h3><p className=\"mt-8 text-sm\">An underlying rhythm.</p></div></AnimatedGrid>"
+  },
+  {
+    "slug": "gradient-mesh",
+    "title": "Gradient Mesh",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/gradient-mesh.tsx",
+    "symbol": "GradientMesh",
+    "example": "<GradientMesh className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">A softer edge.</h3><p className=\"mt-8 text-sm\">Colour, with room to breathe.</p></div></GradientMesh>"
+  },
+  {
+    "slug": "aurora-background",
+    "title": "Aurora Background",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/aurora-background.tsx",
+    "symbol": "AuroraBackground",
+    "example": "<AuroraBackground className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">After hours.</h3><p className=\"mt-8 text-sm\">A little light in the dark.</p></div></AuroraBackground>"
+  },
+  {
+    "slug": "spotlight-background",
+    "title": "Spotlight Background",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/spotlight-background.tsx",
+    "symbol": "SpotlightBackground",
+    "example": "<SpotlightBackground className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">Find your focus.</h3><p className=\"mt-8 text-sm\">Let the important things come forward.</p></div></SpotlightBackground>"
+  },
+  {
+    "slug": "border-beam",
+    "title": "Border Beam",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/border-beam.tsx",
+    "symbol": "BorderBeam",
+    "example": "<BorderBeam className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">Worth a closer look.</h3><p className=\"mt-8 text-sm\">A detail that draws you in.</p></div></BorderBeam>"
+  },
+  {
+    "slug": "ripple-field",
+    "title": "Ripple Field",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/ripple-field.tsx",
+    "symbol": "RippleField",
+    "example": "<RippleField/>"
+  },
+  {
+    "slug": "cursor-trail",
+    "title": "Cursor Trail",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/cursor-trail.tsx",
+    "symbol": "CursorTrail",
+    "example": "<CursorTrail className=\"min-h-[360px]\"><div className=\"flex min-h-64 flex-col justify-between\"><h3 className=\"max-w-md font-display text-5xl font-medium leading-[1.03] tracking-tight md:text-6xl\">Leave your mark.</h3><p className=\"mt-8 text-sm\">Move around. See what follows.</p></div></CursorTrail>"
+  },
+  {
+    "slug": "webgl-particle-field",
+    "title": "WebGL Particle Field",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/webgl-particle-field.tsx",
+    "symbol": "WebGLParticleField",
+    "example": "<div className=\"w-full\"><WebGLParticleField paused={scenePaused} speed={sceneSpeed} color={sceneColor}/><div className=\"mt-4 flex flex-wrap items-center justify-between gap-4 text-xs\"><button className=\"rounded-lg border border-border px-3 py-2\" onClick={()=>setScenePaused(p=>!p)}>{scenePaused?'Play motion':'Pause motion'}</button><label className=\"flex items-center gap-2\">Palette<select aria-label=\"Scene palette\" className=\"rounded-lg border border-border bg-background px-2 py-2\" value={sceneColor??''} onChange={e=>setSceneColor(e.target.value||undefined)}><option value=\"\">Studio</option><option value=\"#a6c7cc\">Glacier</option><option value=\"#df9e72\">Copper</option><option value=\"#beb1eb\">Iris</option></select></label><label className=\"flex items-center gap-2\">Speed<input aria-label=\"Scene speed\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value={sceneSpeed} onChange={e=>setSceneSpeed(Number(e.target.value))} className=\"w-20 accent-primary\"/></label><span className=\"text-muted-foreground\">Move your pointer to explore</span></div></div>"
+  },
+  {
+    "slug": "webgl-ribbon-field",
+    "title": "WebGL Ribbon Field",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/webgl-ribbon-field.tsx",
+    "symbol": "WebGLRibbonField",
+    "example": "<div className=\"w-full\"><WebGLRibbonField paused={scenePaused} speed={sceneSpeed} color={sceneColor}/><div className=\"mt-4 flex flex-wrap items-center justify-between gap-4 text-xs\"><button className=\"rounded-lg border border-border px-3 py-2\" onClick={()=>setScenePaused(p=>!p)}>{scenePaused?'Play motion':'Pause motion'}</button><label className=\"flex items-center gap-2\">Palette<select aria-label=\"Scene palette\" className=\"rounded-lg border border-border bg-background px-2 py-2\" value={sceneColor??''} onChange={e=>setSceneColor(e.target.value||undefined)}><option value=\"\">Studio</option><option value=\"#a6c7cc\">Glacier</option><option value=\"#df9e72\">Copper</option><option value=\"#beb1eb\">Iris</option></select></label><label className=\"flex items-center gap-2\">Speed<input aria-label=\"Scene speed\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value={sceneSpeed} onChange={e=>setSceneSpeed(Number(e.target.value))} className=\"w-20 accent-primary\"/></label><span className=\"text-muted-foreground\">Move your pointer to explore</span></div></div>"
+  },
+  {
+    "slug": "webgl-liquid-surface",
+    "title": "WebGL Liquid Surface",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/webgl-liquid-surface.tsx",
+    "symbol": "WebGLLiquidSurface",
+    "example": "<div className=\"w-full\"><WebGLLiquidSurface paused={scenePaused} speed={sceneSpeed} color={sceneColor}/><div className=\"mt-4 flex flex-wrap items-center justify-between gap-4 text-xs\"><button className=\"rounded-lg border border-border px-3 py-2\" onClick={()=>setScenePaused(p=>!p)}>{scenePaused?'Play motion':'Pause motion'}</button><label className=\"flex items-center gap-2\">Palette<select aria-label=\"Scene palette\" className=\"rounded-lg border border-border bg-background px-2 py-2\" value={sceneColor??''} onChange={e=>setSceneColor(e.target.value||undefined)}><option value=\"\">Studio</option><option value=\"#a6c7cc\">Glacier</option><option value=\"#df9e72\">Copper</option><option value=\"#beb1eb\">Iris</option></select></label><label className=\"flex items-center gap-2\">Speed<input aria-label=\"Scene speed\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value={sceneSpeed} onChange={e=>setSceneSpeed(Number(e.target.value))} className=\"w-20 accent-primary\"/></label><span className=\"text-muted-foreground\">Move your pointer to explore</span></div></div>"
+  },
+  {
+    "slug": "webgl-orb",
+    "title": "WebGL Orb",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/webgl-orb.tsx",
+    "symbol": "WebGLOrb",
+    "example": "<div className=\"w-full\"><WebGLOrb paused={scenePaused} speed={sceneSpeed} color={sceneColor}/><div className=\"mt-4 flex flex-wrap items-center justify-between gap-4 text-xs\"><button className=\"rounded-lg border border-border px-3 py-2\" onClick={()=>setScenePaused(p=>!p)}>{scenePaused?'Play motion':'Pause motion'}</button><label className=\"flex items-center gap-2\">Palette<select aria-label=\"Scene palette\" className=\"rounded-lg border border-border bg-background px-2 py-2\" value={sceneColor??''} onChange={e=>setSceneColor(e.target.value||undefined)}><option value=\"\">Studio</option><option value=\"#a6c7cc\">Glacier</option><option value=\"#df9e72\">Copper</option><option value=\"#beb1eb\">Iris</option></select></label><label className=\"flex items-center gap-2\">Speed<input aria-label=\"Scene speed\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value={sceneSpeed} onChange={e=>setSceneSpeed(Number(e.target.value))} className=\"w-20 accent-primary\"/></label><span className=\"text-muted-foreground\">Move your pointer to explore</span></div></div>"
+  },
+  {
+    "slug": "webgl-terrain",
+    "title": "WebGL Terrain",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/webgl-terrain.tsx",
+    "symbol": "WebGLTerrain",
+    "example": "<div className=\"w-full\"><WebGLTerrain paused={scenePaused} speed={sceneSpeed} color={sceneColor}/><div className=\"mt-4 flex flex-wrap items-center justify-between gap-4 text-xs\"><button className=\"rounded-lg border border-border px-3 py-2\" onClick={()=>setScenePaused(p=>!p)}>{scenePaused?'Play motion':'Pause motion'}</button><label className=\"flex items-center gap-2\">Palette<select aria-label=\"Scene palette\" className=\"rounded-lg border border-border bg-background px-2 py-2\" value={sceneColor??''} onChange={e=>setSceneColor(e.target.value||undefined)}><option value=\"\">Studio</option><option value=\"#a6c7cc\">Glacier</option><option value=\"#df9e72\">Copper</option><option value=\"#beb1eb\">Iris</option></select></label><label className=\"flex items-center gap-2\">Speed<input aria-label=\"Scene speed\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value={sceneSpeed} onChange={e=>setSceneSpeed(Number(e.target.value))} className=\"w-20 accent-primary\"/></label><span className=\"text-muted-foreground\">Move your pointer to explore</span></div></div>"
+  },
+  {
+    "slug": "webgl-image-distortion",
+    "title": "WebGL Image Distortion",
+    "group": "effects",
+    "kind": "component",
+    "file": "registry/ui/webgl-image-distortion.tsx",
+    "symbol": "WebGLImageDistortion",
+    "example": "<div className=\"w-full\"><WebGLImageDistortion paused={scenePaused} speed={sceneSpeed} color={sceneColor} imageSrc=\"/assets/studio-lamp.png\"/><div className=\"mt-4 flex flex-wrap items-center justify-between gap-4 text-xs\"><button className=\"rounded-lg border border-border px-3 py-2\" onClick={()=>setScenePaused(p=>!p)}>{scenePaused?'Play motion':'Pause motion'}</button><label className=\"flex items-center gap-2\">Palette<select aria-label=\"Scene palette\" className=\"rounded-lg border border-border bg-background px-2 py-2\" value={sceneColor??''} onChange={e=>setSceneColor(e.target.value||undefined)}><option value=\"\">Studio</option><option value=\"#a6c7cc\">Glacier</option><option value=\"#df9e72\">Copper</option><option value=\"#beb1eb\">Iris</option></select></label><label className=\"flex items-center gap-2\">Speed<input aria-label=\"Scene speed\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value={sceneSpeed} onChange={e=>setSceneSpeed(Number(e.target.value))} className=\"w-20 accent-primary\"/></label><span className=\"text-muted-foreground\">Move your pointer to explore</span></div></div>"
+  },
+  {
+    "slug": "area-chart",
+    "title": "Area Chart",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/area-chart.tsx",
+    "symbol": "AreaChart",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">The bigger picture.</h3><p className=\"mt-2 text-sm text-muted-foreground\">Audience over the last seven days</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><AreaChart/></div>"
+  },
+  {
+    "slug": "line-chart",
+    "title": "Line Chart",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/line-chart.tsx",
+    "symbol": "LineChart",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">A steady rhythm.</h3><p className=\"mt-2 text-sm text-muted-foreground\">Weekly publishing activity</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><LineChart/></div>"
+  },
+  {
+    "slug": "bar-chart",
+    "title": "Bar Chart",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/bar-chart.tsx",
+    "symbol": "BarChart",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">Every day counts.</h3><p className=\"mt-2 text-sm text-muted-foreground\">Orders by day of the week</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><BarChart/></div>"
+  },
+  {
+    "slug": "stacked-bar-chart",
+    "title": "Stacked Bar Chart",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/stacked-bar-chart.tsx",
+    "symbol": "StackedBarChart",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">Better side by side.</h3><p className=\"mt-2 text-sm text-muted-foreground\">This week compared with the last</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><StackedBarChart/></div>"
+  },
+  {
+    "slug": "donut-chart",
+    "title": "Donut Chart",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/donut-chart.tsx",
+    "symbol": "DonutChart",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">Where it all goes.</h3><p className=\"mt-2 text-sm text-muted-foreground\">A week of studio time</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><DonutChart/></div>"
+  },
+  {
+    "slug": "radial-gauge",
+    "title": "Radial Gauge",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/radial-gauge.tsx",
+    "symbol": "RadialGauge",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">Almost there.</h3><p className=\"mt-2 text-sm text-muted-foreground\">Progress toward the weekly target</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><RadialGauge/></div>"
+  },
+  {
+    "slug": "heatmap",
+    "title": "Heatmap",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/heatmap.tsx",
+    "symbol": "Heatmap",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">Keep showing up.</h3><p className=\"mt-2 text-sm text-muted-foreground\">A year of small, consistent steps</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><Heatmap/></div>"
+  },
+  {
+    "slug": "sparkline",
+    "title": "Sparkline",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/sparkline.tsx",
+    "symbol": "Sparkline",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">A good direction.</h3><p className=\"mt-2 text-sm text-muted-foreground\">The shape of this week</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><Sparkline/></div>"
+  },
+  {
+    "slug": "live-line-chart",
+    "title": "Live Line Chart",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/live-line-chart.tsx",
+    "symbol": "LiveLineChart",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">In the moment.</h3><p className=\"mt-2 text-sm text-muted-foreground\">A simulated feed, updating live</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><LiveLineChart/></div>"
+  },
+  {
+    "slug": "scatter-chart",
+    "title": "Scatter Chart",
+    "group": "charts",
+    "kind": "component",
+    "file": "registry/ui/scatter-chart.tsx",
+    "symbol": "ScatterChart",
+    "example": "<div className=\"w-full max-w-2xl\"><div className=\"mb-8 flex flex-wrap items-end justify-between gap-4\"><div><h3 className=\"text-3xl tracking-tight\">Find the pattern.</h3><p className=\"mt-2 text-sm text-muted-foreground\">The relationship behind the numbers</p></div><span className=\"rounded-full border border-border px-3 py-1 text-xs text-muted-foreground\">Demo data</span></div><ScatterChart/></div>"
+  },
+  {
+    "slug": "editorial-hero",
+    "title": "Editorial Hero",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/editorial-hero.tsx",
+    "symbol": "EditorialHero",
+    "example": "<EditorialHero/>"
+  },
+  {
+    "slug": "product-demo-hero",
+    "title": "Product Demo Hero",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/product-demo-hero.tsx",
+    "symbol": "ProductDemoHero",
+    "example": "<ProductDemoHero/>"
+  },
+  {
+    "slug": "webgl-hero",
+    "title": "WebGL Hero",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/webgl-hero.tsx",
+    "symbol": "WebglHero",
+    "example": "<WebglHero/>"
+  },
+  {
+    "slug": "logo-wall",
+    "title": "Logo Wall",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/logo-wall.tsx",
+    "symbol": "LogoWall",
+    "example": "<LogoWall/>"
+  },
+  {
+    "slug": "feature-grid",
+    "title": "Feature Grid",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/feature-grid.tsx",
+    "symbol": "FeatureGrid",
+    "example": "<FeatureGrid/>"
+  },
+  {
+    "slug": "alternating-feature-story",
+    "title": "Alternating Feature Story",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/alternating-feature-story.tsx",
+    "symbol": "AlternatingFeatureStory",
+    "example": "<AlternatingFeatureStory/>"
+  },
+  {
+    "slug": "product-comparison",
+    "title": "Product Comparison",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/product-comparison.tsx",
+    "symbol": "ProductComparison",
+    "example": "<ProductComparison/>"
+  },
+  {
+    "slug": "metrics-strip",
+    "title": "Metrics Strip",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/metrics-strip.tsx",
+    "symbol": "MetricsStrip",
+    "example": "<MetricsStrip/>"
+  },
+  {
+    "slug": "testimonial-grid",
+    "title": "Testimonial Grid",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/testimonial-grid.tsx",
+    "symbol": "TestimonialGrid",
+    "example": "<TestimonialGrid/>"
+  },
+  {
+    "slug": "testimonial-carousel",
+    "title": "Testimonial Carousel",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/testimonial-carousel.tsx",
+    "symbol": "TestimonialCarousel",
+    "example": "<TestimonialCarousel/>"
+  },
+  {
+    "slug": "pricing-table",
+    "title": "Pricing Table",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/pricing-table.tsx",
+    "symbol": "PricingTable",
+    "example": "<PricingTable/>"
+  },
+  {
+    "slug": "pricing-comparison",
+    "title": "Pricing Comparison",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/pricing-comparison.tsx",
+    "symbol": "PricingComparison",
+    "example": "<PricingComparison/>"
+  },
+  {
+    "slug": "faq",
+    "title": "FAQ",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/faq.tsx",
+    "symbol": "Faq",
+    "example": "<Faq/>"
+  },
+  {
+    "slug": "newsletter-signup",
+    "title": "Newsletter Signup",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/newsletter-signup.tsx",
+    "symbol": "NewsletterSignup",
+    "example": "<NewsletterSignup/>"
+  },
+  {
+    "slug": "contact-form",
+    "title": "Contact Form",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/contact-form.tsx",
+    "symbol": "ContactForm",
+    "example": "<ContactForm/>"
+  },
+  {
+    "slug": "cta-section",
+    "title": "CTA Section",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/cta-section.tsx",
+    "symbol": "CtaSection",
+    "example": "<CtaSection/>"
+  },
+  {
+    "slug": "marketing-navigation",
+    "title": "Marketing Navigation",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/marketing-navigation.tsx",
+    "symbol": "MarketingNavigation",
+    "example": "<MarketingNavigation/>"
+  },
+  {
+    "slug": "mega-navigation",
+    "title": "Mega Navigation",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/mega-navigation.tsx",
+    "symbol": "MegaNavigation",
+    "example": "<MegaNavigation/>"
+  },
+  {
+    "slug": "floating-navigation",
+    "title": "Floating Navigation",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/floating-navigation.tsx",
+    "symbol": "FloatingNavigation",
+    "example": "<FloatingNavigation/>"
+  },
+  {
+    "slug": "terrain-hero",
+    "title": "Terrain Hero",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/terrain-hero.tsx",
+    "symbol": "TerrainHero",
+    "example": "<TerrainHero/>"
+  },
+  {
+    "slug": "marketing-footer",
+    "title": "Marketing Footer",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/marketing-footer.tsx",
+    "symbol": "MarketingFooter",
+    "example": "<MarketingFooter/>"
+  },
+  {
+    "slug": "application-shell",
+    "title": "Application Shell",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/application-shell.tsx",
+    "symbol": "ApplicationShell",
+    "example": "<ApplicationShell brand=\"Acme\" currentPath=\"#overview\"><div className=\"mb-7\"><p className=\"mb-2 text-xs text-muted-foreground\">Tuesday, 8 September</p><h2 className=\"font-display text-2xl\">Good morning, Alex.</h2><p className=\"mt-2 text-sm text-muted-foreground\">Here’s what needs your attention.</p></div><div className=\"grid gap-6 xl:grid-cols-[1.3fr_1fr]\"><div><h3 className=\"mb-4 text-sm font-semibold\">Your tasks</h3><TaskList/></div><ActivityFeed/></div></ApplicationShell>"
+  },
+  {
+    "slug": "workspace-navigation",
+    "title": "Workspace Navigation",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/workspace-navigation.tsx",
+    "symbol": "WorkspaceNavigation",
+    "example": "<WorkspaceNavigation/>"
+  },
+  {
+    "slug": "analytics-overview",
+    "title": "Analytics Overview",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/analytics-overview.tsx",
+    "symbol": "AnalyticsOverview",
+    "example": "<AnalyticsOverview/>"
+  },
+  {
+    "slug": "activity-feed",
+    "title": "Activity Feed",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/activity-feed.tsx",
+    "symbol": "ActivityFeed",
+    "example": "<ActivityFeed/>"
+  },
+  {
+    "slug": "searchable-records-screen",
+    "title": "Searchable Records Screen",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/searchable-records-screen.tsx",
+    "symbol": "SearchableRecordsScreen",
+    "example": "<SearchableRecordsScreen/>"
+  },
+  {
+    "slug": "record-detail-panel",
+    "title": "Record Detail Panel",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/record-detail-panel.tsx",
+    "symbol": "RecordDetailPanel",
+    "example": "<RecordDetailPanel/>"
+  },
+  {
+    "slug": "kanban-board",
+    "title": "Kanban Board",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/kanban-board.tsx",
+    "symbol": "KanbanBoard",
+    "example": "<KanbanBoard/>"
+  },
+  {
+    "slug": "task-list",
+    "title": "Task List",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/task-list.tsx",
+    "symbol": "TaskList",
+    "example": "<TaskList/>"
+  },
+  {
+    "slug": "calendar-schedule",
+    "title": "Calendar Schedule",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/calendar-schedule.tsx",
+    "symbol": "CalendarSchedule",
+    "example": "<CalendarSchedule/>"
+  },
+  {
+    "slug": "onboarding-wizard",
+    "title": "Onboarding Wizard",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/onboarding-wizard.tsx",
+    "symbol": "OnboardingWizard",
+    "example": "<OnboardingWizard/>"
+  },
+  {
+    "slug": "sign-in-form",
+    "title": "Sign In Form",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/sign-in-form.tsx",
+    "symbol": "SignInForm",
+    "example": "<SignInForm/>"
+  },
+  {
+    "slug": "sign-up-form",
+    "title": "Sign Up Form",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/sign-up-form.tsx",
+    "symbol": "SignUpForm",
+    "example": "<SignUpForm/>"
+  },
+  {
+    "slug": "password-reset-form",
+    "title": "Password Reset Form",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/password-reset-form.tsx",
+    "symbol": "PasswordResetForm",
+    "example": "<PasswordResetForm/>"
+  },
+  {
+    "slug": "profile-settings",
+    "title": "Profile Settings",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/profile-settings.tsx",
+    "symbol": "ProfileSettings",
+    "example": "<ProfileSettings/>"
+  },
+  {
+    "slug": "team-management",
+    "title": "Team Management",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/team-management.tsx",
+    "symbol": "TeamManagement",
+    "example": "<TeamManagement/>"
+  },
+  {
+    "slug": "billing-settings",
+    "title": "Billing Settings",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/billing-settings.tsx",
+    "symbol": "BillingSettings",
+    "example": "<BillingSettings/>"
+  },
+  {
+    "slug": "notification-centre",
+    "title": "Notification Centre",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/notification-centre.tsx",
+    "symbol": "NotificationCentre",
+    "example": "<NotificationCentre/>"
+  },
+  {
+    "slug": "command-search",
+    "title": "Command Search",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/command-search.tsx",
+    "symbol": "CommandSearch",
+    "example": "<CommandSearch/>"
+  },
+  {
+    "slug": "chat-workspace",
+    "title": "Chat Workspace",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/chat-workspace.tsx",
+    "symbol": "ChatWorkspace",
+    "example": "<ChatWorkspace/>"
+  }
+]

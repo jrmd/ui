@@ -1,0 +1,1 @@
+import './globals.css';import type {Metadata} from 'next';export const metadata:Metadata={title:"Common — Project workspace",description:"A warmer place for teams to plan and make."};export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}

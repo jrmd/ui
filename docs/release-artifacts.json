@@ -1,0 +1,46 @@
+{
+  "version": "0.1.0",
+  "generatedAt": "2026-09-05T14:55:33.103525+00:00",
+  "templates": [
+    {
+      "file": "downloads/agency.tar.gz",
+      "bytes": 5100397,
+      "sha256": "2d5c8edd9723bb1fca0a9b2bde50f0eb87385a7696425b6d280557e1d8c5a3aa"
+    },
+    {
+      "file": "downloads/ai-chat.tar.gz",
+      "bytes": 5101599,
+      "sha256": "ac63fbe80eb0abd880d3cc821392a7e017cb2dafc4a943800f978bcae29c36f8"
+    },
+    {
+      "file": "downloads/analytics.tar.gz",
+      "bytes": 5103919,
+      "sha256": "ef983e9582cf34b1a7f6f0b4b2505fb877d7a619045c0afc4ccab6e0c5f3ac1d"
+    },
+    {
+      "file": "downloads/editorial.tar.gz",
+      "bytes": 5100323,
+      "sha256": "32e08d17134c748f442830ce98aef8f2932ef8ba0fbd84f72256197ff54917ac"
+    },
+    {
+      "file": "downloads/portfolio.tar.gz",
+      "bytes": 5100352,
+      "sha256": "7c40d79576be5d81694d20e1df8048bb1c9134669832a095e2d93f4ce9e9aa9d"
+    },
+    {
+      "file": "downloads/projects.tar.gz",
+      "bytes": 5102329,
+      "sha256": "fffb4ae846d99cf83968c5f651d829c76046391b45efbfd04f1572c32ff888e6"
+    },
+    {
+      "file": "downloads/saas.tar.gz",
+      "bytes": 5104059,
+      "sha256": "9895b81cf9b8c1fb42a7a7e6e4f07fefd4cbc17a78fe53276de1ad8b99941ce2"
+    },
+    {
+      "file": "downloads/storefront.tar.gz",
+      "bytes": 5101137,
+      "sha256": "f9b87397be98799778d201b3b2b929e3de22172088f0ca00c1d12fb9d8b499a9"
+    }
+  ]
+}

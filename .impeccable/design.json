@@ -1,0 +1,432 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-05T15:47:51+01:00",
+  "title": "Design System: Jez UI",
+  "extensions": {
+    "colorMeta": {
+      "background": {
+        "role": "neutral",
+        "displayName": "Warm White",
+        "canonical": "#f8f7f3",
+        "tonalRamp": [
+          "oklch(15% 0.008 100)",
+          "oklch(27% 0.008 100)",
+          "oklch(39% 0.008 100)",
+          "oklch(51% 0.008 100)",
+          "oklch(63% 0.008 100)",
+          "oklch(75% 0.008 100)",
+          "oklch(87% 0.008 100)",
+          "oklch(95% 0.008 100)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#171817",
+        "tonalRamp": [
+          "oklch(15% 0.008 140)",
+          "oklch(27% 0.008 140)",
+          "oklch(39% 0.008 140)",
+          "oklch(51% 0.008 140)",
+          "oklch(63% 0.008 140)",
+          "oklch(75% 0.008 140)",
+          "oklch(87% 0.008 140)",
+          "oklch(95% 0.008 140)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Mineral Muted",
+        "canonical": "#eeede7",
+        "tonalRamp": [
+          "oklch(15% 0.008 100)",
+          "oklch(27% 0.008 100)",
+          "oklch(39% 0.008 100)",
+          "oklch(51% 0.008 100)",
+          "oklch(63% 0.008 100)",
+          "oklch(75% 0.008 100)",
+          "oklch(87% 0.008 100)",
+          "oklch(95% 0.008 100)"
+        ]
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Soft Graphite",
+        "canonical": "#64665d",
+        "tonalRamp": [
+          "oklch(15% 0.015 110)",
+          "oklch(27% 0.015 110)",
+          "oklch(39% 0.015 110)",
+          "oklch(51% 0.015 110)",
+          "oklch(63% 0.015 110)",
+          "oklch(75% 0.015 110)",
+          "oklch(87% 0.015 110)",
+          "oklch(95% 0.015 110)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline Stone",
+        "canonical": "#d6d7ce",
+        "tonalRamp": [
+          "oklch(15% 0.012 110)",
+          "oklch(27% 0.012 110)",
+          "oklch(39% 0.012 110)",
+          "oklch(51% 0.012 110)",
+          "oklch(63% 0.012 110)",
+          "oklch(75% 0.012 110)",
+          "oklch(87% 0.012 110)",
+          "oklch(95% 0.012 110)"
+        ]
+      },
+      "primary": {
+        "role": "primary",
+        "displayName": "Olive Charcoal",
+        "canonical": "#36483e",
+        "tonalRamp": [
+          "oklch(15% 0.035 155)",
+          "oklch(27% 0.035 155)",
+          "oklch(39% 0.035 155)",
+          "oklch(51% 0.035 155)",
+          "oklch(63% 0.035 155)",
+          "oklch(75% 0.035 155)",
+          "oklch(87% 0.035 155)",
+          "oklch(95% 0.035 155)"
+        ]
+      },
+      "primary-foreground": {
+        "role": "neutral",
+        "displayName": "Primary White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(39% 0 0)",
+          "oklch(51% 0 0)",
+          "oklch(63% 0 0)",
+          "oklch(75% 0 0)",
+          "oklch(87% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "accent": {
+        "role": "tertiary",
+        "displayName": "Soft Sage",
+        "canonical": "#d9e3cd",
+        "tonalRamp": [
+          "oklch(15% 0.028 130)",
+          "oklch(27% 0.028 130)",
+          "oklch(39% 0.028 130)",
+          "oklch(51% 0.028 130)",
+          "oklch(63% 0.028 130)",
+          "oklch(75% 0.028 130)",
+          "oklch(87% 0.028 130)",
+          "oklch(95% 0.028 130)"
+        ]
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "Danger Red",
+        "canonical": "#b32335",
+        "tonalRamp": [
+          "oklch(15% 0.17 20)",
+          "oklch(27% 0.17 20)",
+          "oklch(39% 0.17 20)",
+          "oklch(51% 0.17 20)",
+          "oklch(63% 0.17 20)",
+          "oklch(75% 0.17 20)",
+          "oklch(87% 0.17 20)",
+          "oklch(95% 0.17 20)"
+        ]
+      },
+      "dark-background": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#191b19",
+        "tonalRamp": [
+          "oklch(15% 0.012 140)",
+          "oklch(27% 0.012 140)",
+          "oklch(39% 0.012 140)",
+          "oklch(51% 0.012 140)",
+          "oklch(63% 0.012 140)",
+          "oklch(75% 0.012 140)",
+          "oklch(87% 0.012 140)",
+          "oklch(95% 0.012 140)"
+        ]
+      },
+      "dark-foreground": {
+        "role": "neutral",
+        "displayName": "Pale Ink",
+        "canonical": "#f4f4ec",
+        "tonalRamp": [
+          "oklch(15% 0.008 100)",
+          "oklch(27% 0.008 100)",
+          "oklch(39% 0.008 100)",
+          "oklch(51% 0.008 100)",
+          "oklch(63% 0.008 100)",
+          "oklch(75% 0.008 100)",
+          "oklch(87% 0.008 100)",
+          "oklch(95% 0.008 100)"
+        ]
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "Dark Mineral",
+        "canonical": "#282b27",
+        "tonalRamp": [
+          "oklch(15% 0.015 140)",
+          "oklch(27% 0.015 140)",
+          "oklch(39% 0.015 140)",
+          "oklch(51% 0.015 140)",
+          "oklch(63% 0.015 140)",
+          "oklch(75% 0.015 140)",
+          "oklch(87% 0.015 140)",
+          "oklch(95% 0.015 140)"
+        ]
+      },
+      "dark-muted-foreground": {
+        "role": "neutral",
+        "displayName": "Dark Supporting Text",
+        "canonical": "#b5baae",
+        "tonalRamp": [
+          "oklch(15% 0.02 125)",
+          "oklch(27% 0.02 125)",
+          "oklch(39% 0.02 125)",
+          "oklch(51% 0.02 125)",
+          "oklch(63% 0.02 125)",
+          "oklch(75% 0.02 125)",
+          "oklch(87% 0.02 125)",
+          "oklch(95% 0.02 125)"
+        ]
+      },
+      "dark-border": {
+        "role": "neutral",
+        "displayName": "Dark Hairline",
+        "canonical": "#464b42",
+        "tonalRamp": [
+          "oklch(15% 0.018 130)",
+          "oklch(27% 0.018 130)",
+          "oklch(39% 0.018 130)",
+          "oklch(51% 0.018 130)",
+          "oklch(63% 0.018 130)",
+          "oklch(75% 0.018 130)",
+          "oklch(87% 0.018 130)",
+          "oklch(95% 0.018 130)"
+        ]
+      },
+      "dark-primary": {
+        "role": "primary",
+        "displayName": "Night Sage",
+        "canonical": "#bdcfb8",
+        "tonalRamp": [
+          "oklch(15% 0.035 140)",
+          "oklch(27% 0.035 140)",
+          "oklch(39% 0.035 140)",
+          "oklch(51% 0.035 140)",
+          "oklch(63% 0.035 140)",
+          "oklch(75% 0.035 140)",
+          "oklch(87% 0.035 140)",
+          "oklch(95% 0.035 140)"
+        ]
+      },
+      "dark-primary-foreground": {
+        "role": "neutral",
+        "displayName": "Deep Olive Ink",
+        "canonical": "#17241b",
+        "tonalRamp": [
+          "oklch(15% 0.025 150)",
+          "oklch(27% 0.025 150)",
+          "oklch(39% 0.025 150)",
+          "oklch(51% 0.025 150)",
+          "oklch(63% 0.025 150)",
+          "oklch(75% 0.025 150)",
+          "oklch(87% 0.025 150)",
+          "oklch(95% 0.025 150)"
+        ]
+      },
+      "dark-danger": {
+        "role": "secondary",
+        "displayName": "Night Danger",
+        "canonical": "#ff9ba7",
+        "tonalRamp": [
+          "oklch(15% 0.11 15)",
+          "oklch(27% 0.11 15)",
+          "oklch(39% 0.11 15)",
+          "oklch(51% 0.11 15)",
+          "oklch(63% 0.11 15)",
+          "oklch(75% 0.11 15)",
+          "oklch(87% 0.11 15)",
+          "oklch(95% 0.11 15)"
+        ]
+      },
+      "danger-foreground": {
+        "role": "neutral",
+        "displayName": "Danger White",
+        "canonical": "#ffffff"
+      },
+      "dark-danger-foreground": {
+        "role": "neutral",
+        "displayName": "Dark Danger Ink",
+        "canonical": "#3a101b"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home statements and the largest page introductions."
+      },
+      "heading": {
+        "displayName": "Heading",
+        "purpose": "Section and page headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Catalogue descriptions and reading copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navigation, metadata, filters, and preview tools."
+      }
+    },
+    "shadows": [
+      {
+        "name": "catalogue-preview",
+        "value": "0 10px 30px #00000012",
+        "purpose": "Lift the nested template miniature from its muted preview canvas."
+      }
+    ],
+    "motion": [
+      {
+        "name": "base-duration",
+        "value": "220ms",
+        "purpose": "Shared theme duration for interface motion."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Forced animation and transition duration when reduced motion is requested."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "catalogue-medium",
+        "value": "900px"
+      },
+      {
+        "name": "catalogue-small",
+        "value": "600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The compact default action for registry examples and product controls.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Make something good</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); padding: 10px 16px; font: 500 14px var(--font-interface); transition: filter var(--motion-duration); } .ds-btn-primary:hover { filter: brightness(1.1); } .ds-btn-primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; } .ds-btn-primary:disabled { cursor: not-allowed; opacity: .45; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "A low-emphasis action that holds its place with a hairline border.",
+      "html": "<button class=\"ds-btn-outline\" type=\"button\">Explore components</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: var(--radius); background: transparent; color: var(--foreground); padding: 10px 16px; font: 500 14px var(--font-interface); transition: background var(--motion-duration); } .ds-btn-outline:hover { background: var(--muted); } .ds-btn-outline:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A full-width, warm-white text field for catalogue forms and search.",
+      "html": "<label class=\"ds-input-label\">Search components<input class=\"ds-input\" placeholder=\"Search\" /></label>",
+      "css": ".ds-input-label { display: grid; gap: 6px; color: var(--foreground); font: 12px var(--font-interface); } .ds-input { box-sizing: border-box; width: 100%; height: 44px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background); color: var(--foreground); padding: 8px 12px; font: 14px var(--font-interface); caret-color: var(--primary); } .ds-input::placeholder { color: var(--muted-foreground); } .ds-input:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; } .ds-input:disabled { opacity: .5; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "The flat, bordered container for structured content and component demonstrations.",
+      "html": "<article class=\"ds-card\"><strong>Good foundations.</strong><span>Useful, calm, and ready to extend.</span></article>",
+      "css": ".ds-card { display: grid; gap: 8px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background); color: var(--foreground); padding: 24px; font: 14px var(--font-interface); } .ds-card span { color: var(--muted-foreground); }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "A compact muted pill for quiet classification and metadata.",
+      "html": "<span class=\"ds-badge\">Foundations</span>",
+      "css": ".ds-badge { display: inline-flex; border-radius: 9999px; background: var(--muted); color: var(--foreground); padding: 4px 10px; font: 500 12px var(--font-interface); }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "navigation-menu",
+      "description": "A compact, calm link that gains a muted surface only on hover.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Example navigation\"><a href=\"#components\">Components</a><a href=\"#blocks\">Blocks</a><a href=\"#templates\">Templates</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 4px; } .ds-nav a { display: block; border-radius: 8px; color: var(--foreground); padding: 8px 12px; font: 14px var(--font-interface); text-decoration: none; transition: background var(--motion-duration); } .ds-nav a:hover { background: var(--muted); } .ds-nav a:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }"
+    },
+    {
+      "name": "Switch",
+      "kind": "custom",
+      "refersTo": "switch",
+      "description": "A small pill switch used in the live playground and component forms.",
+      "html": "<button class=\"ds-switch\" type=\"button\" role=\"switch\" aria-checked=\"true\"><span></span></button>",
+      "css": ".ds-switch { box-sizing: border-box; display: block; width: 44px; height: 24px; border: 0; border-radius: 9999px; background: var(--primary); padding: 2px; } .ds-switch span { display: block; width: 20px; height: 20px; border-radius: 9999px; background: var(--background); transform: translateX(20px); transition: transform var(--motion-duration); } .ds-switch:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }"
+    },
+    {
+      "name": "Tabs",
+      "kind": "nav",
+      "refersTo": "tabs",
+      "description": "A flat bottom-border tab row that marks the active view in olive charcoal.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button role=\"tab\" aria-selected=\"true\">Preview</button><button role=\"tab\" aria-selected=\"false\">Code</button></div>",
+      "css": ".ds-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); } .ds-tabs button { border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--foreground); padding: 12px 16px; font: 14px var(--font-interface); } .ds-tabs button[aria-selected=\"true\"] { border-bottom-color: var(--primary); color: var(--primary); } .ds-tabs button:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Mineral Workbench",
+    "overview": "Jez UI makes a generous, warm-white work surface for building interfaces, then interrupts it with concentrated mineral colour and a few playful moving exhibits. The catalogue stays calm enough to scan: ink typography, hairline divisions, roomy grids, and compact controls make the product source easy to assess.\n\nExpression is deliberate rather than ambient. The home exhibit is the place for expressive ribbons, olive-charcoal controls, motion, and dark stages; documentation and component inventory return to quiet surfaces.",
+    "keyCharacteristics": [
+      "Warm white paper and near-black ink establish the default reading environment.",
+      "Space Grotesk gives headings a large, close-set editorial voice; Geist keeps controls and supporting copy direct.",
+      "Soft sage and olive charcoal identify interaction, selection, and the live exhibit rather than filling whole screens.",
+      "Borders and tonal surface changes organize information; shadows appear only on contained previews and elevated overlays."
+    ],
+    "rules": [
+      {
+        "name": "The Concentrated Signal Rule",
+        "body": "Use olive charcoal and soft sage at moments that need direction or energy. Let the warm-white and ink system do the reading work everywhere else.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Voice Rule",
+        "body": "Use Space Grotesk for headings only. Keep UI controls, navigation, code, and supporting text in Geist unless a component explicitly needs a different functional face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Frame Rule",
+        "body": "Keep durable content aligned to the shared shell and let the exhibit, preview canvas, or template artwork provide the visual event inside it.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-at-Rest Rule",
+        "body": "Give ordinary cards and controls their boundary with colour and a one-pixel border. Reserve elevation for overlays and nested previews that need to read as above their context.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the warm-white, ink, and hairline-stone foundation for catalogue, documentation, and component previews.",
+      "Do reserve soft sage for highlights, selection, or a deliberate exhibit panel, and olive charcoal for active controls and direct action.",
+      "Do keep display type in Space Grotesk with close tracking and use Geist for interface work.",
+      "Do retain the shared focus treatment on every interactive primitive.",
+      "Do collapse exhibit and catalogue grids at the established breakpoints rather than squeezing desktop arrangements on mobile."
+    ],
+    "donts": [
+      "Don't introduce ambient shadows or heavy card chrome into the standard catalogue grid.",
+      "Don't turn the documentation surface into a permanent dark or sage field; expression belongs in bounded demos and exhibits.",
+      "Don't use rounded decorative blobs as a substitute for the system's restrained rectangle, pill, and hairline language.",
+      "Don't replace real component states with inert showcase controls; the live exhibit and registry both depend on working interaction."
+    ]
+  }
+}

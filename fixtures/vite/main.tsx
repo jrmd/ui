@@ -1,0 +1,1 @@
+import {createRoot} from 'react-dom/client';import './globals.css';import {installed} from './all-components';createRoot(document.getElementById('root')!).render(<main>{installed.length} installed components and blocks</main>);

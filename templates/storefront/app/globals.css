@@ -1,0 +1,8 @@
+@import "./theme.css";
+@import "@fontsource/space-grotesk/latin-400.css";
+@import "@fontsource/space-grotesk/latin-500.css";
+@import "@fontsource/space-grotesk/latin-700.css";
+@import "@fontsource/geist/latin-400.css";
+@import "@fontsource/geist/latin-500.css";
+@source "../registry";
+:root{--background:#f8f5ee;--primary:#414c36;--accent:#e4dcc8;}

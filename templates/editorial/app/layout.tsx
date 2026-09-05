@@ -1,0 +1,1 @@
+import './globals.css';import type {Metadata} from 'next';export const metadata:Metadata={title:"Still — Editorial publication",description:"Good stories, given the space they deserve."};export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}

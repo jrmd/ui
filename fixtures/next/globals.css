@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-accent: var(--accent);
+    --color-danger: var(--danger);
+    --font-display: var(--font-heading);
+    --font-interface: var(--font-interface);
+    --font-heading: var(--font-heading);
+  @keyframes jez-shift {
+  to {
+    background-position: 200% 50%;
+        }
+    }
+  @keyframes jez-grid {
+  to {
+    background-position: 48px 48px;
+        }
+    }
+  @keyframes jez-ripple {
+  to {
+    transform: scale(3);
+    opacity: 0;
+        }
+    }
+  @keyframes jez-marquee {
+  to {
+    transform: translateX(-50%);
+        }
+    }
+  @keyframes jez-aurora {
+  50% {
+    transform: translate(12%,-8%) rotate(20deg);
+        }
+    }
+}
+
+:root {
+    --background: #f8f7f3;
+    --foreground: #171817;
+    --muted: #eeede7;
+    --muted-foreground: #64665d;
+    --border: #d6d7ce;
+    --primary: #343be8;
+    --primary-foreground: #ffffff;
+    --accent: #d9fb61;
+    --danger: #b32335;
+    --font-heading: "Space Grotesk",sans-serif;
+    --font-interface: "Geist",sans-serif;
+}
+
+.dark {
+    --background: #191b19;
+    --foreground: #f4f4ec;
+    --muted: #282b27;
+    --muted-foreground: #b5baae;
+    --border: #464b42;
+    --primary: #9aabff;
+    --primary-foreground: #111731;
+    --accent: #d9fb61;
+    --danger: #ff9ba7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="jez-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    }
+}

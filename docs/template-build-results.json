@@ -1,0 +1,38 @@
+{
+  "verifiedAt": "2026-09-05T16:52:15.843Z",
+  "temporaryBuildsCleaned": true,
+  "results": [
+    {
+      "slug": "saas",
+      "status": "passed"
+    },
+    {
+      "slug": "analytics",
+      "status": "passed"
+    },
+    {
+      "slug": "projects",
+      "status": "passed"
+    },
+    {
+      "slug": "ai-chat",
+      "status": "passed"
+    },
+    {
+      "slug": "agency",
+      "status": "passed"
+    },
+    {
+      "slug": "portfolio",
+      "status": "passed"
+    },
+    {
+      "slug": "editorial",
+      "status": "passed"
+    },
+    {
+      "slug": "storefront",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "#e6edcc",
+        "files": [
+          "registry/ui/webgl-stage.tsx"
+        ],
+        "createdAt": "2026-09-05T14:59:21.983Z",
+        "reason": "Agent review: intentional contrasting ribbon material within the configurable WebGL art demo; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "7px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:22.198Z",
+        "reason": "Agent review: intentional rotated brand mark, miniature template frame, isolated preview frame; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "13px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:22.365Z",
+        "reason": "Agent review: intentional catalogue navigation, section navigation, catalogue search input, template route list, template route links; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#182022",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:22.510Z",
+        "reason": "Agent review: intentional dark WebGL exhibit stage; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "25px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:22.793Z",
+        "reason": "Agent review: intentional exhibit heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#bdc9b5",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:22.970Z",
+        "reason": "Agent review: intentional secondary exhibit caption; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "28px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:23.165Z",
+        "reason": "Agent review: intentional fluid animated type exhibit, mobile section heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#e9e7f0",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:23.311Z",
+        "reason": "Agent review: intentional lavender control exhibit surface; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#2c2a39",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:23.452Z",
+        "reason": "Agent review: intentional control exhibit ink; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "14px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:23.571Z",
+        "reason": "Agent review: intentional section supporting text, thumbnail caption, button specimen type, template supporting copy, mobile introduction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "11px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:23.815Z",
+        "reason": "Agent review: intentional thumbnail metadata, code copy control, mobile navigation, mobile section link; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#e1fa92",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:24.061Z",
+        "reason": "Agent review: intentional illustrative button specimen accent; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#cbcfc0",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:24.184Z",
+        "reason": "Agent review: intentional illustrative card specimen border; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#8d9f6c",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:24.404Z",
+        "reason": "Agent review: intentional illustrative chart specimen bars; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "5px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:24.608Z",
+        "reason": "Agent review: intentional chart specimen bar corners, miniature template art corners; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#9fa595",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:24.800Z",
+        "reason": "Agent review: intentional dot-pattern specimen; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#96b379",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:24.881Z",
+        "reason": "Agent review: intentional shape specimen outline; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "9px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:25.077Z",
+        "reason": "Agent review: intentional miniature template header; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#deded4",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:25.180Z",
+        "reason": "Agent review: intentional miniature template separator; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "30px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:25.329Z",
+        "reason": "Agent review: intentional miniature template heading, mobile type exhibit; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#e7e9e0",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:25.461Z",
+        "reason": "Agent review: intentional miniature template text lines; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#d8e1b6",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:25.835Z",
+        "reason": "Agent review: intentional miniature template art surface; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "46px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:26.086Z",
+        "reason": "Agent review: intentional component detail heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "10px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:26.301Z",
+        "reason": "Agent review: intentional code panel; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "48px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:26.448Z",
+        "reason": "Agent review: intentional documentation heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "26px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:26.607Z",
+        "reason": "Agent review: intentional documentation section heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "44px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:26.768Z",
+        "reason": "Agent review: intentional template launch heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "22px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:26.865Z",
+        "reason": "Agent review: intentional mobile brand; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "54px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:26.896Z",
+        "reason": "Agent review: intentional mobile homepage display; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "10px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:27.042Z",
+        "reason": "Agent review: intentional mobile exhibit label, horizontal-scroll instruction; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "23px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:27.205Z",
+        "reason": "Agent review: intentional mobile type specimen; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "43px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:27.448Z",
+        "reason": "Agent review: intentional mobile catalogue heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "37px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:27.613Z",
+        "reason": "Agent review: intentional mobile component heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "39px",
+        "files": [
+          "apps/catalogue/app/globals.css"
+        ],
+        "createdAt": "2026-09-05T14:59:27.884Z",
+        "reason": "Agent review: intentional mobile documentation heading; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "11px",
+        "files": [
+          "apps/catalogue/components/home-exhibit.tsx"
+        ],
+        "createdAt": "2026-09-05T14:59:28.076Z",
+        "reason": "Agent review: intentional compact scene-speed label in the interactive homepage exhibit; present in the production source reviewed during the 2026-09-05 finish pass. DESIGN.md records shared primitives, not every specimen and responsive surface value."
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+name: Verify catalogue
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.22.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - run: |
+          pnpm --filter @jez-ui/catalogue start > /tmp/jez-ui-server.log 2>&1 &
+          for attempt in $(seq 1 30); do curl -fsS http://localhost:3000 > /dev/null && break; sleep 1; done
+          pnpm test
+          pnpm fixtures:verify
+          pnpm templates:build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification
+          path: |
+            playwright-report
+            docs/template-build-results.json

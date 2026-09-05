@@ -1,0 +1,29 @@
+{
+  "name": "jez-template-projects",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tailwindcss": "4.3.3",
+    "@tailwindcss/postcss": "4.3.3",
+    "@fontsource/space-grotesk": "5.2.10",
+    "@fontsource/geist": "5.2.8",
+    "clsx": "2.1.1",
+    "tailwind-merge": "3.5.0",
+    "radix-ui": "1.6.7",
+    "lucide-react": "0.577.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "24.12.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
+  }
+}

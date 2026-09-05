@@ -1,0 +1,1 @@
+"use client";import {installed} from '../all-components';export default function Page(){return <main>{installed.length} installed components and blocks</main>}

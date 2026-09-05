@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-09-05T15:02:36.421Z",
+  "baseUrl": "http://localhost:3000",
+  "slugs": [
+    "button",
+    "card",
+    "input",
+    "tilt-card",
+    "shared-layout-transition",
+    "area-chart",
+    "webgl-particle-field",
+    "webgl-ribbon-field",
+    "webgl-liquid-surface",
+    "webgl-orb",
+    "webgl-terrain",
+    "webgl-image-distortion"
+  ],
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844
+    }
+  },
+  "browser": "Chromium headless shell 1234"
+}
