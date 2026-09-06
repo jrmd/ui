@@ -1,3 +1,15 @@
+import { FeatureCarousel } from "../../../registry/blocks/feature-carousel";
+import { ExpandableFeatures } from "../../../registry/blocks/expandable-features";
+import { FeatureTabs } from "../../../registry/blocks/feature-tabs";
+import { FeatureMosaic } from "../../../registry/blocks/feature-mosaic";
+import { FeatureSpotlight } from "../../../registry/blocks/feature-spotlight";
+import { ProductBento } from "../../../registry/blocks/product-bento";
+import { IntegrationBento } from "../../../registry/blocks/integration-bento";
+import { HowItWorksHorizontal } from "../../../registry/blocks/how-it-works-horizontal";
+import { HowItWorksVertical } from "../../../registry/blocks/how-it-works-vertical";
+import { CenteredAuth } from "../../../registry/blocks/centered-auth";
+import { SplitAuth } from "../../../registry/blocks/split-auth";
+import { InsetAuth } from "../../../registry/blocks/inset-auth";
 import * as React from "react";
 import { MediaAside } from "../../../registry/blocks/media-aside";
 import { JournalBento } from "../../../registry/blocks/journal-bento";
@@ -1049,6 +1061,150 @@ export function BlockConsumers() {
       >
         <span>Owned workspace-login</span>
       </WorkspaceLogin>
+      <FeatureCarousel
+        id="feature-carousel"
+        data-testid="feature-carousel"
+        aria-label="Owned feature-carousel"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned feature-carousel</span>
+      </FeatureCarousel>
+      <ExpandableFeatures
+        id="expandable-features"
+        data-testid="expandable-features"
+        aria-label="Owned expandable-features"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned expandable-features</span>
+      </ExpandableFeatures>
+      <FeatureTabs
+        id="feature-tabs"
+        data-testid="feature-tabs"
+        aria-label="Owned feature-tabs"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned feature-tabs</span>
+      </FeatureTabs>
+      <FeatureMosaic
+        id="feature-mosaic"
+        data-testid="feature-mosaic"
+        aria-label="Owned feature-mosaic"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned feature-mosaic</span>
+      </FeatureMosaic>
+      <FeatureSpotlight
+        id="feature-spotlight"
+        data-testid="feature-spotlight"
+        aria-label="Owned feature-spotlight"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned feature-spotlight</span>
+      </FeatureSpotlight>
+      <ProductBento
+        id="product-bento"
+        data-testid="product-bento"
+        aria-label="Owned product-bento"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned product-bento</span>
+      </ProductBento>
+      <IntegrationBento
+        id="integration-bento"
+        data-testid="integration-bento"
+        aria-label="Owned integration-bento"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned integration-bento</span>
+      </IntegrationBento>
+      <HowItWorksHorizontal
+        id="how-it-works-horizontal"
+        data-testid="how-it-works-horizontal"
+        aria-label="Owned how-it-works-horizontal"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned how-it-works-horizontal</span>
+      </HowItWorksHorizontal>
+      <HowItWorksVertical
+        id="how-it-works-vertical"
+        data-testid="how-it-works-vertical"
+        aria-label="Owned how-it-works-vertical"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned how-it-works-vertical</span>
+      </HowItWorksVertical>
+      <CenteredAuth
+        id="centered-auth"
+        data-testid="centered-auth"
+        aria-label="Owned centered-auth"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned centered-auth</span>
+      </CenteredAuth>
+      <SplitAuth
+        id="split-auth"
+        data-testid="split-auth"
+        aria-label="Owned split-auth"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned split-auth</span>
+      </SplitAuth>
+      <InsetAuth
+        id="inset-auth"
+        data-testid="inset-auth"
+        aria-label="Owned inset-auth"
+        className="p-2!"
+        style={{ outlineOffset: 7 }}
+        ref={(node) => {
+          if (node) node.dataset.refConnected = "true";
+        }}
+      >
+        <span>Owned inset-auth</span>
+      </InsetAuth>
     </main>
   );
 }

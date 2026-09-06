@@ -552,7 +552,7 @@ fs.writeFileSync(
 );
 fs.writeFileSync(
   out + "/llms.txt",
-  `# Jez UI\n\n91 source-owned React components, 79 blocks, ${templateSpecs.length} templates.\n\n${items.map((i) => `- [${i.title}](/${i.kind === "block" ? "blocks" : "components"}/${i.slug}): ${i.group}`).join("\n")}\n`,
+  `# Jez UI\n\n${items.filter((i) => i.kind === "component").length} source-owned React components, ${items.filter((i) => i.kind === "block").length} blocks, ${templateSpecs.length} templates.\n\n${items.map((i) => `- [${i.title}](/${i.kind === "block" ? "blocks" : "components"}/${i.slug}): ${i.group}`).join("\n")}\n`,
 );
 console.log(
   `Generated ${items.length} registry entries, ${templateSpecs.length} standalone templates and downloads.`,

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import items from "../packages/catalogue/items.json";
 const fixture = process.env.COMPOSITION_FIXTURE_URL ?? "http://127.0.0.1:4175";
 for (const width of [1440, 390]) {
-  test(`all 80 composed block recipes render at ${width}px`, async ({
+  test(`all registered composed block recipes render at ${width}px`, async ({
     page,
   }) => {
     test.setTimeout(240_000);

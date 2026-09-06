@@ -1,6 +1,6 @@
 # Jez UI
 
-91 source-owned React components, 79 blocks, 9 templates.
+91 source-owned React components, 92 blocks, 9 templates.
 
 - [Button](/components/button): foundations
 - [Icon Button](/components/icon-button): foundations
@@ -173,3 +173,15 @@
 - [SSO Login](/blocks/sso-login): workspace
 - [Split Login](/blocks/split-login): workspace
 - [Workspace Login](/blocks/workspace-login): workspace
+- [Feature Carousel](/blocks/feature-carousel): marketing
+- [Expandable Features](/blocks/expandable-features): marketing
+- [Feature Tabs](/blocks/feature-tabs): marketing
+- [Feature Mosaic](/blocks/feature-mosaic): marketing
+- [Feature Spotlight](/blocks/feature-spotlight): marketing
+- [Product Bento](/blocks/product-bento): marketing
+- [Integration Bento](/blocks/integration-bento): marketing
+- [How It Works Horizontal](/blocks/how-it-works-horizontal): marketing
+- [How It Works Vertical](/blocks/how-it-works-vertical): marketing
+- [Centered Auth](/blocks/centered-auth): workspace
+- [Split Auth](/blocks/split-auth): workspace
+- [Inset Auth](/blocks/inset-auth): workspace

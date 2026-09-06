@@ -115,7 +115,7 @@ export function HomeExhibit() {
       <div className="exhibit-bottom">
         <div className="stat-links">
           <a href="/components">91 components ↗</a>
-          <a href="/blocks">79 blocks ↗</a>
+          <a href="/blocks">92 blocks ↗</a>
           <a href="/templates">9 templates ↗</a>
         </div>
         <span>React + Tailwind. Your source. Your next thing.</span>

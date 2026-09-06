@@ -8,7 +8,7 @@
     "symbol": "Button",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"grid w-full max-w-lg gap-6\"><div className=\"flex items-center justify-between border-b border-border pb-5\"><div><h3 className=\"text-lg font-semibold\">Project actions</h3><p className=\"mt-1 text-sm text-muted-foreground\">Website refresh · Draft</p></div><Badge>Draft</Badge></div><div className=\"flex flex-wrap items-center gap-3\"><Button loading={buttonBusy} onClick={()=>setButtonBusy(true)}><Plus size={16}/>Publish project</Button><Button variant=\"outline\" onClick={()=>setNotice('Draft saved.')}>Save draft</Button><Button variant=\"ghost\" onClick={()=>setNotice('Preview selected.')}>Preview <ArrowUpRight size={15}/></Button></div><div className=\"flex flex-wrap items-center gap-3\"><Button size=\"sm\" variant=\"secondary\" onClick={()=>setNotice('Invitation link copied in this example.')}>Invite member</Button><Button size=\"sm\" variant=\"danger\" onClick={()=>setNotice('Archive action selected.')}>Archive</Button><Button size=\"sm\" disabled>Up to date <Check size={14}/></Button></div></div>"
+    "example": "<div className=\"grid w-full max-w-lg gap-6\"><div className=\"flex items-center justify-between border-b border-border pb-5\"><div><h3 className=\"text-lg font-semibold\">Project actions</h3><p className=\"mt-1 text-sm text-muted-foreground\">Website refresh \u00b7 Draft</p></div><Badge>Draft</Badge></div><div className=\"flex flex-wrap items-center gap-3\"><Button loading={buttonBusy} onClick={()=>setButtonBusy(true)}><Plus size={16}/>Publish project</Button><Button variant=\"outline\" onClick={()=>setNotice('Draft saved.')}>Save draft</Button><Button variant=\"ghost\" onClick={()=>setNotice('Preview selected.')}>Preview <ArrowUpRight size={15}/></Button></div><div className=\"flex flex-wrap items-center gap-3\"><Button size=\"sm\" variant=\"secondary\" onClick={()=>setNotice('Invitation link copied in this example.')}>Invite member</Button><Button size=\"sm\" variant=\"danger\" onClick={()=>setNotice('Archive action selected.')}>Archive</Button><Button size=\"sm\" disabled>Up to date <Check size={14}/></Button></div></div>"
   },
   {
     "slug": "icon-button",
@@ -30,7 +30,7 @@
     "symbol": "Badge",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"grid max-w-md gap-7\"><h3 className=\"text-2xl\">A status worth noticing.</h3><div className=\"flex flex-wrap gap-3\"><Badge tone=\"positive\">● Live</Badge><Badge tone=\"accent\">In review</Badge><Badge tone=\"warning\">Needs attention</Badge><Badge>Draft</Badge></div><p className=\"text-sm text-muted-foreground\">Small signals. Clear next steps.</p></div>"
+    "example": "<div className=\"grid max-w-md gap-7\"><h3 className=\"text-2xl\">A status worth noticing.</h3><div className=\"flex flex-wrap gap-3\"><Badge tone=\"positive\">\u25cf Live</Badge><Badge tone=\"accent\">In review</Badge><Badge tone=\"warning\">Needs attention</Badge><Badge>Draft</Badge></div><p className=\"text-sm text-muted-foreground\">Small signals. Clear next steps.</p></div>"
   },
   {
     "slug": "avatar",
@@ -107,7 +107,7 @@
     "symbol": "Textarea",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"w-full max-w-lg\"><div className=\"mb-4 flex items-center gap-3\"><Avatar alt=\"Alex Morgan\" fallback=\"AM\" className=\"size-8\"/><div><h3 className=\"text-sm font-semibold\">Add a project update</h3><p className=\"text-xs text-muted-foreground\">Shared with your team</p></div></div><div className=\"overflow-hidden rounded-xl border border-border focus-within:border-primary/50 focus-within:ring-3 focus-within:ring-primary/8\"><Textarea aria-label=\"Project description\" placeholder=\"What changed? What’s next?\" maxLength={500} value={draft} onChange={e=>setDraft(e.target.value)} className=\"min-h-36 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0\"/><div className=\"flex items-center justify-between border-t border-border/50 bg-muted/20 px-3 py-2\"><span className=\"text-xs text-muted-foreground tabular-nums\">{draft.length} / 500</span><Button size=\"sm\" disabled={!draft.trim()} onClick={()=>{setNotice('Update posted: '+draft);setDraft('');}}>Post update <ArrowUpRight size={14}/></Button></div></div></div>"
+    "example": "<div className=\"w-full max-w-lg\"><div className=\"mb-4 flex items-center gap-3\"><Avatar alt=\"Alex Morgan\" fallback=\"AM\" className=\"size-8\"/><div><h3 className=\"text-sm font-semibold\">Add a project update</h3><p className=\"text-xs text-muted-foreground\">Shared with your team</p></div></div><div className=\"overflow-hidden rounded-xl border border-border focus-within:border-primary/50 focus-within:ring-3 focus-within:ring-primary/8\"><Textarea aria-label=\"Project description\" placeholder=\"What changed? What\u2019s next?\" maxLength={500} value={draft} onChange={e=>setDraft(e.target.value)} className=\"min-h-36 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0\"/><div className=\"flex items-center justify-between border-t border-border/50 bg-muted/20 px-3 py-2\"><span className=\"text-xs text-muted-foreground tabular-nums\">{draft.length} / 500</span><Button size=\"sm\" disabled={!draft.trim()} onClick={()=>{setNotice('Update posted: '+draft);setDraft('');}}>Post update <ArrowUpRight size={14}/></Button></div></div></div>"
   },
   {
     "slug": "label",
@@ -217,7 +217,7 @@
     "symbol": "Collapsible",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"w-full max-w-md\"><Collapsible title=\"Changed files · 3\" defaultOpen>{[\"components/button.tsx\",\"styles/theme.css\",\"tests/controls.spec.ts\"].map((file,i)=><div key={file} className=\"flex items-center gap-2 py-2 text-sm\"><FileCode2 size={15} className=\"shrink-0 text-muted-foreground\"/><span className=\"min-w-0 flex-1 truncate font-mono text-xs\">{file}</span><span className=\"text-xs text-primary\">+{[24,8,16][i]}</span></div>)}</Collapsible></div>"
+    "example": "<div className=\"w-full max-w-md\"><Collapsible title=\"Changed files \u00b7 3\" defaultOpen>{[\"components/button.tsx\",\"styles/theme.css\",\"tests/controls.spec.ts\"].map((file,i)=><div key={file} className=\"flex items-center gap-2 py-2 text-sm\"><FileCode2 size={15} className=\"shrink-0 text-muted-foreground\"/><span className=\"min-w-0 flex-1 truncate font-mono text-xs\">{file}</span><span className=\"text-xs text-primary\">+{[24,8,16][i]}</span></div>)}</Collapsible></div>"
   },
   {
     "slug": "dialog",
@@ -250,7 +250,7 @@
     "symbol": "Sheet",
     "customization": [],
     "copyDefaults": {},
-    "example": "<Sheet trigger={<Button variant=\"outline\">Open details</Button>} title=\"Project details\" description=\"Website refresh · PRJ-102\"><div className=\"grid gap-6\"><FormField label=\"Project name\"><Input defaultValue=\"Website refresh\"/></FormField><FormField label=\"Status\"><Select label=\"Status\" defaultValue=\"progress\" options={[{label:\"In progress\",value:\"progress\"},{label:\"In review\",value:\"review\"},{label:\"Complete\",value:\"complete\"}]}/></FormField><FormField label=\"Notes\"><Textarea defaultValue=\"Explore a clearer homepage direction and bring the component previews up to date.\"/></FormField><Button onClick={()=>setNotice(\"Project details saved.\")}>Save changes</Button></div></Sheet>"
+    "example": "<Sheet trigger={<Button variant=\"outline\">Open details</Button>} title=\"Project details\" description=\"Website refresh \u00b7 PRJ-102\"><div className=\"grid gap-6\"><FormField label=\"Project name\"><Input defaultValue=\"Website refresh\"/></FormField><FormField label=\"Status\"><Select label=\"Status\" defaultValue=\"progress\" options={[{label:\"In progress\",value:\"progress\"},{label:\"In review\",value:\"review\"},{label:\"Complete\",value:\"complete\"}]}/></FormField><FormField label=\"Notes\"><Textarea defaultValue=\"Explore a clearer homepage direction and bring the component previews up to date.\"/></FormField><Button onClick={()=>setNotice(\"Project details saved.\")}>Save changes</Button></div></Sheet>"
   },
   {
     "slug": "popover",
@@ -283,7 +283,7 @@
     "symbol": "DropdownMenu",
     "customization": [],
     "copyDefaults": {},
-    "example": "<DropdownMenu><DropdownMenuTrigger asChild><Button variant=\"outline\">Project actions ↓</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuLabel>Project</DropdownMenuLabel>{actions.map(action=><DropdownMenuItem key={action.label} onSelect={action.onSelect}>{action.label}</DropdownMenuItem>)}<DropdownMenuSeparator/><DropdownMenuCheckboxItem checked={showArchived} onCheckedChange={setShowArchived}>Show archived</DropdownMenuCheckboxItem><DropdownMenuSub><DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger><DropdownMenuSubContent><DropdownMenuItem onSelect={()=>setNotice(\"Moved to Personal.\")}>Personal</DropdownMenuItem><DropdownMenuItem onSelect={()=>setNotice(\"Moved to Team.\")}>Team</DropdownMenuItem></DropdownMenuSubContent></DropdownMenuSub></DropdownMenuContent></DropdownMenu>"
+    "example": "<DropdownMenu><DropdownMenuTrigger asChild><Button variant=\"outline\">Project actions \u2193</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuLabel>Project</DropdownMenuLabel>{actions.map(action=><DropdownMenuItem key={action.label} onSelect={action.onSelect}>{action.label}</DropdownMenuItem>)}<DropdownMenuSeparator/><DropdownMenuCheckboxItem checked={showArchived} onCheckedChange={setShowArchived}>Show archived</DropdownMenuCheckboxItem><DropdownMenuSub><DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger><DropdownMenuSubContent><DropdownMenuItem onSelect={()=>setNotice(\"Moved to Personal.\")}>Personal</DropdownMenuItem><DropdownMenuItem onSelect={()=>setNotice(\"Moved to Team.\")}>Team</DropdownMenuItem></DropdownMenuSubContent></DropdownMenuSub></DropdownMenuContent></DropdownMenu>"
   },
   {
     "slug": "context-menu",
@@ -360,7 +360,7 @@
     "symbol": "CommandPalette",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">One shortcut away.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Find your next action without losing your place.</p></div><CommandPalette items={[{label:\"Create a project\",group:\"Workspace\",shortcut:\"⌘ N\",onSelect:()=>setNotice(\"Create project selected.\")},{label:\"Find a teammate\",group:\"Workspace\",onSelect:()=>setNotice(\"Team search selected.\")},{label:\"Open settings\",group:\"Navigation\",shortcut:\"⌘ ,\",onSelect:()=>setNotice(\"Settings selected.\")},{label:\"View archive\",group:\"Navigation\",onSelect:()=>setNotice(\"Archive selected.\")}]}/></div>"
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">One shortcut away.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Find your next action without losing your place.</p></div><CommandPalette items={[{label:\"Create a project\",group:\"Workspace\",shortcut:\"\u2318 N\",onSelect:()=>setNotice(\"Create project selected.\")},{label:\"Find a teammate\",group:\"Workspace\",onSelect:()=>setNotice(\"Team search selected.\")},{label:\"Open settings\",group:\"Navigation\",shortcut:\"\u2318 ,\",onSelect:()=>setNotice(\"Settings selected.\")},{label:\"View archive\",group:\"Navigation\",onSelect:()=>setNotice(\"Archive selected.\")}]}/></div>"
   },
   {
     "slug": "calendar",
@@ -448,7 +448,7 @@
     "symbol": "SearchInput",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Find the thing.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Projects, notes, and the details you nearly forgot.</p></div><div><SearchInput value={searchTerm} onValueChange={setSearchTerm} placeholder=\"Search projects…\"/><div className=\"mt-3 overflow-hidden rounded-lg border border-border\">{[\"Website refresh\",\"Brand guidelines\",\"Component library\"].filter(t=>t.toLowerCase().includes(searchTerm.toLowerCase())).map(t=><button key={t} onClick={()=>setNotice(t+\" opened.\")} className=\"flex w-full items-center gap-3 border-b border-border/50 px-3 py-3 text-left text-sm last:border-0 hover:bg-muted\"><Folder size={15} className=\"text-muted-foreground\"/>{t}<ArrowUpRight size={13} className=\"ml-auto text-muted-foreground\"/></button>)}{![\"Website refresh\",\"Brand guidelines\",\"Component library\"].some(t=>t.toLowerCase().includes(searchTerm.toLowerCase()))&&<p className=\"p-5 text-sm text-muted-foreground\">No projects found.</p>}</div></div></div>"
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Find the thing.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Projects, notes, and the details you nearly forgot.</p></div><div><SearchInput value={searchTerm} onValueChange={setSearchTerm} placeholder=\"Search projects\u2026\"/><div className=\"mt-3 overflow-hidden rounded-lg border border-border\">{[\"Website refresh\",\"Brand guidelines\",\"Component library\"].filter(t=>t.toLowerCase().includes(searchTerm.toLowerCase())).map(t=><button key={t} onClick={()=>setNotice(t+\" opened.\")} className=\"flex w-full items-center gap-3 border-b border-border/50 px-3 py-3 text-left text-sm last:border-0 hover:bg-muted\"><Folder size={15} className=\"text-muted-foreground\"/>{t}<ArrowUpRight size={13} className=\"ml-auto text-muted-foreground\"/></button>)}{![\"Website refresh\",\"Brand guidelines\",\"Component library\"].some(t=>t.toLowerCase().includes(searchTerm.toLowerCase()))&&<p className=\"p-5 text-sm text-muted-foreground\">No projects found.</p>}</div></div></div>"
   },
   {
     "slug": "tag-input",
@@ -470,7 +470,7 @@
     "symbol": "FormField",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Start something new.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Give your workspace a name you will remember.</p></div><FormField label=\"Project name\" hint=\"Something you’ll recognise later.\"><Input placeholder=\"Field notes\"/></FormField></div>"
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Start something new.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">Give your workspace a name you will remember.</p></div><FormField label=\"Project name\" hint=\"Something you\u2019ll recognise later.\"><Input placeholder=\"Field notes\"/></FormField></div>"
   },
   {
     "slug": "pagination",
@@ -558,7 +558,7 @@
     "symbol": "Progress",
     "customization": [],
     "copyDefaults": {},
-    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Getting there.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">The next release is taking shape.</p></div><div className=\"grid gap-4\"><div className=\"flex items-center justify-between text-sm\"><span>{progress===100?\"Export complete\":progressRunning?\"Preparing export…\":progress>0?\"Export paused\":\"Ready to export\"}</span><span className=\"font-mono tabular-nums\">{progress}%</span></div><Progress value={progress} label=\"Export progress\" showLabel={false}/><div className=\"flex gap-2\"><Button size=\"sm\" disabled={progress===100} onClick={()=>setProgressRunning(v=>!v)}>{progressRunning?<Pause size={14}/>:<Play size={14}/>} {progressRunning?\"Pause\":progress>0?\"Resume\":\"Start export\"}</Button><Button size=\"sm\" variant=\"ghost\" aria-label=\"Reset progress\" onClick={()=>{setProgressRunning(false);setProgress(0);}}><RotateCcw size={14}/></Button></div><p className=\"text-xs text-muted-foreground\">Simulated export · try pausing halfway through.</p></div></div>"
+    "example": "<div className=\"w-full max-w-sm\"><div className=\"mb-7\"><h3 className=\"text-2xl tracking-tight\">Getting there.</h3><p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">The next release is taking shape.</p></div><div className=\"grid gap-4\"><div className=\"flex items-center justify-between text-sm\"><span>{progress===100?\"Export complete\":progressRunning?\"Preparing export\u2026\":progress>0?\"Export paused\":\"Ready to export\"}</span><span className=\"font-mono tabular-nums\">{progress}%</span></div><Progress value={progress} label=\"Export progress\" showLabel={false}/><div className=\"flex gap-2\"><Button size=\"sm\" disabled={progress===100} onClick={()=>setProgressRunning(v=>!v)}>{progressRunning?<Pause size={14}/>:<Play size={14}/>} {progressRunning?\"Pause\":progress>0?\"Resume\":\"Start export\"}</Button><Button size=\"sm\" variant=\"ghost\" aria-label=\"Reset progress\" onClick={()=>{setProgressRunning(false);setProgress(0);}}><RotateCcw size={14}/></Button></div><p className=\"text-xs text-muted-foreground\">Simulated export \u00b7 try pausing halfway through.</p></div></div>"
   },
   {
     "slug": "text-reveal",
@@ -668,7 +668,7 @@
     "symbol": "MagneticButton",
     "customization": [],
     "copyDefaults": {},
-    "example": "<MagneticButton>Come a little closer →</MagneticButton>"
+    "example": "<MagneticButton>Come a little closer \u2192</MagneticButton>"
   },
   {
     "slug": "tilt-card",
@@ -679,7 +679,7 @@
     "symbol": "TiltCard",
     "customization": [],
     "copyDefaults": {},
-    "example": "<TiltCard className=\"w-full max-w-sm border-0 bg-primary p-0 text-primary-foreground\"><div className=\"flex min-h-80 flex-col justify-between p-8\"><div className=\"flex justify-between text-sm\"><span>Jez Studio</span><span>↗</span></div><h3 className=\"text-5xl font-medium leading-[1.05] tracking-tight\">A different<br/>perspective.</h3><div className=\"flex justify-between border-t border-white/30 pt-5 text-xs\"><span>Move your pointer.</span><span>Make it yours.</span></div></div></TiltCard>"
+    "example": "<TiltCard className=\"w-full max-w-sm border-0 bg-primary p-0 text-primary-foreground\"><div className=\"flex min-h-80 flex-col justify-between p-8\"><div className=\"flex justify-between text-sm\"><span>Jez Studio</span><span>\u2197</span></div><h3 className=\"text-5xl font-medium leading-[1.05] tracking-tight\">A different<br/>perspective.</h3><div className=\"flex justify-between border-t border-white/30 pt-5 text-xs\"><span>Move your pointer.</span><span>Make it yours.</span></div></div></TiltCard>"
   },
   {
     "slug": "spotlight-card",
@@ -1106,11 +1106,7 @@
     "kind": "block",
     "file": "registry/blocks/editorial-hero.tsx",
     "symbol": "EditorialHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel"
-    ],
+    "customization": ["title", "description", "actionLabel"],
     "copyDefaults": {},
     "example": "<EditorialHero/>"
   },
@@ -1121,11 +1117,7 @@
     "kind": "block",
     "file": "registry/blocks/product-demo-hero.tsx",
     "symbol": "ProductDemoHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel"
-    ],
+    "customization": ["title", "description", "actionLabel"],
     "copyDefaults": {
       "footerNote": "Try the project: switch views, open a task, or mark something done."
     },
@@ -1138,12 +1130,7 @@
     "kind": "block",
     "file": "registry/blocks/webgl-hero.tsx",
     "symbol": "WebglHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "description", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play",
       "pauseLabel": "Pause",
@@ -1334,12 +1321,7 @@
     "kind": "block",
     "file": "registry/blocks/terrain-hero.tsx",
     "symbol": "TerrainHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "description", "actionLabel", "artwork"],
     "copyDefaults": {
       "brand": "FIELD / 01",
       "meta": "A study in elevation",
@@ -1356,12 +1338,7 @@
     "kind": "block",
     "file": "registry/blocks/terrain-relief-hero.tsx",
     "symbol": "TerrainReliefHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "description", "actionLabel", "artwork"],
     "copyDefaults": {
       "brand": "FIELD / 01",
       "meta": "A study in elevation",
@@ -1389,12 +1366,7 @@
     "kind": "block",
     "file": "registry/blocks/particle-hero.tsx",
     "symbol": "ParticleHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "description", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play artwork",
       "pauseLabel": "Pause artwork",
@@ -1410,17 +1382,12 @@
     "kind": "block",
     "file": "registry/blocks/liquid-hero.tsx",
     "symbol": "LiquidHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "description", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play artwork",
       "pauseLabel": "Pause artwork",
       "artworkLabel": "Interactive liquid artwork",
-      "brand": "Tide®",
+      "brand": "Tide\u00ae",
       "eyebrow": "Ideas in motion"
     },
     "example": "<LiquidHero/>"
@@ -1432,17 +1399,13 @@
     "kind": "block",
     "file": "registry/blocks/orb-hero.tsx",
     "symbol": "OrbHero",
-    "customization": [
-      "title",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play artwork",
       "pauseLabel": "Pause artwork",
       "artworkLabel": "Interactive orb artwork",
       "brand": "SOMA / OBJECTS OF POSSIBILITY",
-      "meta": "01—03"
+      "meta": "01\u201403"
     },
     "example": "<OrbHero/>"
   },
@@ -1453,11 +1416,7 @@
     "kind": "block",
     "file": "registry/blocks/silk-hero.tsx",
     "symbol": "SilkHero",
-    "customization": [
-      "title",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play artwork",
       "pauseLabel": "Pause artwork",
@@ -1475,19 +1434,14 @@
     "kind": "block",
     "file": "registry/blocks/eclipse-hero.tsx",
     "symbol": "EclipseHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "description", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play artwork",
       "pauseLabel": "Pause artwork",
       "artworkLabel": "Interactive eclipse artwork",
       "brand": "UMBRA",
       "eyebrow": "An encounter with the unseen",
-      "footerNote": "A digital exhibition · Open to everyone"
+      "footerNote": "A digital exhibition \u00b7 Open to everyone"
     },
     "example": "<EclipseHero/>"
   },
@@ -1498,11 +1452,7 @@
     "kind": "block",
     "file": "registry/blocks/tunnel-hero.tsx",
     "symbol": "TunnelHero",
-    "customization": [
-      "title",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play artwork",
       "pauseLabel": "Pause artwork",
@@ -1521,12 +1471,7 @@
     "kind": "block",
     "file": "registry/blocks/constellation-hero.tsx",
     "symbol": "ConstellationHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel",
-      "artwork"
-    ],
+    "customization": ["title", "description", "actionLabel", "artwork"],
     "copyDefaults": {
       "playLabel": "Play artwork",
       "pauseLabel": "Pause artwork",
@@ -1587,13 +1532,9 @@
     "kind": "block",
     "file": "registry/blocks/typographic-hero.tsx",
     "symbol": "TypographicHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel"
-    ],
+    "customization": ["title", "description", "actionLabel"],
     "copyDefaults": {
-      "brand": "OTHER® — DESIGN & DIRECTION",
+      "brand": "OTHER\u00ae \u2014 DESIGN & DIRECTION",
       "meta": "OPEN TO GOOD PROBLEMS"
     },
     "example": "<TypographicHero/>"
@@ -1605,11 +1546,7 @@
     "kind": "block",
     "file": "registry/blocks/shape-hero.tsx",
     "symbol": "ShapeHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel"
-    ],
+    "customization": ["title", "description", "actionLabel"],
     "copyDefaults": {
       "brand": "Playroom."
     },
@@ -1632,7 +1569,7 @@
     "copyDefaults": {
       "brand": "FIELDWORK / BRAND & DIGITAL",
       "meta": "INDEPENDENT BY DESIGN",
-      "caption": "Featured project — Fieldwork"
+      "caption": "Featured project \u2014 Fieldwork"
     },
     "example": "<StudioHero/>"
   },
@@ -1665,11 +1602,7 @@
     "kind": "block",
     "file": "registry/blocks/poster-hero.tsx",
     "symbol": "PosterHero",
-    "customization": [
-      "title",
-      "description",
-      "actionLabel"
-    ],
+    "customization": ["title", "description", "actionLabel"],
     "copyDefaults": {
       "brand": "ASSEMBLY / A GATHERING OF IDEAS",
       "meta": "ONLINE & EVERYWHERE",
@@ -1761,11 +1694,7 @@
     "kind": "block",
     "file": "registry/blocks/immersive-login.tsx",
     "symbol": "ImmersiveLogin",
-    "customization": [
-      "title",
-      "description",
-      "brand"
-    ],
+    "customization": ["title", "description", "brand"],
     "copyDefaults": {},
     "example": "<ImmersiveLogin/>"
   },
@@ -1776,11 +1705,7 @@
     "kind": "block",
     "file": "registry/blocks/ribbon-login.tsx",
     "symbol": "RibbonLogin",
-    "customization": [
-      "title",
-      "description",
-      "brand"
-    ],
+    "customization": ["title", "description", "brand"],
     "copyDefaults": {},
     "example": "<RibbonLogin/>"
   },
@@ -1811,7 +1736,7 @@
     "symbol": "ApplicationShell",
     "customization": [],
     "copyDefaults": {},
-    "example": "<ApplicationShell brand=\"Acme\" currentPath=\"#overview\"><div className=\"mb-7\"><p className=\"mb-2 text-xs text-muted-foreground\">Tuesday, 8 September</p><h2 className=\"font-display text-2xl\">Good morning, Alex.</h2><p className=\"mt-2 text-sm text-muted-foreground\">Here’s what needs your attention.</p></div><div className=\"grid gap-6 xl:grid-cols-[1.3fr_1fr]\"><div><h3 className=\"mb-4 text-sm font-semibold\">Your tasks</h3><TaskList/></div><ActivityFeed/></div></ApplicationShell>"
+    "example": "<ApplicationShell brand=\"Acme\" currentPath=\"#overview\"><div className=\"mb-7\"><p className=\"mb-2 text-xs text-muted-foreground\">Tuesday, 8 September</p><h2 className=\"font-display text-2xl\">Good morning, Alex.</h2><p className=\"mt-2 text-sm text-muted-foreground\">Here\u2019s what needs your attention.</p></div><div className=\"grid gap-6 xl:grid-cols-[1.3fr_1fr]\"><div><h3 className=\"mb-4 text-sm font-semibold\">Your tasks</h3><TaskList/></div><ActivityFeed/></div></ApplicationShell>"
   },
   {
     "slug": "workspace-navigation",
@@ -2009,7 +1934,7 @@
     "symbol": "ChatWorkspace",
     "customization": [],
     "copyDefaults": {},
-    "example": "<ChatWorkspace onSend={async (prompt) => \"Demo response: define a clear outcome for “\" + prompt + \"”, then try a small version.\"}/>"
+    "example": "<ChatWorkspace onSend={async (prompt) => \"Demo response: define a clear outcome for \u201c\" + prompt + \"\u201d, then try a small version.\"}/>"
   },
   {
     "slug": "workspace-sidebar",
@@ -2073,11 +1998,7 @@
     "kind": "block",
     "file": "registry/blocks/sso-login.tsx",
     "symbol": "SSOLogin",
-    "customization": [
-      "title",
-      "description",
-      "brand"
-    ],
+    "customization": ["title", "description", "brand"],
     "copyDefaults": {},
     "example": "<SSOLogin/>"
   },
@@ -2088,11 +2009,7 @@
     "kind": "block",
     "file": "registry/blocks/split-login.tsx",
     "symbol": "SplitLogin",
-    "customization": [
-      "title",
-      "description",
-      "brand"
-    ],
+    "customization": ["title", "description", "brand"],
     "copyDefaults": {},
     "example": "<SplitLogin/>"
   },
@@ -2103,12 +2020,140 @@
     "kind": "block",
     "file": "registry/blocks/workspace-login.tsx",
     "symbol": "WorkspaceLogin",
-    "customization": [
-      "title",
-      "description",
-      "brand"
-    ],
+    "customization": ["title", "description", "brand"],
     "copyDefaults": {},
     "example": "<WorkspaceLogin/>"
+  },
+  {
+    "slug": "feature-carousel",
+    "title": "Feature Carousel",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/feature-carousel.tsx",
+    "symbol": "FeatureCarousel",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<FeatureCarousel/>"
+  },
+  {
+    "slug": "expandable-features",
+    "title": "Expandable Features",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/expandable-features.tsx",
+    "symbol": "ExpandableFeatures",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<ExpandableFeatures/>"
+  },
+  {
+    "slug": "feature-tabs",
+    "title": "Feature Tabs",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/feature-tabs.tsx",
+    "symbol": "FeatureTabs",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<FeatureTabs/>"
+  },
+  {
+    "slug": "feature-mosaic",
+    "title": "Feature Mosaic",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/feature-mosaic.tsx",
+    "symbol": "FeatureMosaic",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<FeatureMosaic/>"
+  },
+  {
+    "slug": "feature-spotlight",
+    "title": "Feature Spotlight",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/feature-spotlight.tsx",
+    "symbol": "FeatureSpotlight",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<FeatureSpotlight/>"
+  },
+  {
+    "slug": "product-bento",
+    "title": "Product Bento",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/product-bento.tsx",
+    "symbol": "ProductBento",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<ProductBento/>"
+  },
+  {
+    "slug": "integration-bento",
+    "title": "Integration Bento",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/integration-bento.tsx",
+    "symbol": "IntegrationBento",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<IntegrationBento/>"
+  },
+  {
+    "slug": "how-it-works-horizontal",
+    "title": "How It Works Horizontal",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/how-it-works-horizontal.tsx",
+    "symbol": "HowItWorksHorizontal",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<HowItWorksHorizontal/>"
+  },
+  {
+    "slug": "how-it-works-vertical",
+    "title": "How It Works Vertical",
+    "group": "marketing",
+    "kind": "block",
+    "file": "registry/blocks/how-it-works-vertical.tsx",
+    "symbol": "HowItWorksVertical",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<HowItWorksVertical/>"
+  },
+  {
+    "slug": "centered-auth",
+    "title": "Centered Auth",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/centered-auth.tsx",
+    "symbol": "CenteredAuth",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<CenteredAuth/>"
+  },
+  {
+    "slug": "split-auth",
+    "title": "Split Auth",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/split-auth.tsx",
+    "symbol": "SplitAuth",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<SplitAuth/>"
+  },
+  {
+    "slug": "inset-auth",
+    "title": "Inset Auth",
+    "group": "workspace",
+    "kind": "block",
+    "file": "registry/blocks/inset-auth.tsx",
+    "symbol": "InsetAuth",
+    "customization": [],
+    "copyDefaults": {},
+    "example": "<InsetAuth/>"
   }
 ]

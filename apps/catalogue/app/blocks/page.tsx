@@ -9,8 +9,9 @@ export default function Page() {
         <header className="catalogue-title">
           <h1>A head start with character.</h1>
           <p>
-            36 complete sections for products and marketing sites. Thoughtfully
-            composed, with working interactions and editable source.
+            {items.filter((item) => item.kind === "block").length} complete
+            sections for products and marketing sites. Thoughtfully composed,
+            with working interactions and editable source.
           </p>
         </header>
         <CatalogueList items={items.filter((i) => i.kind === "block")} />

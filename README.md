@@ -1,6 +1,6 @@
 # Jez UI
 
-91 editable React components, 79 composed blocks, and nine standalone Next.js templates. React 19, TypeScript, Tailwind 4. Original source is private and all rights reserved.
+91 editable React components, 92 composed blocks, and nine standalone Next.js templates. React 19, TypeScript, Tailwind 4. Original source is private and all rights reserved.
 
 ## Run
 

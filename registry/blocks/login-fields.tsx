@@ -25,11 +25,12 @@ export function LoginFields({
   onSubmit,
   onSSO,
   enterprise = false,
+  mode = "sign-in",
   children,
   className,
   ...rootProps
 }: Omit<React.ComponentProps<"div">, keyof LoginHandlers> &
-  LoginHandlers & { enterprise?: boolean }) {
+  LoginHandlers & { enterprise?: boolean; mode?: "sign-in" | "sign-up" }) {
   const [pending, setPending] = React.useState<string | null>(null),
     [message, setMessage] = React.useState(""),
     [error, setError] = React.useState(false);
@@ -40,7 +41,11 @@ export function LoginFields({
     try {
       if (action) {
         await action();
-        setMessage("Sign-in request completed.");
+        setMessage(
+          mode === "sign-up"
+            ? "Account request completed."
+            : "Sign-in request completed.",
+        );
       } else
         setMessage(
           "Demo only. Connect your authentication provider to sign in.",
@@ -91,7 +96,7 @@ export function LoginFields({
               Continue with GitHub
             </Button>
           </div>
-          <div className="flex items-center gap-4 text-[11px] text-muted-foreground">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <span className="h-px flex-1 bg-border" />
             or continue with {enterprise ? "SSO" : "email"}
             <span className="h-px flex-1 bg-border" />
@@ -103,6 +108,17 @@ export function LoginFields({
               const data = new FormData(e.currentTarget),
                 email = String(data.get("email")),
                 password = String(data.get("password") ?? "");
+              if (
+                !enterprise &&
+                mode === "sign-up" &&
+                password !== String(data.get("passwordConfirmation") ?? "")
+              ) {
+                setError(true);
+                setMessage(
+                  "Passwords do not match. Check both fields and try again.",
+                );
+                return;
+              }
               void run(
                 "email",
                 enterprise
@@ -130,9 +146,22 @@ export function LoginFields({
                 Password
                 <PasswordInput
                   name="password"
-                  autoComplete="current-password"
+                  autoComplete={
+                    mode === "sign-up" ? "new-password" : "current-password"
+                  }
                   required
                   placeholder="Enter your password"
+                />
+              </label>
+            )}
+            {!enterprise && mode === "sign-up" && (
+              <label className="grid gap-2 text-xs font-medium">
+                Confirm password
+                <PasswordInput
+                  name="passwordConfirmation"
+                  autoComplete="new-password"
+                  required
+                  placeholder="Confirm your password"
                 />
               </label>
             )}
@@ -149,7 +178,7 @@ export function LoginFields({
                 </>
               ) : (
                 <>
-                  Sign in
+                  {mode === "sign-up" ? "Create account" : "Sign in"}
                   <ArrowRight size={16} />
                 </>
               )}
@@ -167,7 +196,7 @@ export function LoginFields({
               {message}
             </p>
           )}
-          <p className="flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
+          <p className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
             <KeyRound size={12} />
             Your workspace. Your secure way in.
           </p>

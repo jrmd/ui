@@ -101,7 +101,7 @@ The Workspace, Rail, and Inset Sidebar blocks remain useful presets. Supply a `s
 
 ## Block migration status
 
-All 80 registered blocks now have a compiled composition example in `examples/blocks`. The catalogue's **Composition** preview runs that exact example; **Compose your own** shows its source. The preset preview remains available beside it.
+All 92 registered blocks now have a compiled composition example in `examples/blocks`. The catalogue's **Composition** preview runs that exact example; **Compose your own** shows its source. The preset preview remains available beside it.
 
 There are two kinds of parts. Styled primitives such as titles, content containers, rows and actions accept your children directly. Functional sections such as KanbanBoardComposer, ChatWorkspaceMessages and TerrainHeroControls read the nearest block root's state and supply their default contents. Both support replacement content; rendered elements forward native props and refs. Conditional status parts can render nothing and therefore expose children rather than a DOM ref.
 
@@ -121,7 +121,9 @@ The three sidebar variants expose Root, Panel, Header, Body, Footer, Content and
 ```tsx
 <ProductDemoHeroRoot>
   <ProductDemoHeroIntro />
-  <ProductDemoHeroPreview><YourApplication /></ProductDemoHeroPreview>
+  <ProductDemoHeroPreview>
+    <YourApplication />
+  </ProductDemoHeroPreview>
   <ProductDemoHeroCaption>Try the controls above.</ProductDemoHeroCaption>
 </ProductDemoHeroRoot>
 ```
@@ -148,7 +150,9 @@ import {
       A <em>different</em> perspective
     </MediaAsideTitle>
     <MediaAsideDescription>Stories from our workshop.</MediaAsideDescription>
-    <MediaAsideAction asChild><Link href="/story">Read the story</Link></MediaAsideAction>
+    <MediaAsideAction asChild>
+      <Link href="/story">Read the story</Link>
+    </MediaAsideAction>
   </MediaAsideContent>
   <MediaAsideMedia src="/our-photo.jpg" alt="Our workshop" />
 </MediaAside>;
@@ -187,6 +191,22 @@ ChartFrame exports ChartCaption and ChartContent. Chart presets accept native fi
 
 ### Verification
 
-`pnpm test:composition` typechecks and runs the independent Vite consumer fixture. It starts its own server. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH when using a system browser. Coverage includes all 80 compiled compositions at desktop and mobile widths, every registered block's root attributes and refs, shared section state, form labels and submissions, menus, artwork controls, sidebar focus, input focus, table identity, pricing, async saves and chat callbacks. Catalogue rendering and interaction tests remain separate. Run `pnpm fixtures:verify` to install the registry through the real shadcn CLI into Vite and Next.js projects, compile all 80 composition examples against the installed files, and build both applications.
+`pnpm test:composition` typechecks and runs the independent Vite consumer fixture. It starts its own server. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH when using a system browser. Coverage includes all 92 compiled compositions at desktop and mobile widths, every registered block's root attributes and refs, shared section state, form labels and submissions, menus, artwork controls, sidebar focus, input focus, table identity, pricing, async saves and chat callbacks. Catalogue rendering and interaction tests remain separate. Run `pnpm fixtures:verify` to install the registry through the real shadcn CLI into Vite and Next.js projects, compile all 92 composition examples against the installed files, and build both applications.
 
 See [current composition inventory](COMPOSITION_INVENTORY.md) for the exported parts in each entry file.
+
+## Marketing feature families
+
+FeatureCarousel offers `layout="spotlight"` and `layout="rail"`. FeatureCarousel, FeatureTabs and ExpandableFeatures accept `items`, `value`, `defaultValue`, and `onValueChange`. Item values are stable IDs. Supply preview nodes and your own content through the exported parts; carousel rotation is user initiated. FeatureTabs uses arrow keys, Home and End; expandable media panels become disclosures on mobile.
+
+FeatureMosaic, FeatureSpotlight, ProductBento and IntegrationBento provide different feature hierarchies. Use the named grid, tile, copy and preview parts to change a layout. Dataset-based presets accept empty or extended collections; `children={null}` suppresses default contents. FeatureSpotlight only displays its action when you supply `href`.
+
+HowItWorksHorizontal and HowItWorksVertical accept `steps`. Each step can include custom `media`, while the presets show distinct brief, collaboration and decision previews. Horizontal steps stack on mobile; vertical steps alternate copy and media on wide screens. Both use ordered lists so sequence remains meaningful to assistive technology.
+
+## Authentication shells and recovery
+
+CenteredAuth, SplitAuth and InsetAuth share four modes: `sign-in`, `sign-up`, `reset-request`, and `reset-password`. Use `defaultMode` for an initial mode or control navigation with `mode` and `onModeChange`. The zero-prop presets navigate locally. Mode changes clear the previous form state.
+
+`form` replaces the form completely; `formProps` customizes LoginFields; `resetFormProps` customizes PasswordResetForm. Supply `onSubmit` and `onSSO` for sign-in/sign-up integration, and `resetFormProps.onSubmit` for password recovery. The application owns provider calls and reset tokens. The shells do not authenticate users or send mail by themselves. PasswordResetForm also works independently with `mode="request"` or `mode="new-password"`.
+
+All three composition examples demonstrate mode navigation. Their reset-request callback only advances the illustrative UI to the new-password form; it does not validate a recovery token or send email.

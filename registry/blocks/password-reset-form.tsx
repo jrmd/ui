@@ -9,6 +9,7 @@ export type PasswordResetFormOptions = {
   className?: string;
   onSubmit?: (data: Record<string, string>) => Promise<void>;
   heading?: React.ReactNode;
+  mode?: "request" | "new-password";
 };
 export type PasswordResetFormProps = Omit<
   React.ComponentProps<"form">,
@@ -17,22 +18,31 @@ export type PasswordResetFormProps = Omit<
   PasswordResetFormOptions;
 
 function usePasswordResetFormModel({
-  heading = "Forgot your password?",
+  heading,
+  mode = "request",
   className,
   onSubmit,
   children,
   ...rootProps
 }: PasswordResetFormProps) {
   const [status, setStatus] = React.useState("");
+  const [error, setError] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
   return {
-    heading,
+    heading:
+      heading ??
+      (mode === "new-password"
+        ? "Choose a new password."
+        : "Forgot your password?"),
+    mode,
     className,
     onSubmit,
     children,
     rootProps,
     status,
     setStatus,
+    error,
+    setError,
     busy,
     setBusy,
   };
@@ -50,8 +60,16 @@ function usePasswordResetFormComposition() {
 }
 export function PasswordResetForm(props: PasswordResetFormProps) {
   const model = usePasswordResetFormModel(props);
-  const { className, onSubmit, rootProps, setStatus, setBusy, children } =
-    model;
+  const {
+    className,
+    onSubmit,
+    rootProps,
+    setStatus,
+    setError,
+    setBusy,
+    children,
+    mode,
+  } = model;
   return (
     <PasswordResetFormCompositionContext.Provider value={model}>
       <form
@@ -65,15 +83,31 @@ export function PasswordResetForm(props: PasswordResetFormProps) {
           const data = Object.fromEntries(
             new FormData(e.currentTarget),
           ) as Record<string, string>;
+          if (
+            mode === "new-password" &&
+            data.password !== data.passwordConfirmation
+          ) {
+            setError(true);
+            setStatus(
+              "Passwords do not match. Check both fields and try again.",
+            );
+            return;
+          }
           setBusy(true);
+          setError(false);
           try {
             await onSubmit?.(data);
             setStatus(
               onSubmit
-                ? "Request complete."
-                : "Demo complete. No account or email was created.",
+                ? mode === "new-password"
+                  ? "Password updated."
+                  : "Request complete."
+                : mode === "new-password"
+                  ? "Demo complete. No password was changed."
+                  : "Demo complete. No account or email was created.",
             );
           } catch {
+            setError(true);
             setStatus("Unable to continue. Check your details and try again.");
           } finally {
             setBusy(false);
@@ -85,7 +119,11 @@ export function PasswordResetForm(props: PasswordResetFormProps) {
         ) : (
           <>
             <PasswordResetFormIntro />
-            <PasswordResetFormEmailField />
+            {mode === "request" ? (
+              <PasswordResetFormEmailField />
+            ) : (
+              <PasswordResetFormPasswordFields />
+            )}
             <PasswordResetFormSubmit />
             <PasswordResetFormStatus />
           </>
@@ -126,7 +164,7 @@ export function PasswordResetFormIntro({
 }: Partial<React.ComponentProps<typeof PasswordResetFormContent>> & {
   children?: React.ReactNode;
 }) {
-  const { heading } = usePasswordResetFormComposition();
+  const { heading, mode } = usePasswordResetFormComposition();
   return (
     <PasswordResetFormContent {...props}>
       {children === undefined ? (
@@ -136,7 +174,9 @@ export function PasswordResetFormIntro({
           </span>
           <PasswordResetFormTitle>{heading}</PasswordResetFormTitle>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Enter the email address associated with your account.
+            {mode === "new-password"
+              ? "Choose a new password for your account."
+              : "Enter the email address associated with your account."}
           </p>
         </>
       ) : (
@@ -174,18 +214,63 @@ export function PasswordResetFormSubmit({
 }: Partial<React.ComponentProps<typeof Button>> & {
   children?: React.ReactNode;
 }) {
-  const { busy } = usePasswordResetFormComposition();
+  const { busy, mode } = usePasswordResetFormComposition();
   return (
     <Button type="submit" loading={busy} {...props}>
-      {children === undefined ? "Send reset link" : children}
+      {children === undefined
+        ? mode === "new-password"
+          ? "Update password"
+          : "Send reset link"
+        : children}
     </Button>
   );
 }
+export function PasswordResetFormPasswordFields({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<"div"> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <div
+      data-slot="password-reset-form-password-fields"
+      className={cn("grid gap-4", className)}
+      {...props}
+    >
+      {children === undefined ? (
+        <>
+          <FormField label="New password">
+            <Input
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+            />
+          </FormField>
+          <FormField label="Confirm new password">
+            <Input
+              name="passwordConfirmation"
+              type="password"
+              autoComplete="new-password"
+              required
+            />
+          </FormField>
+        </>
+      ) : (
+        children
+      )}
+    </div>
+  );
+}
 export function PasswordResetFormStatus({ children }: React.PropsWithChildren) {
-  const { status } = usePasswordResetFormComposition();
+  const { status, error } = usePasswordResetFormComposition();
   return children === undefined
     ? status && (
-        <p role="status" className="text-sm">
+        <p
+          role={error ? "alert" : "status"}
+          className={cn("text-sm", error && "text-danger")}
+        >
           {status}
         </p>
       )

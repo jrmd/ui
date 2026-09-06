@@ -79,7 +79,19 @@ import Recipe76 from "../../../examples/blocks/organization-switcher";
 import Recipe77 from "../../../examples/blocks/sso-login";
 import Recipe78 from "../../../examples/blocks/split-login";
 import Recipe79 from "../../../examples/blocks/workspace-login";
-export const recipes: Record<string, React.ComponentType> = {
+import Recipe80 from "../../../examples/blocks/feature-carousel";
+import Recipe81 from "../../../examples/blocks/expandable-features";
+import Recipe82 from "../../../examples/blocks/feature-tabs";
+import Recipe83 from "../../../examples/blocks/feature-mosaic";
+import Recipe84 from "../../../examples/blocks/feature-spotlight";
+import Recipe85 from "../../../examples/blocks/product-bento";
+import Recipe86 from "../../../examples/blocks/integration-bento";
+import Recipe87 from "../../../examples/blocks/how-it-works-horizontal";
+import Recipe88 from "../../../examples/blocks/how-it-works-vertical";
+import Recipe89 from "../../../examples/blocks/centered-auth";
+import Recipe90 from "../../../examples/blocks/split-auth";
+import Recipe91 from "../../../examples/blocks/inset-auth";
+const recipes: Record<string, React.ComponentType> = {
   "media-aside": Recipe0,
   "journal-bento": Recipe1,
   "article-sidebar": Recipe2,
@@ -160,6 +172,18 @@ export const recipes: Record<string, React.ComponentType> = {
   "sso-login": Recipe77,
   "split-login": Recipe78,
   "workspace-login": Recipe79,
+  "feature-carousel": Recipe80,
+  "expandable-features": Recipe81,
+  "feature-tabs": Recipe82,
+  "feature-mosaic": Recipe83,
+  "feature-spotlight": Recipe84,
+  "product-bento": Recipe85,
+  "integration-bento": Recipe86,
+  "how-it-works-horizontal": Recipe87,
+  "how-it-works-vertical": Recipe88,
+  "centered-auth": Recipe89,
+  "split-auth": Recipe90,
+  "inset-auth": Recipe91,
 };
 export function BlockRecipe({ slug }: { slug: string }) {
   const Recipe = recipes[slug];

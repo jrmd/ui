@@ -472,7 +472,7 @@
   padding: 22px;
   min-height: 340px;
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   overflow: auto;
 }
 .preview-stage iframe {

@@ -45,7 +45,7 @@ export function CatalogueList({ items }: { items: Item[] }) {
               }}
               className="capitalize"
             >
-              {c === "all" ? "All " + items.length : c}
+              {c === "all" ? "All " + items.length : c.replaceAll("-", " ")}
             </button>
           ))}
         </div>

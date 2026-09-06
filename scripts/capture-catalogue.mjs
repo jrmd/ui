@@ -1,8 +1,20 @@
 import { chromium } from "@playwright/test";
 import fs from "node:fs";
 import { templateSpecs } from "./catalogue-data.mjs";
+const missingOnly = process.argv.includes("--missing");
 const items = JSON.parse(
   fs.readFileSync("packages/catalogue/items.json", "utf8"),
+).filter(
+  (item) =>
+    !missingOnly ||
+    !fs.existsSync(`apps/catalogue/public/thumbnails/${item.slug}.jpg`),
+);
+const templates = templateSpecs.filter(
+  (item) =>
+    !missingOnly ||
+    !fs.existsSync(
+      `apps/catalogue/public/thumbnails/template-${item.slug}.jpg`,
+    ),
 );
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
@@ -15,7 +27,7 @@ fs.mkdirSync("apps/catalogue/public/thumbnails", { recursive: true });
 for (const item of items) {
   await page.setViewportSize(
     item.kind === "block"
-      ? { width: 1000, height: 740 }
+      ? { width: 1440, height: 1000 }
       : { width: 680, height: 430 },
   );
   await page.goto(
@@ -40,6 +52,9 @@ for (const item of items) {
         requestAnimationFrame(() => requestAnimationFrame(resolve)),
       ),
   );
+  await page.addStyleTag({
+    content: "nextjs-portal { display: none !important; }",
+  });
   await page.screenshot({
     path: `apps/catalogue/public/thumbnails/${item.slug}.jpg`,
     type: "jpeg",
@@ -47,7 +62,7 @@ for (const item of items) {
   });
 }
 await page.setViewportSize({ width: 1280, height: 850 });
-for (const t of templateSpecs) {
+for (const t of templates) {
   await page.goto(
     `${process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000"}/templates/${t.slug}/preview`,
   );
@@ -61,6 +76,9 @@ for (const t of templateSpecs) {
         requestAnimationFrame(() => requestAnimationFrame(resolve)),
       ),
   );
+  await page.addStyleTag({
+    content: "nextjs-portal { display: none !important; }",
+  });
   await page.screenshot({
     path: `apps/catalogue/public/thumbnails/template-${t.slug}.jpg`,
     type: "jpeg",
@@ -69,5 +87,5 @@ for (const t of templateSpecs) {
 }
 await browser.close();
 console.log(
-  `Captured ${items.length} real component/block thumbnails and eight template previews.`,
+  `Captured ${items.length} real component/block thumbnails and ${templates.length} template previews.`,
 );
