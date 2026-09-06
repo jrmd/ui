@@ -1,14 +1,15 @@
 "use client";
 import * as React from "react";
+import { Slot } from "radix-ui";
 import { cn } from "../ui/utils";
 export type MediaAsideOptions = {
   className?: string;
-  title?: string;
-  description?: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   imageSrc?: string;
   imageAlt?: string;
   href?: string;
-  actionLabel?: string;
+  actionLabel?: React.ReactNode;
   reverse?: boolean;
 };
 export type MediaAsideProps = Omit<
@@ -47,15 +48,8 @@ export function MediaAside({
           />
           <MediaAsideContent>
             <MediaAsideTitle>{title}</MediaAsideTitle>
-            <p className="mt-6 max-w-prose text-sm leading-relaxed text-muted-foreground">
-              {description}
-            </p>
-            <a
-              href={href}
-              className="mt-9 w-fit border-b border-current pb-1 text-sm hover:text-primary"
-            >
-              {actionLabel}
-            </a>
+            <MediaAsideDescription>{description}</MediaAsideDescription>
+            <MediaAsideAction href={href}>{actionLabel}</MediaAsideAction>
           </MediaAsideContent>
         </>
       )}
@@ -95,6 +89,39 @@ export function MediaAsideMedia({
   return (
     <img
       className={cn("h-full min-h-64 w-full object-cover", className)}
+      {...props}
+    />
+  );
+}
+
+export function MediaAsideDescription({
+  className,
+  ...props
+}: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="media-aside-description"
+      className={cn(
+        "mt-6 max-w-prose text-sm leading-relaxed text-muted-foreground",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function MediaAsideAction({
+  asChild,
+  className,
+  ...props
+}: React.ComponentProps<"a"> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot.Root : "a";
+  return (
+    <Comp
+      data-slot="media-aside-action"
+      className={cn(
+        "mt-9 w-fit border-b border-current pb-1 text-sm hover:text-primary",
+        className,
+      )}
       {...props}
     />
   );

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import items from "../../../packages/catalogue/items.json";
+import { BlockRecipe } from "./block-recipes";
 import { Demo } from "./demo";
 export function PreviewFrame({ slug }: { slug: string }) {
   const group = items.find((item) => item.slug === slug)?.group;
@@ -8,10 +9,14 @@ export function PreviewFrame({ slug }: { slug: string }) {
   const [customization, setCustomization] = useState<
     NonNullable<Parameters<typeof Demo>[0]["customization"]>
   >({});
+  const [composition, setComposition] = useState(false);
   const [dark, setDark] = useState(false);
   useEffect(() => {
     const isDark = new URLSearchParams(location.search).get("theme") === "dark";
     setDark(isDark);
+    setComposition(
+      new URLSearchParams(location.search).get("composition") === "1",
+    );
     document.documentElement.classList.toggle("dark", isDark);
     function update(e: MessageEvent) {
       if (
@@ -73,7 +78,11 @@ export function PreviewFrame({ slug }: { slug: string }) {
       ref={ref}
       className={"demo-root " + (dark ? "dark" : "")}
     >
-      <Demo slug={slug} customization={customization} />
+      {composition ? (
+        <BlockRecipe slug={slug} />
+      ) : (
+        <Demo slug={slug} customization={customization} />
+      )}
     </div>
   );
 }

@@ -23,7 +23,7 @@ export type StudioHeroProps = Omit<
   keyof StudioHeroOptions
 > &
   StudioHeroOptions;
-export function StudioHero({
+function useStudioHeroModel({
   copy = {},
   title,
   actionLabel,
@@ -35,59 +35,50 @@ export function StudioHero({
   children,
   ...rootProps
 }: StudioHeroProps) {
+  return {
+    copy,
+    title,
+    actionLabel,
+    description,
+    imageSrc,
+    imageAlt,
+    className,
+    href,
+    children,
+    rootProps,
+  };
+}
+const StudioHeroCompositionContext = React.createContext<ReturnType<
+  typeof useStudioHeroModel
+> | null>(null);
+function useStudioHeroComposition() {
+  const context = React.useContext(StudioHeroCompositionContext);
+  if (!context) throw new Error("StudioHero parts must be inside StudioHero.");
+  return context;
+}
+export function StudioHero(props: StudioHeroProps) {
+  const model = useStudioHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "relative isolate overflow-hidden rounded-xl bg-[#22251f] text-[#ebe9dc]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <StudioHeroContent>
-            <span>{copy.brand ?? "FIELDWORK / BRAND & DIGITAL"}</span>
-            <span>{copy.meta ?? "INDEPENDENT BY DESIGN"}</span>
-          </StudioHeroContent>
-          <StudioHeroTitle>
-            {title ?? (
-              <>
-                Rooted in strategy.
-                <br />
-                <span className="font-serif italic text-[#c8d3b6]">
-                  Made to feel something.
-                </span>
-              </>
-            )}
-          </StudioHeroTitle>
-          <div className="grid gap-8 p-7 md:grid-cols-[1.5fr_1fr] md:p-12">
-            <img
-              src={imageSrc ?? "/assets/fieldwork.svg"}
-              alt={imageAlt ?? "Fieldwork identity study"}
-              className="aspect-[16/10] w-full rounded-sm object-cover"
-            />
-            <div className="flex flex-col items-start justify-end gap-7">
-              <p className="max-w-xs text-sm leading-relaxed text-white/65">
-                {description ?? (
-                  <>
-                    We build identities and digital experiences for
-                    organisations moving the world in a better direction.
-                  </>
-                )}
-              </p>
-              <HeroLink href={href}>
-                {actionLabel ?? <>Explore our practice</>}
-              </HeroLink>
-              <span className="text-xs text-white/40">
-                {copy.caption ?? "Featured project — Fieldwork"}
-              </span>
-            </div>
-          </div>
-        </>
-      )}
-    </section>
+    <StudioHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "relative isolate overflow-hidden rounded-xl bg-[#22251f] text-[#ebe9dc]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <StudioHeroMasthead />
+            <StudioHeroHeading />
+            <StudioHeroShowcase />
+          </>
+        )}
+      </section>
+    </StudioHeroCompositionContext.Provider>
   );
 }
 
@@ -119,5 +110,169 @@ export function StudioHeroTitle({
       )}
       {...props}
     />
+  );
+}
+
+export function StudioHeroMasthead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof StudioHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <StudioHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <StudioHeroBrand />
+          <StudioHeroMeta />
+        </>
+      ) : (
+        children
+      )}
+    </StudioHeroContent>
+  );
+}
+export function StudioHeroHeading({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof StudioHeroTitle>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = useStudioHeroComposition();
+  return (
+    <StudioHeroTitle {...props}>
+      {children === undefined
+        ? (title ?? (
+            <>
+              Rooted in strategy.
+              <br />
+              <span className="font-serif italic text-[#c8d3b6]">
+                Made to feel something.
+              </span>
+            </>
+          ))
+        : children}
+    </StudioHeroTitle>
+  );
+}
+export function StudioHeroShowcase({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "grid gap-8 p-7 md:grid-cols-[1.5fr_1fr] md:p-12",
+        props.className,
+      )}
+    >
+      {children === undefined ? (
+        <>
+          <StudioHeroMedia />
+          <div className="flex flex-col items-start justify-end gap-7">
+            <StudioHeroDescription />
+            <StudioHeroAction />
+            <StudioHeroCaption />
+          </div>
+        </>
+      ) : (
+        children
+      )}
+    </div>
+  );
+}
+
+export function StudioHeroMeta({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useStudioHeroComposition();
+  return (
+    <span {...props}>
+      {children === undefined
+        ? (copy.meta ?? "INDEPENDENT BY DESIGN")
+        : children}
+    </span>
+  );
+}
+export function StudioHeroBrand({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useStudioHeroComposition();
+  return (
+    <span {...props}>
+      {children === undefined
+        ? (copy.brand ?? "FIELDWORK / BRAND & DIGITAL")
+        : children}
+    </span>
+  );
+}
+export function StudioHeroAction({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroLink>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, href } = useStudioHeroComposition();
+  return (
+    <HeroLink href={href} {...props}>
+      {children === undefined
+        ? (actionLabel ?? "Explore our practice")
+        : children}
+    </HeroLink>
+  );
+}
+export function StudioHeroCaption({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useStudioHeroComposition();
+  return (
+    <span {...props} className={cn("text-xs text-white/40", props.className)}>
+      {children === undefined
+        ? (copy.caption ?? "Featured project — Fieldwork")
+        : children}
+    </span>
+  );
+}
+export function StudioHeroMedia({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"img">> & { children?: React.ReactNode }) {
+  const { imageSrc, imageAlt } = useStudioHeroComposition();
+  return children === undefined ? (
+    <img
+      src={imageSrc ?? "/assets/fieldwork.svg"}
+      alt={imageAlt ?? "Fieldwork identity study"}
+      {...props}
+      className={cn(
+        "aspect-[16/10] w-full rounded-sm object-cover",
+        props.className,
+      )}
+    />
+  ) : (
+    children
+  );
+}
+export function StudioHeroDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useStudioHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn(
+        "max-w-xs text-sm leading-relaxed text-white/65",
+        props.className,
+      )}
+    >
+      {children === undefined
+        ? (description ??
+          "We build identities and digital experiences for organisations moving the world in a better direction.")
+        : children}
+    </p>
   );
 }

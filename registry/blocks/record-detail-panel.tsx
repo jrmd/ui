@@ -21,57 +21,50 @@ const RecordDetailPanelDefaultItems = [
   ["Last active", "Today"],
   ["Demo revenue", "£240"],
 ];
-export function RecordDetailPanel({
+function useRecordDetailPanelModel({
   items = RecordDetailPanelDefaultItems,
-  description = <>Illustrative customer record.</>,
+  description = "Illustrative customer record.",
   name = "Alex Morgan",
   className,
   children,
   ...rootProps
 }: RecordDetailPanelProps) {
+  return { items, description, name, className, children, rootProps };
+}
+const RecordDetailPanelCompositionContext = React.createContext<ReturnType<
+  typeof useRecordDetailPanelModel
+> | null>(null);
+function useRecordDetailPanelComposition() {
+  const context = React.useContext(RecordDetailPanelCompositionContext);
+  if (!context)
+    throw new Error(
+      "RecordDetailPanel parts must be inside RecordDetailPanel.",
+    );
+  return context;
+}
+export function RecordDetailPanel(props: RecordDetailPanelProps) {
+  const model = useRecordDetailPanelModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "grid max-w-xl gap-6 rounded-xl border border-border p-6",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <RecordDetailPanelHeader>
-            <div className="flex items-center gap-3">
-              <span className="grid size-12 place-items-center rounded-full bg-primary/10 text-lg text-primary">
-                {name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </span>
-              <div>
-                <RecordDetailPanelTitle>{name}</RecordDetailPanelTitle>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Customer since August 2026
-                </p>
-              </div>
-            </div>
-            <Badge>Active</Badge>
-          </RecordDetailPanelHeader>
-          <RecordDetailPanelList>
-            {items.map(([k, v]) => (
-              <React.Fragment key={k}>
-                <dt className="text-muted-foreground">{k}</dt>
-                <dd className="break-words font-medium">{v}</dd>
-              </React.Fragment>
-            ))}
-          </RecordDetailPanelList>
-          <RecordDetailPanelDescription>
-            {description}
-          </RecordDetailPanelDescription>
-        </>
-      )}
-    </section>
+    <RecordDetailPanelCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "grid max-w-xl gap-6 rounded-xl border border-border p-6",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <RecordDetailPanelHeading />
+            <RecordDetailPanelDetails />
+            <RecordDetailPanelNote />
+          </>
+        )}
+      </section>
+    </RecordDetailPanelCompositionContext.Provider>
   );
 }
 
@@ -124,5 +117,72 @@ export function RecordDetailPanelDescription({
       className={cn("text-xs text-muted-foreground", className)}
       {...props}
     />
+  );
+}
+
+export function RecordDetailPanelHeading({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof RecordDetailPanelHeader>> & {
+  children?: React.ReactNode;
+}) {
+  const { name } = useRecordDetailPanelComposition();
+  return (
+    <RecordDetailPanelHeader {...props}>
+      {children === undefined ? (
+        <>
+          <div className="flex items-center gap-3">
+            <span className="grid size-12 place-items-center rounded-full bg-primary/10 text-lg text-primary">
+              {name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
+            </span>
+            <div>
+              <RecordDetailPanelTitle>{name}</RecordDetailPanelTitle>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Customer since August 2026
+              </p>
+            </div>
+          </div>
+          <Badge>Active</Badge>
+        </>
+      ) : (
+        children
+      )}
+    </RecordDetailPanelHeader>
+  );
+}
+export function RecordDetailPanelDetails({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof RecordDetailPanelList>> & {
+  children?: React.ReactNode;
+}) {
+  const { items } = useRecordDetailPanelComposition();
+  return (
+    <RecordDetailPanelList {...props}>
+      {children === undefined
+        ? items.map(([k, v]) => (
+            <React.Fragment key={k}>
+              <dt className="text-muted-foreground">{k}</dt>
+              <dd className="break-words font-medium">{v}</dd>
+            </React.Fragment>
+          ))
+        : children}
+    </RecordDetailPanelList>
+  );
+}
+export function RecordDetailPanelNote({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof RecordDetailPanelDescription>> & {
+  children?: React.ReactNode;
+}) {
+  const { description } = useRecordDetailPanelComposition();
+  return (
+    <RecordDetailPanelDescription {...props}>
+      {children === undefined ? description : children}
+    </RecordDetailPanelDescription>
   );
 }

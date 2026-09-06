@@ -41,7 +41,7 @@ const NotificationCentreDefaultItems = [
   },
 ];
 const NotificationCentreDefaultFilters = [false, true];
-export function NotificationCentre({
+function useNotificationCentreModel({
   readIds: suppliedValue,
   defaultReadIds = [],
   onReadIdsChange,
@@ -57,91 +57,56 @@ export function NotificationCentre({
     onReadIdsChange,
   );
   const [unreadOnly, setUnreadOnly] = React.useState(false);
-
+  return {
+    suppliedValue,
+    defaultReadIds,
+    onReadIdsChange,
+    items,
+    filters,
+    className,
+    children,
+    rootProps,
+    read,
+    setRead,
+    unreadOnly,
+    setUnreadOnly,
+  };
+}
+const NotificationCentreCompositionContext = React.createContext<ReturnType<
+  typeof useNotificationCentreModel
+> | null>(null);
+function useNotificationCentreComposition() {
+  const context = React.useContext(NotificationCentreCompositionContext);
+  if (!context)
+    throw new Error(
+      "NotificationCentre parts must be inside NotificationCentre.",
+    );
+  return context;
+}
+export function NotificationCentre(props: NotificationCentreProps) {
+  const model = useNotificationCentreModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "overflow-hidden rounded-xl border border-border",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <NotificationCentreHeader>
-            <NotificationCentreTitle>
-              Inbox{" "}
-              <span className="ml-1 text-sm text-muted-foreground">
-                {items.filter((item) => !read.includes(item.id)).length}
-              </span>
-            </NotificationCentreTitle>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => setRead(items.map((i) => i.id))}
-            >
-              <CheckCheck size={15} />
-              Mark all read
-            </Button>
-          </NotificationCentreHeader>
-          <NotificationCentreContent>
-            {filters.map((v) => (
-              <NotificationCentreItem
-                key={String(v)}
-                onClick={() => setUnreadOnly(v)}
-                className={cn(
-                  unreadOnly === v
-                    ? "border-primary font-medium"
-                    : "border-transparent text-muted-foreground",
-                )}
-              >
-                {v ? "Unread" : "All activity"}
-              </NotificationCentreItem>
-            ))}
-          </NotificationCentreContent>
-          {items
-            .filter((i) => !unreadOnly || !read.includes(i.id))
-            .map((i) => (
-              <button
-                key={i.id}
-                onClick={() =>
-                  setRead((r) => (r.includes(i.id) ? r : [...r, i.id]))
-                }
-                className={cn(
-                  "flex w-full items-start gap-3 border-b border-border/60 p-5 text-left transition-colors last:border-0 hover:bg-muted/40",
-                  !read.includes(i.id) && "bg-primary/3",
-                )}
-              >
-                <span className="grid size-9 shrink-0 place-items-center rounded-full border border-border bg-background">
-                  <i.icon size={16} />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-medium">{i.title}</span>
-                  <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
-                    {i.detail}
-                  </span>
-                </span>
-                <span className="grid justify-items-end gap-2 text-xs text-muted-foreground">
-                  {i.time}
-                  {!read.includes(i.id) && (
-                    <span className="size-1.5 rounded-full bg-primary" />
-                  )}
-                  <span className="sr-only">
-                    {read.includes(i.id) ? "Read" : "Unread"}
-                  </span>
-                </span>
-              </button>
-            ))}
-          {unreadOnly && items.every((item) => read.includes(item.id)) && (
-            <p className="p-10 text-center text-sm text-muted-foreground">
-              You’re all caught up.
-            </p>
-          )}
-        </>
-      )}
-    </section>
+    <NotificationCentreCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "overflow-hidden rounded-xl border border-border",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <NotificationCentreToolbar />
+            <NotificationCentreFilters />
+            <NotificationCentreMessages />
+            <NotificationCentreEmpty />
+          </>
+        )}
+      </section>
+    </NotificationCentreCompositionContext.Provider>
   );
 }
 
@@ -197,4 +162,116 @@ export function NotificationCentreItem({
       {...props}
     />
   );
+}
+
+export function NotificationCentreToolbar({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof NotificationCentreHeader>> & {
+  children?: React.ReactNode;
+}) {
+  const { items, read, setRead } = useNotificationCentreComposition();
+  return (
+    <NotificationCentreHeader {...props}>
+      {children === undefined ? (
+        <>
+          <NotificationCentreTitle>
+            Inbox{" "}
+            <span className="ml-1 text-sm text-muted-foreground">
+              {items.filter((item) => !read.includes(item.id)).length}
+            </span>
+          </NotificationCentreTitle>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => setRead(items.map((i) => i.id))}
+          >
+            <CheckCheck size={15} />
+            Mark all read
+          </Button>
+        </>
+      ) : (
+        children
+      )}
+    </NotificationCentreHeader>
+  );
+}
+export function NotificationCentreFilters({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof NotificationCentreContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { filters, unreadOnly, setUnreadOnly } =
+    useNotificationCentreComposition();
+  return (
+    <NotificationCentreContent {...props}>
+      {children === undefined
+        ? filters.map((v) => (
+            <NotificationCentreItem
+              key={String(v)}
+              onClick={() => setUnreadOnly(v)}
+              className={cn(
+                unreadOnly === v
+                  ? "border-primary font-medium"
+                  : "border-transparent text-muted-foreground",
+              )}
+            >
+              {v ? "Unread" : "All activity"}
+            </NotificationCentreItem>
+          ))
+        : children}
+    </NotificationCentreContent>
+  );
+}
+export function NotificationCentreMessages({
+  children,
+}: React.PropsWithChildren) {
+  const { items, read, setRead, unreadOnly } =
+    useNotificationCentreComposition();
+  return children === undefined
+    ? items
+        .filter((i) => !unreadOnly || !read.includes(i.id))
+        .map((i) => (
+          <button
+            key={i.id}
+            onClick={() =>
+              setRead((r) => (r.includes(i.id) ? r : [...r, i.id]))
+            }
+            className={cn(
+              "flex w-full items-start gap-3 border-b border-border/60 p-5 text-left transition-colors last:border-0 hover:bg-muted/40",
+              !read.includes(i.id) && "bg-primary/3",
+            )}
+          >
+            <span className="grid size-9 shrink-0 place-items-center rounded-full border border-border bg-background">
+              <i.icon size={16} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-medium">{i.title}</span>
+              <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                {i.detail}
+              </span>
+            </span>
+            <span className="grid justify-items-end gap-2 text-xs text-muted-foreground">
+              {i.time}
+              {!read.includes(i.id) && (
+                <span className="size-1.5 rounded-full bg-primary" />
+              )}
+              <span className="sr-only">
+                {read.includes(i.id) ? "Read" : "Unread"}
+              </span>
+            </span>
+          </button>
+        ))
+    : children;
+}
+export function NotificationCentreEmpty({ children }: React.PropsWithChildren) {
+  const { items, read, unreadOnly } = useNotificationCentreComposition();
+  return children === undefined
+    ? unreadOnly && items.every((item) => read.includes(item.id)) && (
+        <p className="p-10 text-center text-sm text-muted-foreground">
+          You’re all caught up.
+        </p>
+      )
+    : children;
 }

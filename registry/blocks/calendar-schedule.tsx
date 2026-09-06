@@ -20,7 +20,7 @@ const CalendarScheduleDefaultEvents = [
   { id: "focus", date: "2026-09-08", content: "11:00 · Focus time" },
   { id: "catch-up", date: "2026-09-08", content: "14:00 · Project catch-up" },
 ];
-export function CalendarSchedule({
+function useCalendarScheduleModel({
   value: suppliedValue,
   defaultValue = "2026-09-08",
   onValueChange,
@@ -34,47 +34,49 @@ export function CalendarSchedule({
     defaultValue,
     onValueChange,
   );
+  return {
+    suppliedValue,
+    defaultValue,
+    onValueChange,
+    events,
+    className,
+    children,
+    rootProps,
+    date,
+    setDate,
+  };
+}
+const CalendarScheduleCompositionContext = React.createContext<ReturnType<
+  typeof useCalendarScheduleModel
+> | null>(null);
+function useCalendarScheduleComposition() {
+  const context = React.useContext(CalendarScheduleCompositionContext);
+  if (!context)
+    throw new Error("CalendarSchedule parts must be inside CalendarSchedule.");
+  return context;
+}
+export function CalendarSchedule(props: CalendarScheduleProps) {
+  const model = useCalendarScheduleModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <div
-      {...rootProps}
-      className={cn(
-        "flex flex-wrap gap-8 rounded-xl border border-border p-5",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <Calendar value={date} onValueChange={setDate} />
-          <CalendarScheduleContent>
-            <p className="mb-1 text-xs text-muted-foreground">Your schedule</p>
-            <CalendarScheduleItemTitle>
-              {new Date(date + "T12:00:00").toLocaleDateString("en-GB", {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-              })}
-            </CalendarScheduleItemTitle>
-            {events.some((event) => event.date === date) ? (
-              <ol className="grid gap-4">
-                {events
-                  .filter((event) => event.date === date)
-                  .map((e) => (
-                    <CalendarScheduleItem key={e.id}>
-                      {e.content}
-                    </CalendarScheduleItem>
-                  ))}
-              </ol>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Nothing scheduled for this day.
-              </p>
-            )}
-          </CalendarScheduleContent>
-        </>
-      )}
-    </div>
+    <CalendarScheduleCompositionContext.Provider value={model}>
+      <div
+        {...rootProps}
+        className={cn(
+          "flex flex-wrap gap-8 rounded-xl border border-border p-5",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <CalendarScheduleCalendar />
+            <CalendarScheduleAgenda />
+          </>
+        )}
+      </div>
+    </CalendarScheduleCompositionContext.Provider>
   );
 }
 
@@ -116,5 +118,67 @@ export function CalendarScheduleItem({
       )}
       {...props}
     />
+  );
+}
+
+export function CalendarScheduleCalendar({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof Calendar>> & {
+  children?: React.ReactNode;
+}) {
+  const { date, setDate } = useCalendarScheduleComposition();
+  return (
+    <Calendar
+      value={date}
+      {...props}
+      onValueChange={(value) => {
+        setDate(value);
+        props.onValueChange?.(value);
+      }}
+    >
+      {children}
+    </Calendar>
+  );
+}
+export function CalendarScheduleAgenda({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof CalendarScheduleContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { events, date } = useCalendarScheduleComposition();
+  return (
+    <CalendarScheduleContent {...props}>
+      {children === undefined ? (
+        <>
+          <p className="mb-1 text-xs text-muted-foreground">Your schedule</p>
+          <CalendarScheduleItemTitle>
+            {new Date(date + "T12:00:00").toLocaleDateString("en-GB", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+            })}
+          </CalendarScheduleItemTitle>
+          {events.some((event) => event.date === date) ? (
+            <ol className="grid gap-4">
+              {events
+                .filter((event) => event.date === date)
+                .map((e) => (
+                  <CalendarScheduleItem key={e.id}>
+                    {e.content}
+                  </CalendarScheduleItem>
+                ))}
+            </ol>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Nothing scheduled for this day.
+            </p>
+          )}
+        </>
+      ) : (
+        children
+      )}
+    </CalendarScheduleContent>
   );
 }

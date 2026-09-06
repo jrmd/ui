@@ -25,9 +25,9 @@ const BillingSettingsDefaultPlans = [
   { name: "Team", price: 12, detail: "For teams building together" },
   { name: "Studio", price: 24, detail: "For a growing practice" },
 ];
-export function BillingSettings({
+function useBillingSettingsModel({
   plans = BillingSettingsDefaultPlans,
-  heading = <>Plan & billing</>,
+  heading = "Plan & billing",
   className,
   value: controlledValue,
   defaultValue = "Team",
@@ -45,101 +45,54 @@ export function BillingSettings({
   const [choice, setChoice] = React.useState(plan);
   const [status, setStatus] = React.useState("");
   React.useEffect(() => setChoice(plan), [plan]);
+  return {
+    plans,
+    heading,
+    className,
+    controlledValue,
+    defaultValue,
+    onValueChange,
+    onSave,
+    children,
+    rootProps,
+    action,
+    plan,
+    setPlan,
+    choice,
+    setChoice,
+    status,
+    setStatus,
+  };
+}
+const BillingSettingsCompositionContext = React.createContext<ReturnType<
+  typeof useBillingSettingsModel
+> | null>(null);
+function useBillingSettingsComposition() {
+  const context = React.useContext(BillingSettingsCompositionContext);
+  if (!context)
+    throw new Error("BillingSettings parts must be inside BillingSettings.");
+  return context;
+}
+export function BillingSettings(props: BillingSettingsProps) {
+  const model = useBillingSettingsModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section {...rootProps} className={cn("grid max-w-2xl gap-6", className)}>
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          {action.error && <p role="alert">{action.error}</p>}
-          <div>
-            <BillingSettingsTitle>{heading}</BillingSettingsTitle>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Choose the space your team needs.
-            </p>
-          </div>
-          <fieldset>
-            <legend className="sr-only">Choose plan</legend>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {plans.map((p) => (
-                <BillingSettingsItem
-                  key={p.name}
-                  className={cn(
-                    choice === p.name
-                      ? "border-primary bg-primary/4"
-                      : "border-border",
-                  )}
-                >
-                  <input
-                    type="radio"
-                    name="plan"
-                    className="sr-only peer"
-                    checked={choice === p.name}
-                    onChange={() => setChoice(p.name)}
-                  />
-                  <span className="block text-sm font-medium peer-focus-visible:underline">
-                    {p.name}
-                  </span>
-                  {choice === p.name && (
-                    <Check
-                      size={15}
-                      className="absolute right-4 top-5 text-primary"
-                    />
-                  )}
-                  <span className="mt-5 block font-display text-3xl">
-                    £{p.price}
-                    <span className="ml-1 font-sans text-xs text-muted-foreground">
-                      / month
-                    </span>
-                  </span>
-                  <span className="mt-3 block text-xs leading-relaxed text-muted-foreground">
-                    {p.detail}
-                  </span>
-                </BillingSettingsItem>
-              ))}
-            </div>
-          </fieldset>
-          <BillingSettingsContent>
-            <div className="mb-4 flex items-center justify-between text-sm">
-              <span className="font-medium">Workspace storage</span>
-              <span className="text-muted-foreground">2.4 GB of 10 GB</span>
-            </div>
-            <Progress value={24} label="Storage used" showLabel={false} />
-            <p className="mt-3 text-xs text-muted-foreground">
-              Illustrative usage for the {plan} plan.
-            </p>
-          </BillingSettingsContent>
-          <BillingSettingsHeader>
-            <span className="flex items-center gap-2 text-xs text-muted-foreground">
-              <CreditCard size={16} />
-              Preview pricing · no payment connected
-            </span>
-            <Button
-              disabled={action.pending}
-              loading={action.pending}
-              onClick={() => {
-                void action.run(async () => {
-                  await onSave?.(choice);
-                  setPlan(choice);
-                  setStatus(
-                    onSave
-                      ? `${choice} selected.`
-                      : `${choice} selected locally. No charge was made.`,
-                  );
-                });
-              }}
-            >
-              Update plan
-            </Button>
-          </BillingSettingsHeader>
-          {status && (
-            <p role="status" className="text-sm">
-              {status}
-            </p>
-          )}
-        </>
-      )}
-    </section>
+    <BillingSettingsCompositionContext.Provider value={model}>
+      <section {...rootProps} className={cn("grid max-w-2xl gap-6", className)}>
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <BillingSettingsError />
+            <BillingSettingsIntro />
+            <BillingSettingsPlans />
+            <BillingSettingsUsage />
+            <BillingSettingsActions />
+            <BillingSettingsStatus />
+          </>
+        )}
+      </section>
+    </BillingSettingsCompositionContext.Provider>
   );
 }
 
@@ -194,4 +147,162 @@ export function BillingSettingsItem({
       {...props}
     />
   );
+}
+
+export function BillingSettingsError({ children }: React.PropsWithChildren) {
+  const { action } = useBillingSettingsComposition();
+  return children === undefined
+    ? action.error && <p role="alert">{action.error}</p>
+    : children;
+}
+export function BillingSettingsIntro({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  const { heading } = useBillingSettingsComposition();
+  return (
+    <div {...props}>
+      {children === undefined ? (
+        <>
+          <BillingSettingsTitle>{heading}</BillingSettingsTitle>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Choose the space your team needs.
+          </p>
+        </>
+      ) : (
+        children
+      )}
+    </div>
+  );
+}
+export function BillingSettingsPlans({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"fieldset">> & { children?: React.ReactNode }) {
+  const { plans, choice, setChoice } = useBillingSettingsComposition();
+  return (
+    <fieldset {...props}>
+      {children === undefined ? (
+        <>
+          <legend className="sr-only">Choose plan</legend>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {plans.map((p) => (
+              <BillingSettingsItem
+                key={p.name}
+                className={cn(
+                  choice === p.name
+                    ? "border-primary bg-primary/4"
+                    : "border-border",
+                )}
+              >
+                <input
+                  type="radio"
+                  name="plan"
+                  className="sr-only peer"
+                  checked={choice === p.name}
+                  onChange={() => setChoice(p.name)}
+                />
+                <span className="block text-sm font-medium peer-focus-visible:underline">
+                  {p.name}
+                </span>
+                {choice === p.name && (
+                  <Check
+                    size={15}
+                    className="absolute right-4 top-5 text-primary"
+                  />
+                )}
+                <span className="mt-5 block font-display text-3xl">
+                  £{p.price}
+                  <span className="ml-1 font-sans text-xs text-muted-foreground">
+                    / month
+                  </span>
+                </span>
+                <span className="mt-3 block text-xs leading-relaxed text-muted-foreground">
+                  {p.detail}
+                </span>
+              </BillingSettingsItem>
+            ))}
+          </div>
+        </>
+      ) : (
+        children
+      )}
+    </fieldset>
+  );
+}
+export function BillingSettingsUsage({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof BillingSettingsContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { plan } = useBillingSettingsComposition();
+  return (
+    <BillingSettingsContent {...props}>
+      {children === undefined ? (
+        <>
+          <div className="mb-4 flex items-center justify-between text-sm">
+            <span className="font-medium">Workspace storage</span>
+            <span className="text-muted-foreground">2.4 GB of 10 GB</span>
+          </div>
+          <Progress value={24} label="Storage used" showLabel={false} />
+          <p className="mt-3 text-xs text-muted-foreground">
+            Illustrative usage for the {plan} plan.
+          </p>
+        </>
+      ) : (
+        children
+      )}
+    </BillingSettingsContent>
+  );
+}
+export function BillingSettingsActions({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof BillingSettingsHeader>> & {
+  children?: React.ReactNode;
+}) {
+  const { onSave, action, setPlan, choice, setStatus } =
+    useBillingSettingsComposition();
+  return (
+    <BillingSettingsHeader {...props}>
+      {children === undefined ? (
+        <>
+          <span className="flex items-center gap-2 text-xs text-muted-foreground">
+            <CreditCard size={16} />
+            Preview pricing · no payment connected
+          </span>
+          <Button
+            disabled={action.pending}
+            loading={action.pending}
+            onClick={() => {
+              void action.run(async () => {
+                await onSave?.(choice);
+                setPlan(choice);
+                setStatus(
+                  onSave
+                    ? `${choice} selected.`
+                    : `${choice} selected locally. No charge was made.`,
+                );
+              });
+            }}
+          >
+            Update plan
+          </Button>
+        </>
+      ) : (
+        children
+      )}
+    </BillingSettingsHeader>
+  );
+}
+export function BillingSettingsStatus({ children }: React.PropsWithChildren) {
+  const { status } = useBillingSettingsComposition();
+  return children === undefined
+    ? status && (
+        <p role="status" className="text-sm">
+          {status}
+        </p>
+      )
+    : children;
 }

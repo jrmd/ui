@@ -26,7 +26,7 @@ export type ProductDemoHeroProps = Omit<
   keyof ProductDemoHeroOptions
 > &
   ProductDemoHeroOptions;
-export function ProductDemoHero({
+function useProductDemoHeroModel({
   title,
   description,
   actionLabel,
@@ -37,43 +37,57 @@ export function ProductDemoHero({
   href = "#features",
   ...rootProps
 }: ProductDemoHeroProps) {
+  return {
+    title,
+    description,
+    actionLabel,
+    copy,
+    children,
+    preview,
+    className,
+    href,
+    rootProps,
+  };
+}
+const ProductDemoHeroCompositionContext = React.createContext<ReturnType<
+  typeof useProductDemoHeroModel
+> | null>(null);
+function useProductDemoHeroComposition() {
+  const context = React.useContext(ProductDemoHeroCompositionContext);
+  if (!context)
+    throw new Error("ProductDemoHero parts must be inside ProductDemoHero.");
+  return context;
+}
+export function ProductDemoHero(
+  props: ProductDemoHeroProps & { composition?: React.ReactNode },
+) {
+  const { composition, ...modelProps } = props;
+  const model = useProductDemoHeroModel(modelProps);
+  const { className, rootProps } = model;
   return (
-    <section {...rootProps} className={cn("py-12 md:py-20", className)}>
-      <ProductDemoHeroContent>
-        <ProductDemoHeroTitle>
-          {title ?? (
-            <>
-              A clear view.
-              <br />
-              <span className="text-muted-foreground">
-                A shared finish line.
-              </span>
-            </>
-          )}
-        </ProductDemoHeroTitle>
-        <div className="max-w-sm md:justify-self-end">
-          <p className="text-base leading-relaxed text-muted-foreground">
-            {description ?? (
-              <>
-                Projects, decisions, and the work in between. Bring your team
-                into one workspace where everyone can see what happens next.
-              </>
-            )}
-          </p>
-          <Button asChild className="mt-6">
-            <a href={href}>
-              {actionLabel ?? "Explore the workspace"} <ArrowRight size={16} />
-            </a>
-          </Button>
-        </div>
-      </ProductDemoHeroContent>
-      {children ?? preview ?? <ProjectPreview />}
-      <ProductDemoHeroDescription>
-        {copy.footerNote ??
-          "Try the project: switch views, open a task, or mark something done."}
-      </ProductDemoHeroDescription>
-    </section>
+    <ProductDemoHeroCompositionContext.Provider value={model}>
+      <section {...rootProps} className={cn("py-12 md:py-20", className)}>
+        {composition !== undefined ? (
+          composition
+        ) : (
+          <>
+            <ProductDemoHeroIntro />
+            <ProductDemoHeroPreview />
+            <ProductDemoHeroCaption />
+          </>
+        )}
+      </section>
+    </ProductDemoHeroCompositionContext.Provider>
   );
+}
+export function ProductDemoHeroRoot({
+  children,
+  ...props
+}: Omit<
+  React.ComponentProps<typeof ProductDemoHero>,
+  "children" | "composition"
+> & { children?: React.ReactNode }) {
+  return <ProductDemoHero {...props} composition={children} />;
 }
 
 export function ProductDemoHeroContent({
@@ -119,5 +133,102 @@ export function ProductDemoHeroDescription({
       )}
       {...props}
     />
+  );
+}
+
+export function ProductDemoHeroIntro({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ProductDemoHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = useProductDemoHeroComposition();
+  return (
+    <ProductDemoHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <ProductDemoHeroTitle>
+            {title ?? (
+              <>
+                A clear view.
+                <br />
+                <span className="text-muted-foreground">
+                  A shared finish line.
+                </span>
+              </>
+            )}
+          </ProductDemoHeroTitle>
+          <div className="max-w-sm md:justify-self-end">
+            <ProductDemoHeroLead />
+            <ProductDemoHeroAction />
+          </div>
+        </>
+      ) : (
+        children
+      )}
+    </ProductDemoHeroContent>
+  );
+}
+export function ProductDemoHeroPreview({ children }: React.PropsWithChildren) {
+  const { children: modelChildren } = useProductDemoHeroComposition();
+  const { preview } = useProductDemoHeroComposition();
+  return children === undefined
+    ? (modelChildren ?? preview ?? <ProjectPreview />)
+    : children;
+}
+export function ProductDemoHeroCaption({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ProductDemoHeroDescription>> & {
+  children?: React.ReactNode;
+}) {
+  const { copy } = useProductDemoHeroComposition();
+  return (
+    <ProductDemoHeroDescription {...props}>
+      {children === undefined
+        ? (copy.footerNote ??
+          "Try the project: switch views, open a task, or mark something done.")
+        : children}
+    </ProductDemoHeroDescription>
+  );
+}
+
+export function ProductDemoHeroAction({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof Button>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, href } = useProductDemoHeroComposition();
+  return (
+    <Button asChild {...props} className={cn("mt-6", props.className)}>
+      {children === undefined ? (
+        <a href={href}>
+          {actionLabel ?? "Explore the workspace"} <ArrowRight size={16} />
+        </a>
+      ) : (
+        children
+      )}
+    </Button>
+  );
+}
+export function ProductDemoHeroLead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useProductDemoHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn(
+        "text-base leading-relaxed text-muted-foreground",
+        props.className,
+      )}
+    >
+      {children === undefined
+        ? (description ??
+          "Projects, decisions, and the work in between. Bring your team into one workspace where everyone can see what happens next.")
+        : children}
+    </p>
   );
 }

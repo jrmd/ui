@@ -1,8 +1,6 @@
 import { test, expect } from "@playwright/test";
 import items from "../packages/catalogue/items.json";
-test("all heroes expose their remaining text slots", async ({
-  page,
-}) => {
+test("all heroes expose their remaining text slots", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   test.setTimeout(120000);
   const heroes = items.filter((i) => i.slug.endsWith("-hero"));
@@ -184,4 +182,34 @@ test("three composed panels resize independently with the keyboard", async ({
   await page.keyboard.press("ArrowLeft");
   await expect(second).toHaveAttribute("aria-valuenow", "40");
   await expect(first).toHaveAttribute("aria-valuenow", "30");
+});
+
+test("block composition preview runs the documented recipe", async ({
+  page,
+}) => {
+  await page.goto("/blocks/kanban-board");
+  await page.getByRole("button", { name: "Composition", exact: true }).click();
+  const frame = page.frameLocator("iframe").first();
+  await frame
+    .getByRole("textbox", { name: "New task title" })
+    .fill("Recipe task");
+  await frame.getByRole("button", { name: "Add task", exact: true }).click();
+  await expect(
+    frame.getByRole("textbox", { name: "Edit task Recipe task" }),
+  ).toHaveValue("Recipe task");
+  await expect(page.locator("iframe").first()).toHaveAttribute(
+    "src",
+    /composition=1/,
+  );
+  await expect(
+    page.locator("pre").filter({ hasText: "KanbanBoardComposer" }).first(),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Preview", exact: true }).click();
+  await expect(page.locator("iframe").first()).toHaveAttribute(
+    "src",
+    /composition=0/,
+  );
+  await expect(
+    frame.getByRole("textbox", { name: "New task title" }),
+  ).toBeVisible();
 });

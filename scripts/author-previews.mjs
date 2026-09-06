@@ -157,7 +157,7 @@ for (const [group, names] of Object.entries(groups))
             prop.initializer.text;
     }
     const parameterSource =
-      source.match(/export function \w+\(\{([\s\S]*?)\}\s*:/)?.[1] ?? "";
+      source.match(/(?:export )?function \w+\(\{([\s\S]*?)\}\s*:/)?.[1] ?? "";
     const customization = customizable
       ? [
           "artworkText",

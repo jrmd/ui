@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { Slot } from "radix-ui";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "../ui/utils";
 export type HeroCopy = Partial<
@@ -41,16 +42,19 @@ export type HeroProps = {
 };
 export function HeroLink({
   href = "/blocks",
+  asChild,
   children = "Explore the collection",
   className,
   ...props
 }: React.ComponentProps<"a"> & {
+  asChild?: boolean;
   href?: string;
   children?: React.ReactNode;
   className?: string;
 }) {
+  const Comp = asChild ? Slot.Root : "a";
   return (
-    <a
+    <Comp
       {...props}
       href={href}
       className={cn(
@@ -58,8 +62,14 @@ export function HeroLink({
         className,
       )}
     >
-      {children}
-      <ArrowUpRight size={16} />
-    </a>
+      {asChild ? (
+        children
+      ) : (
+        <>
+          {children}
+          <ArrowUpRight size={16} />
+        </>
+      )}
+    </Comp>
   );
 }

@@ -11,7 +11,7 @@ export type MarketingFooterProps = Omit<
   keyof MarketingFooterOptions
 > &
   MarketingFooterOptions;
-export function MarketingFooter({
+function useMarketingFooterModel({
   brand = "Forma",
   items = [
     { label: "Contact", href: "#contact" },
@@ -21,32 +21,40 @@ export function MarketingFooter({
   children,
   ...rootProps
 }: MarketingFooterProps) {
+  return { brand, items, className, children, rootProps };
+}
+const MarketingFooterCompositionContext = React.createContext<ReturnType<
+  typeof useMarketingFooterModel
+> | null>(null);
+function useMarketingFooterComposition() {
+  const context = React.useContext(MarketingFooterCompositionContext);
+  if (!context)
+    throw new Error("MarketingFooter parts must be inside MarketingFooter.");
+  return context;
+}
+export function MarketingFooter(props: MarketingFooterProps) {
+  const model = useMarketingFooterModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <footer
-      {...rootProps}
-      className={cn(
-        "mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-border py-8 text-sm",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <span className="font-display text-xl font-medium">{brand}</span>
-          <MarketingFooterNavigation aria-label="Footer">
-            {items.map((i) => (
-              <a key={i.href} href={i.href}>
-                {i.label}
-              </a>
-            ))}
-          </MarketingFooterNavigation>
-          <span className="text-xs text-muted-foreground">
-            A Jez UI demo template.
-          </span>
-        </>
-      )}
-    </footer>
+    <MarketingFooterCompositionContext.Provider value={model}>
+      <footer
+        {...rootProps}
+        className={cn(
+          "mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-border py-8 text-sm",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <MarketingFooterBrand />
+            <MarketingFooterLinks />
+            <MarketingFooterNote />
+          </>
+        )}
+      </footer>
+    </MarketingFooterCompositionContext.Provider>
   );
 }
 
@@ -60,5 +68,52 @@ export function MarketingFooterNavigation({
       className={cn("flex gap-5", className)}
       {...props}
     />
+  );
+}
+
+export function MarketingFooterBrand({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { brand } = useMarketingFooterComposition();
+  return (
+    <span
+      {...props}
+      className={cn("font-display text-xl font-medium", props.className)}
+    >
+      {children === undefined ? brand : children}
+    </span>
+  );
+}
+export function MarketingFooterLinks({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof MarketingFooterNavigation>> & {
+  children?: React.ReactNode;
+}) {
+  const { items } = useMarketingFooterComposition();
+  return (
+    <MarketingFooterNavigation aria-label="Footer" {...props}>
+      {children === undefined
+        ? items.map((i) => (
+            <a key={i.href} href={i.href}>
+              {i.label}
+            </a>
+          ))
+        : children}
+    </MarketingFooterNavigation>
+  );
+}
+export function MarketingFooterNote({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  return (
+    <span
+      {...props}
+      className={cn("text-xs text-muted-foreground", props.className)}
+    >
+      {children === undefined ? "A Jez UI demo template." : children}
+    </span>
   );
 }

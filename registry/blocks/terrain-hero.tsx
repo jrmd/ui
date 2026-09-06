@@ -26,7 +26,7 @@ export type TerrainHeroProps = Omit<
   keyof TerrainHeroOptions
 > &
   TerrainHeroOptions;
-export function TerrainHero({
+function useTerrainHeroModel({
   title,
   description,
   actionLabel,
@@ -38,80 +38,53 @@ export function TerrainHero({
   ...rootProps
 }: TerrainHeroProps) {
   const [paused, setPaused] = React.useState(false);
+  return {
+    title,
+    description,
+    actionLabel,
+    copy,
+    artwork,
+    className,
+    href,
+    children,
+    rootProps,
+    paused,
+    setPaused,
+  };
+}
+const TerrainHeroCompositionContext = React.createContext<ReturnType<
+  typeof useTerrainHeroModel
+> | null>(null);
+function useTerrainHeroComposition() {
+  const context = React.useContext(TerrainHeroCompositionContext);
+  if (!context)
+    throw new Error("TerrainHero parts must be inside TerrainHero.");
+  return context;
+}
+export function TerrainHero(props: TerrainHeroProps) {
+  const model = useTerrainHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "@container relative isolate overflow-hidden rounded-xl bg-[#14221e] text-[#f0f1e6]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <TerrainHeroHeader>
-            <span className="flex items-center gap-2 font-medium tracking-widest">
-              <Mountain size={19} />
-              {copy.brand ?? "FIELD / 01"}
-            </span>
-            <span className="text-[#b7c7b8]">
-              {copy.meta ?? "A study in elevation"}
-            </span>
-          </TerrainHeroHeader>
-          <TerrainHeroContent>
-            <TerrainHeroTitle>
-              {title ?? (
-                <>
-                  Find your
-                  <br />
-                  <span className="text-[#c8dd9f]">higher ground.</span>
-                </>
-              )}
-            </TerrainHeroTitle>
-            <p className="max-w-xs text-sm leading-relaxed text-[#bdcdbf] @min-[640px]:justify-self-end">
-              {description ?? (
-                <>
-                  New perspectives are rarely found on familiar paths. Follow
-                  the contours. See where they take you.
-                </>
-              )}
-            </p>
-          </TerrainHeroContent>
-          <WebGLTerrain
-            color={artwork?.color ?? "#91b47b"}
-            speed={artwork?.speed ?? 0.4}
-            paused={paused}
-            className="-mt-8 h-[300px] rounded-none [mask-image:linear-gradient(to_bottom,transparent,black_24%,black_88%,transparent)] @min-[640px]:h-[360px]"
-            label={
-              copy.artworkLabel ??
-              "An animated topographic field of continuous contour lines"
-            }
-          />
-          <div className="relative z-10 mx-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/20 py-5 @min-[640px]:mx-10">
-            <a
-              href={href}
-              className="flex min-h-11 items-center gap-3 text-sm font-medium hover:text-[#c8dd9f]"
-            >
-              {actionLabel ?? "Explore the collection"}
-              <ArrowUpRight size={17} />
-            </a>
-            <button
-              type="button"
-              aria-pressed={paused}
-              onClick={() => setPaused((v) => !v)}
-              className="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-xs text-[#bdcdbf] hover:bg-white/10"
-            >
-              {paused ? <Play size={13} /> : <Pause size={13} />}{" "}
-              {paused
-                ? (copy.playLabel ?? "Play")
-                : (copy.pauseLabel ?? "Pause")}{" "}
-              {copy.animationName ?? "terrain"}
-            </button>
-          </div>
-        </>
-      )}
-    </section>
+    <TerrainHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "@container relative isolate overflow-hidden rounded-xl bg-[#14221e] text-[#f0f1e6]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <TerrainHeroMasthead />
+            <TerrainHeroIntro />
+            <TerrainHeroArtwork />
+            <TerrainHeroControls />
+          </>
+        )}
+      </section>
+    </TerrainHeroCompositionContext.Provider>
   );
 }
 
@@ -158,5 +131,177 @@ export function TerrainHeroTitle({
       )}
       {...props}
     />
+  );
+}
+
+export function TerrainHeroMasthead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof TerrainHeroHeader>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <TerrainHeroHeader {...props}>
+      {children === undefined ? (
+        <>
+          <TerrainHeroBrand />
+          <TerrainHeroMeta />
+        </>
+      ) : (
+        children
+      )}
+    </TerrainHeroHeader>
+  );
+}
+export function TerrainHeroIntro({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof TerrainHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = useTerrainHeroComposition();
+  return (
+    <TerrainHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <TerrainHeroTitle>
+            {title ?? (
+              <>
+                Find your
+                <br />
+                <span className="text-[#c8dd9f]">higher ground.</span>
+              </>
+            )}
+          </TerrainHeroTitle>
+          <TerrainHeroDescription />
+        </>
+      ) : (
+        children
+      )}
+    </TerrainHeroContent>
+  );
+}
+export function TerrainHeroArtwork({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof WebGLTerrain>> & {
+  children?: React.ReactNode;
+}) {
+  const { copy, artwork, paused } = useTerrainHeroComposition();
+  return children === undefined ? (
+    <WebGLTerrain
+      color={artwork?.color ?? "#91b47b"}
+      speed={artwork?.speed ?? 0.4}
+      paused={paused}
+      label={
+        copy.artworkLabel ??
+        "An animated topographic field of continuous contour lines"
+      }
+      {...props}
+      className={cn(
+        "-mt-8 h-[300px] rounded-none [mask-image:linear-gradient(to_bottom,transparent,black_24%,black_88%,transparent)] @min-[640px]:h-[360px]",
+        props.className,
+      )}
+    />
+  ) : (
+    children
+  );
+}
+export function TerrainHeroControls({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  const { actionLabel, copy, href, paused, setPaused } =
+    useTerrainHeroComposition();
+  return (
+    <div
+      {...props}
+      className={cn(
+        "relative z-10 mx-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/20 py-5 @min-[640px]:mx-10",
+        props.className,
+      )}
+    >
+      {children === undefined ? (
+        <>
+          <a
+            href={href}
+            className="flex min-h-11 items-center gap-3 text-sm font-medium hover:text-[#c8dd9f]"
+          >
+            {actionLabel ?? "Explore the collection"}
+            <ArrowUpRight size={17} />
+          </a>
+          <button
+            type="button"
+            aria-pressed={paused}
+            onClick={() => setPaused((v) => !v)}
+            className="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-xs text-[#bdcdbf] hover:bg-white/10"
+          >
+            {paused ? <Play size={13} /> : <Pause size={13} />}{" "}
+            {paused ? (copy.playLabel ?? "Play") : (copy.pauseLabel ?? "Pause")}{" "}
+            {copy.animationName ?? "terrain"}
+          </button>
+        </>
+      ) : (
+        children
+      )}
+    </div>
+  );
+}
+
+export function TerrainHeroMeta({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useTerrainHeroComposition();
+  return (
+    <span {...props} className={cn("text-[#b7c7b8]", props.className)}>
+      {children === undefined
+        ? (copy.meta ?? "A study in elevation")
+        : children}
+    </span>
+  );
+}
+export function TerrainHeroBrand({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useTerrainHeroComposition();
+  return (
+    <span
+      {...props}
+      className={cn(
+        "flex items-center gap-2 font-medium tracking-widest",
+        props.className,
+      )}
+    >
+      {children === undefined ? (
+        <>
+          <Mountain size={19} />
+          {copy.brand ?? "FIELD / 01"}
+        </>
+      ) : (
+        children
+      )}
+    </span>
+  );
+}
+export function TerrainHeroDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useTerrainHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn(
+        "max-w-xs text-sm leading-relaxed text-[#bdcdbf] @min-[640px]:justify-self-end",
+        props.className,
+      )}
+    >
+      {children === undefined
+        ? (description ??
+          "New perspectives are rarely found on familiar paths. Follow the contours. See where they take you.")
+        : children}
+    </p>
   );
 }

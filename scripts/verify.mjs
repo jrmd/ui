@@ -28,6 +28,21 @@ for (const item of items) {
   assert.ok(
     item.description && item.props && item.example && item.accessibility,
   );
+  if (item.kind === "block") {
+    const examplePath = `examples/blocks/${item.slug}.tsx`;
+    assert.ok(
+      fs.existsSync(examplePath),
+      `Missing composition example: ${item.slug}`,
+    );
+    assert.equal(
+      item.composition,
+      fs
+        .readFileSync(examplePath, "utf8")
+        .replaceAll("../../registry/", "@/components/jez-ui/"),
+      `Stale composition example: ${item.slug}`,
+    );
+    assert.ok(item.parts.length > 0, `Missing block parts: ${item.slug}`);
+  }
   const reg = JSON.parse(
     fs.readFileSync(`apps/catalogue/public/r/${item.slug}.json`, "utf8"),
   );

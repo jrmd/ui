@@ -26,7 +26,7 @@ export type DistortionHeroProps = Omit<
   keyof DistortionHeroOptions
 > &
   DistortionHeroOptions;
-export function DistortionHero({
+function useDistortionHeroModel({
   artworkText,
   copy = {},
   title,
@@ -38,60 +38,51 @@ export function DistortionHero({
   children,
   ...rootProps
 }: DistortionHeroProps) {
+  return {
+    artworkText,
+    copy,
+    title,
+    actionLabel,
+    description,
+    artwork,
+    className,
+    href,
+    children,
+    rootProps,
+  };
+}
+const DistortionHeroCompositionContext = React.createContext<ReturnType<
+  typeof useDistortionHeroModel
+> | null>(null);
+function useDistortionHeroComposition() {
+  const context = React.useContext(DistortionHeroCompositionContext);
+  if (!context)
+    throw new Error("DistortionHero parts must be inside DistortionHero.");
+  return context;
+}
+export function DistortionHero(props: DistortionHeroProps) {
+  const model = useDistortionHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "relative isolate overflow-hidden rounded-xl bg-[#d7dfcf] text-[#28352d]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <DistortionHeroHeader>
-            <span>{copy.brand ?? "FORM / EXPERIMENTAL DESIGN OFFICE"}</span>
-            <span>{copy.meta ?? "EST. 2026"}</span>
-          </DistortionHeroHeader>
-          <HeroArt
-            text={artworkText}
-            options={{
-              ...artwork,
-              label: copy.artworkLabel ?? artwork?.label,
-              playLabel: copy.playLabel ?? artwork?.playLabel,
-              pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
-            }}
-            kind="distortion"
-            className="h-72 md:h-96"
-          />
-          <DistortionHeroContent>
-            <DistortionHeroTitle>
-              {title ?? (
-                <>
-                  Nothing good
-                  <br />
-                  stands still.
-                </>
-              )}
-            </DistortionHeroTitle>
-            <div className="flex flex-col items-start gap-5">
-              <p className="max-w-sm text-sm leading-relaxed">
-                {description ?? (
-                  <>
-                    Identities that move. Experiences that respond. A practice
-                    built around the possibilities of the screen.
-                  </>
-                )}
-              </p>
-              <HeroLink href={href}>
-                {actionLabel ?? <>See what moves us</>}
-              </HeroLink>
-            </div>
-          </DistortionHeroContent>
-        </>
-      )}
-    </section>
+    <DistortionHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "relative isolate overflow-hidden rounded-xl bg-[#d7dfcf] text-[#28352d]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <DistortionHeroMasthead />
+            <DistortionHeroArtwork />
+            <DistortionHeroIntro />
+          </>
+        )}
+      </section>
+    </DistortionHeroCompositionContext.Provider>
   );
 }
 
@@ -138,5 +129,135 @@ export function DistortionHeroTitle({
       )}
       {...props}
     />
+  );
+}
+
+export function DistortionHeroMasthead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof DistortionHeroHeader>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <DistortionHeroHeader {...props}>
+      {children === undefined ? (
+        <>
+          <DistortionHeroBrand />
+          <DistortionHeroMeta />
+        </>
+      ) : (
+        children
+      )}
+    </DistortionHeroHeader>
+  );
+}
+export function DistortionHeroArtwork({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroArt>> & {
+  children?: React.ReactNode;
+}) {
+  const { artworkText, copy, artwork } = useDistortionHeroComposition();
+  return (
+    <HeroArt
+      text={artworkText}
+      options={{
+        ...artwork,
+        label: copy.artworkLabel ?? artwork?.label,
+        playLabel: copy.playLabel ?? artwork?.playLabel,
+        pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+      }}
+      kind="distortion"
+      {...props}
+      className={cn("h-72 md:h-96", props.className)}
+    >
+      {children}
+    </HeroArt>
+  );
+}
+export function DistortionHeroIntro({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof DistortionHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = useDistortionHeroComposition();
+  return (
+    <DistortionHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <DistortionHeroTitle>
+            {title ?? (
+              <>
+                Nothing good
+                <br />
+                stands still.
+              </>
+            )}
+          </DistortionHeroTitle>
+          <div className="flex flex-col items-start gap-5">
+            <DistortionHeroDescription />
+            <DistortionHeroAction />
+          </div>
+        </>
+      ) : (
+        children
+      )}
+    </DistortionHeroContent>
+  );
+}
+
+export function DistortionHeroMeta({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useDistortionHeroComposition();
+  return (
+    <span {...props}>
+      {children === undefined ? (copy.meta ?? "EST. 2026") : children}
+    </span>
+  );
+}
+export function DistortionHeroBrand({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useDistortionHeroComposition();
+  return (
+    <span {...props}>
+      {children === undefined
+        ? (copy.brand ?? "FORM / EXPERIMENTAL DESIGN OFFICE")
+        : children}
+    </span>
+  );
+}
+export function DistortionHeroAction({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroLink>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, href } = useDistortionHeroComposition();
+  return (
+    <HeroLink href={href} {...props}>
+      {children === undefined ? (actionLabel ?? "See what moves us") : children}
+    </HeroLink>
+  );
+}
+export function DistortionHeroDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useDistortionHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn("max-w-sm text-sm leading-relaxed", props.className)}
+    >
+      {children === undefined
+        ? (description ??
+          "Identities that move. Experiences that respond. A practice built around the possibilities of the screen.")
+        : children}
+    </p>
   );
 }

@@ -17,37 +17,42 @@ const TestimonialGridDefaultItems = [
   "It gave our small team a little more room to think.",
   "A calmer way to get from the first idea to the finished thing.",
 ];
-export function TestimonialGrid({
+function useTestimonialGridModel({
   items = TestimonialGridDefaultItems,
-  heading = <>Room for your customers’ stories.</>,
-  description = <>Sample quotes for layout demonstration.</>,
+  heading = "Room for your customers’ stories.",
+  description = "Sample quotes for layout demonstration.",
   className,
   children,
   ...rootProps
 }: TestimonialGridProps) {
+  return { items, heading, description, className, children, rootProps };
+}
+const TestimonialGridCompositionContext = React.createContext<ReturnType<
+  typeof useTestimonialGridModel
+> | null>(null);
+function useTestimonialGridComposition() {
+  const context = React.useContext(TestimonialGridCompositionContext);
+  if (!context)
+    throw new Error("TestimonialGrid parts must be inside TestimonialGrid.");
+  return context;
+}
+export function TestimonialGrid(props: TestimonialGridProps) {
+  const model = useTestimonialGridModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section {...rootProps} className={cn("py-8", className)}>
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <TestimonialGridTitle>{heading}</TestimonialGridTitle>
-          <TestimonialGridDescription>{description}</TestimonialGridDescription>
-          <TestimonialGridContent>
-            {items.map((q, i) => (
-              <figure key={q} className="m-0 border-t border-border pt-5">
-                <blockquote className="text-xl leading-relaxed">
-                  “{q}”
-                </blockquote>
-                <figcaption className="mt-5 text-xs text-muted-foreground">
-                  Sample customer {i + 1} · Illustrative quote
-                </figcaption>
-              </figure>
-            ))}
-          </TestimonialGridContent>
-        </>
-      )}
-    </section>
+    <TestimonialGridCompositionContext.Provider value={model}>
+      <section {...rootProps} className={cn("py-8", className)}>
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <TestimonialGridHeading />
+            <TestimonialGridLead />
+            <TestimonialGridQuotes />
+          </>
+        )}
+      </section>
+    </TestimonialGridCompositionContext.Provider>
   );
 }
 
@@ -83,6 +88,92 @@ export function TestimonialGridContent({
     <div
       data-slot="testimonial-grid-content"
       className={cn("grid gap-8 md:grid-cols-3", className)}
+      {...props}
+    />
+  );
+}
+
+export function TestimonialGridHeading({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof TestimonialGridTitle>> & {
+  children?: React.ReactNode;
+}) {
+  const { heading } = useTestimonialGridComposition();
+  return (
+    <TestimonialGridTitle {...props}>
+      {children === undefined ? heading : children}
+    </TestimonialGridTitle>
+  );
+}
+export function TestimonialGridLead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof TestimonialGridDescription>> & {
+  children?: React.ReactNode;
+}) {
+  const { description } = useTestimonialGridComposition();
+  return (
+    <TestimonialGridDescription {...props}>
+      {children === undefined ? description : children}
+    </TestimonialGridDescription>
+  );
+}
+export function TestimonialGridQuotes({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof TestimonialGridContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { items } = useTestimonialGridComposition();
+  return (
+    <TestimonialGridContent {...props}>
+      {children === undefined
+        ? items.map((q, i) => (
+            <TestimonialGridQuote key={q}>
+              <TestimonialGridQuotation>“{q}”</TestimonialGridQuotation>
+              <TestimonialGridAttribution>
+                Sample customer {i + 1} · Illustrative quote
+              </TestimonialGridAttribution>
+            </TestimonialGridQuote>
+          ))
+        : children}
+    </TestimonialGridContent>
+  );
+}
+
+export function TestimonialGridQuote({
+  className,
+  ...props
+}: React.ComponentProps<"figure">) {
+  return (
+    <figure
+      data-slot="testimonial-grid-quote"
+      className={cn("m-0 border-t border-border pt-5", className)}
+      {...props}
+    />
+  );
+}
+export function TestimonialGridQuotation({
+  className,
+  ...props
+}: React.ComponentProps<"blockquote">) {
+  return (
+    <blockquote
+      data-slot="testimonial-grid-quotation"
+      className={cn("text-xl leading-relaxed", className)}
+      {...props}
+    />
+  );
+}
+export function TestimonialGridAttribution({
+  className,
+  ...props
+}: React.ComponentProps<"figcaption">) {
+  return (
+    <figcaption
+      data-slot="testimonial-grid-attribution"
+      className={cn("mt-5 text-xs text-muted-foreground", className)}
       {...props}
     />
   );

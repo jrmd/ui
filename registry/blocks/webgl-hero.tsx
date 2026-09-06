@@ -24,7 +24,7 @@ export type WebglHeroProps = Omit<
   keyof WebglHeroOptions
 > &
   WebglHeroOptions;
-export function WebglHero({
+function useWebglHeroModel({
   title,
   description,
   actionLabel,
@@ -36,70 +36,51 @@ export function WebglHero({
   ...rootProps
 }: WebglHeroProps) {
   const [paused, setPaused] = React.useState(false);
+  return {
+    title,
+    description,
+    actionLabel,
+    copy,
+    artwork,
+    className,
+    href,
+    children,
+    rootProps,
+    paused,
+    setPaused,
+  };
+}
+const WebglHeroCompositionContext = React.createContext<ReturnType<
+  typeof useWebglHeroModel
+> | null>(null);
+function useWebglHeroComposition() {
+  const context = React.useContext(WebglHeroCompositionContext);
+  if (!context) throw new Error("WebglHero parts must be inside WebglHero.");
+  return context;
+}
+export function WebglHero(props: WebglHeroProps) {
+  const model = useWebglHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "overflow-hidden rounded-xl bg-[#10151d] text-[#f0f4f8]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <WebglHeroContent>
-            <WebglHeroTitle>
-              {title ?? (
-                <>
-                  Form follows
-                  <br />
-                  <span className="text-[#9fb6d0]">curiosity.</span>
-                </>
-              )}
-            </WebglHeroTitle>
-            <p className="max-w-xs text-sm leading-relaxed text-[#b9c5d3] md:justify-self-end">
-              {description ?? (
-                <>
-                  An exploration of light, material, and movement. Move through
-                  the field and watch it respond.
-                </>
-              )}
-            </p>
-          </WebglHeroContent>
-          <WebGLRibbonField
-            color={artwork?.color}
-            speed={artwork?.speed}
-            paused={paused}
-            className="h-[280px] rounded-none md:h-[360px]"
-            label={
-              copy.artworkLabel ??
-              "Seven flowing ribbons responding to your pointer"
-            }
-          />
-          <WebglHeroHeader>
-            <a
-              href={href}
-              className="flex items-center gap-2 text-sm hover:text-[#9fb6d0]"
-            >
-              {actionLabel ?? "Explore the work"} <ArrowUpRight size={16} />
-            </a>
-            <button
-              type="button"
-              aria-pressed={paused}
-              onClick={() => setPaused((v) => !v)}
-              className="flex items-center gap-2 rounded-md px-3 py-2 text-xs text-[#b9c5d3] hover:bg-white/10"
-            >
-              {paused ? <Play size={13} /> : <Pause size={13} />}
-              {paused
-                ? (copy.playLabel ?? "Play")
-                : (copy.pauseLabel ?? "Pause")}{" "}
-              {copy.animationName ?? "scene"}
-            </button>
-          </WebglHeroHeader>
-        </>
-      )}
-    </section>
+    <WebglHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "overflow-hidden rounded-xl bg-[#10151d] text-[#f0f4f8]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <WebglHeroIntro />
+            <WebglHeroArtwork />
+            <WebglHeroControls />
+          </>
+        )}
+      </section>
+    </WebglHeroCompositionContext.Provider>
   );
 }
 
@@ -143,5 +124,114 @@ export function WebglHeroHeader({
       )}
       {...props}
     />
+  );
+}
+
+export function WebglHeroIntro({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof WebglHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = useWebglHeroComposition();
+  return (
+    <WebglHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <WebglHeroTitle>
+            {title ?? (
+              <>
+                Form follows
+                <br />
+                <span className="text-[#9fb6d0]">curiosity.</span>
+              </>
+            )}
+          </WebglHeroTitle>
+          <WebglHeroDescription />
+        </>
+      ) : (
+        children
+      )}
+    </WebglHeroContent>
+  );
+}
+export function WebglHeroArtwork({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof WebGLRibbonField>> & {
+  children?: React.ReactNode;
+}) {
+  const { copy, artwork, paused } = useWebglHeroComposition();
+  return children === undefined ? (
+    <WebGLRibbonField
+      color={artwork?.color}
+      speed={artwork?.speed}
+      paused={paused}
+      label={
+        copy.artworkLabel ?? "Seven flowing ribbons responding to your pointer"
+      }
+      {...props}
+      className={cn("h-[280px] rounded-none md:h-[360px]", props.className)}
+    />
+  ) : (
+    children
+  );
+}
+export function WebglHeroControls({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof WebglHeroHeader>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, copy, href, paused, setPaused } =
+    useWebglHeroComposition();
+  return (
+    <WebglHeroHeader {...props}>
+      {children === undefined ? (
+        <>
+          <a
+            href={href}
+            className="flex items-center gap-2 text-sm hover:text-[#9fb6d0]"
+          >
+            {actionLabel ?? "Explore the work"} <ArrowUpRight size={16} />
+          </a>
+          <button
+            type="button"
+            aria-pressed={paused}
+            onClick={() => setPaused((v) => !v)}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-xs text-[#b9c5d3] hover:bg-white/10"
+          >
+            {paused ? <Play size={13} /> : <Pause size={13} />}
+            {paused
+              ? (copy.playLabel ?? "Play")
+              : (copy.pauseLabel ?? "Pause")}{" "}
+            {copy.animationName ?? "scene"}
+          </button>
+        </>
+      ) : (
+        children
+      )}
+    </WebglHeroHeader>
+  );
+}
+
+export function WebglHeroDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useWebglHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn(
+        "max-w-xs text-sm leading-relaxed text-[#b9c5d3] md:justify-self-end",
+        props.className,
+      )}
+    >
+      {children === undefined
+        ? (description ??
+          "An exploration of light, material, and movement. Move through the field and watch it respond.")
+        : children}
+    </p>
   );
 }

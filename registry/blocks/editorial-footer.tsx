@@ -13,7 +13,7 @@ export type EditorialFooterProps = Omit<
   keyof EditorialFooterOptions
 > &
   EditorialFooterOptions;
-export function EditorialFooter({
+function useEditorialFooterModel({
   className,
   brand = "The Sunday Edit.",
   description = "Notes on design, culture, and paying closer attention.",
@@ -21,30 +21,36 @@ export function EditorialFooter({
   children,
   ...rootProps
 }: EditorialFooterProps) {
+  return { className, brand, description, groups, children, rootProps };
+}
+const EditorialFooterCompositionContext = React.createContext<ReturnType<
+  typeof useEditorialFooterModel
+> | null>(null);
+function useEditorialFooterComposition() {
+  const context = React.useContext(EditorialFooterCompositionContext);
+  if (!context)
+    throw new Error("EditorialFooter parts must be inside EditorialFooter.");
+  return context;
+}
+export function EditorialFooter(props: EditorialFooterProps) {
+  const model = useEditorialFooterModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <footer
-      {...rootProps}
-      className={cn("border-t border-border py-10", className)}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <EditorialFooterContent>
-            <div>
-              <EditorialFooterTitle>{brand}</EditorialFooterTitle>
-              <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
-                {description}
-              </p>
-            </div>
-            <FooterLinks groups={groups} />
-          </EditorialFooterContent>
-          <EditorialFooterDescription>
-            An illustrative publication · Made with Jez UI
-          </EditorialFooterDescription>
-        </>
-      )}
-    </footer>
+    <EditorialFooterCompositionContext.Provider value={model}>
+      <footer
+        {...rootProps}
+        className={cn("border-t border-border py-10", className)}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <EditorialFooterColumns />
+            <EditorialFooterNote />
+          </>
+        )}
+      </footer>
+    </EditorialFooterCompositionContext.Provider>
   );
 }
 
@@ -85,5 +91,46 @@ export function EditorialFooterDescription({
       )}
       {...props}
     />
+  );
+}
+
+export function EditorialFooterColumns({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof EditorialFooterContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { brand, description, groups } = useEditorialFooterComposition();
+  return (
+    <EditorialFooterContent {...props}>
+      {children === undefined ? (
+        <>
+          <div>
+            <EditorialFooterTitle>{brand}</EditorialFooterTitle>
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              {description}
+            </p>
+          </div>
+          <FooterLinks groups={groups} />
+        </>
+      ) : (
+        children
+      )}
+    </EditorialFooterContent>
+  );
+}
+export function EditorialFooterNote({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof EditorialFooterDescription>> & {
+  children?: React.ReactNode;
+}) {
+  const {} = useEditorialFooterComposition();
+  return (
+    <EditorialFooterDescription {...props}>
+      {children === undefined
+        ? "An illustrative publication · Made with Jez UI"
+        : children}
+    </EditorialFooterDescription>
   );
 }

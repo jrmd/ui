@@ -15,7 +15,7 @@ export type TypographicHeroProps = Omit<
   keyof TypographicHeroOptions
 > &
   TypographicHeroOptions;
-export function TypographicHero({
+function useTypographicHeroModel({
   copy = {},
   title,
   actionLabel,
@@ -25,50 +25,48 @@ export function TypographicHero({
   children,
   ...rootProps
 }: TypographicHeroProps) {
+  return {
+    copy,
+    title,
+    actionLabel,
+    description,
+    className,
+    href,
+    children,
+    rootProps,
+  };
+}
+const TypographicHeroCompositionContext = React.createContext<ReturnType<
+  typeof useTypographicHeroModel
+> | null>(null);
+function useTypographicHeroComposition() {
+  const context = React.useContext(TypographicHeroCompositionContext);
+  if (!context)
+    throw new Error("TypographicHero parts must be inside TypographicHero.");
+  return context;
+}
+export function TypographicHero(props: TypographicHeroProps) {
+  const model = useTypographicHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "relative isolate overflow-hidden rounded-xl bg-[#ef582f] text-[#231d18]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <TypographicHeroHeader>
-            <span>{copy.brand ?? "OTHER® — DESIGN & DIRECTION"}</span>
-            <span>{copy.meta ?? "OPEN TO GOOD PROBLEMS"}</span>
-          </TypographicHeroHeader>
-          <TypographicHeroContent>
-            <TypographicHeroTitle>
-              {title ?? (
-                <>
-                  GOOD
-                  <br />
-                  <span className="block text-right">WEIRD.</span>
-                  <span className="block">WORK.</span>
-                </>
-              )}
-            </TypographicHeroTitle>
-            <div className="mt-10 flex flex-wrap items-end justify-between gap-7">
-              <p className="max-w-xs text-sm leading-relaxed">
-                {description ?? (
-                  <>
-                    For people with something to say. We turn a point of view
-                    into a world you can step inside.
-                  </>
-                )}
-              </p>
-              <HeroLink href={href}>
-                {actionLabel ?? <>Take a look around</>}
-              </HeroLink>
-            </div>
-          </TypographicHeroContent>
-        </>
-      )}
-    </section>
+    <TypographicHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "relative isolate overflow-hidden rounded-xl bg-[#ef582f] text-[#231d18]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <TypographicHeroMasthead />
+            <TypographicHeroIntro />
+          </>
+        )}
+      </section>
+    </TypographicHeroCompositionContext.Provider>
   );
 }
 
@@ -112,5 +110,116 @@ export function TypographicHeroTitle({
       )}
       {...props}
     />
+  );
+}
+
+export function TypographicHeroMasthead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof TypographicHeroHeader>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <TypographicHeroHeader {...props}>
+      {children === undefined ? (
+        <>
+          <TypographicHeroBrand />
+          <TypographicHeroMeta />
+        </>
+      ) : (
+        children
+      )}
+    </TypographicHeroHeader>
+  );
+}
+export function TypographicHeroIntro({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof TypographicHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = useTypographicHeroComposition();
+  return (
+    <TypographicHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <TypographicHeroTitle>
+            {title ?? (
+              <>
+                GOOD
+                <br />
+                <span className="block text-right">WEIRD.</span>
+                <span className="block">WORK.</span>
+              </>
+            )}
+          </TypographicHeroTitle>
+          <div className="mt-10 flex flex-wrap items-end justify-between gap-7">
+            <TypographicHeroDescription />
+            <TypographicHeroAction />
+          </div>
+        </>
+      ) : (
+        children
+      )}
+    </TypographicHeroContent>
+  );
+}
+
+export function TypographicHeroMeta({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useTypographicHeroComposition();
+  return (
+    <span {...props}>
+      {children === undefined
+        ? (copy.meta ?? "OPEN TO GOOD PROBLEMS")
+        : children}
+    </span>
+  );
+}
+export function TypographicHeroBrand({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useTypographicHeroComposition();
+  return (
+    <span {...props}>
+      {children === undefined
+        ? (copy.brand ?? "OTHER® — DESIGN & DIRECTION")
+        : children}
+    </span>
+  );
+}
+export function TypographicHeroAction({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroLink>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, href } = useTypographicHeroComposition();
+  return (
+    <HeroLink href={href} {...props}>
+      {children === undefined
+        ? (actionLabel ?? "Take a look around")
+        : children}
+    </HeroLink>
+  );
+}
+export function TypographicHeroDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useTypographicHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn("max-w-xs text-sm leading-relaxed", props.className)}
+    >
+      {children === undefined
+        ? (description ??
+          "For people with something to say. We turn a point of view into a world you can step inside.")
+        : children}
+    </p>
   );
 }

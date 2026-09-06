@@ -162,6 +162,19 @@ const theme = {
   },
 };
 fs.writeFileSync(out + "/r/jez-theme.json", JSON.stringify(theme, null, 2));
+// The catalogue previews execute the same examples that consumers compile.
+const blockRecipes = items.filter(
+  (item) =>
+    item.kind === "block" && fs.existsSync(`examples/blocks/${item.slug}.tsx`),
+);
+fs.writeFileSync(
+  "apps/catalogue/components/block-recipes.tsx",
+  `"use client";
+import {lazy,Suspense} from "react";
+${blockRecipes.map((item, index) => `const Recipe${index}=lazy(()=>import("../../../examples/blocks/${item.slug}"));`).join("\n")}
+const recipes={${blockRecipes.map((item, index) => `"${item.slug}":Recipe${index}`).join(",")}};
+export function BlockRecipe({slug}:{slug:string}){const Recipe=recipes[slug as keyof typeof recipes];return Recipe?<Suspense fallback={<p>Loading composition…</p>}><Recipe/></Suspense>:null;}`,
+);
 const manifests = [];
 for (const item of items) {
   const files = [...closure(item.file)],
@@ -330,6 +343,11 @@ for (const item of items) {
       .map((m) => m[1])
       .filter((name) => name !== item.symbol && !name.endsWith("Copy")),
     usage,
+    composition: fs.existsSync(`examples/blocks/${item.slug}.tsx`)
+      ? fs
+          .readFileSync(`examples/blocks/${item.slug}.tsx`, "utf8")
+          .replaceAll("../../registry/", "@/components/jez-ui/")
+      : null,
     source: fs.readFileSync(item.file, "utf8"),
     files: files.map((f) => ({ path: f, source: fs.readFileSync(f, "utf8") })),
   };

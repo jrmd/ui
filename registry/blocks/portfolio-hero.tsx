@@ -22,7 +22,7 @@ export type PortfolioHeroProps = Omit<
   keyof PortfolioHeroOptions
 > &
   PortfolioHeroOptions;
-export function PortfolioHero({
+function usePortfolioHeroModel({
   copy = {},
   title,
   actionLabel,
@@ -34,67 +34,50 @@ export function PortfolioHero({
   children,
   ...rootProps
 }: PortfolioHeroProps) {
+  return {
+    copy,
+    title,
+    actionLabel,
+    description,
+    imageSrc,
+    imageAlt,
+    className,
+    href,
+    children,
+    rootProps,
+  };
+}
+const PortfolioHeroCompositionContext = React.createContext<ReturnType<
+  typeof usePortfolioHeroModel
+> | null>(null);
+function usePortfolioHeroComposition() {
+  const context = React.useContext(PortfolioHeroCompositionContext);
+  if (!context)
+    throw new Error("PortfolioHero parts must be inside PortfolioHero.");
+  return context;
+}
+export function PortfolioHero(props: PortfolioHeroProps) {
+  const model = usePortfolioHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "relative isolate overflow-hidden rounded-xl bg-[#ecece7] text-[#262923]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <PortfolioHeroHeader>
-            <span>{copy.brand ?? "ALEX RIVERS / DESIGN ENGINEER"}</span>
-            <span className="flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-[#557746]" />
-              {copy.meta ?? "Independent practice"}
-            </span>
-          </PortfolioHeroHeader>
-          <PortfolioHeroContent>
-            <div>
-              <PortfolioHeroTitle>
-                {title ?? (
-                  <>
-                    Thoughtful
-                    <br />
-                    by design.
-                    <br />
-                    <span className="text-[#7a8171]">
-                      Useful by
-                      <br />
-                      default.
-                    </span>
-                  </>
-                )}
-              </PortfolioHeroTitle>
-              <div className="mt-8">
-                <HeroLink href={href}>
-                  {actionLabel ?? <>Selected projects</>}
-                </HeroLink>
-              </div>
-            </div>
-            <div className="flex flex-col justify-end gap-5">
-              <img
-                src={imageSrc ?? "/assets/common.svg"}
-                alt={imageAlt ?? "Common identity and digital design project"}
-                className="aspect-square w-full -rotate-3 object-cover shadow-lg"
-              />
-              <p className="mt-3 max-w-xs text-sm leading-relaxed text-[#676d60]">
-                {description ?? (
-                  <>
-                    I bring design and engineering together to make the web feel
-                    a little more human.
-                  </>
-                )}
-              </p>
-            </div>
-          </PortfolioHeroContent>
-        </>
-      )}
-    </section>
+    <PortfolioHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "relative isolate overflow-hidden rounded-xl bg-[#ecece7] text-[#262923]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <PortfolioHeroMasthead />
+            <PortfolioHeroLayout />
+          </>
+        )}
+      </section>
+    </PortfolioHeroCompositionContext.Provider>
   );
 }
 
@@ -138,5 +121,151 @@ export function PortfolioHeroTitle({
       )}
       {...props}
     />
+  );
+}
+
+export function PortfolioHeroMasthead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof PortfolioHeroHeader>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <PortfolioHeroHeader {...props}>
+      {children === undefined ? (
+        <>
+          <PortfolioHeroBrand />
+          <PortfolioHeroMeta />
+        </>
+      ) : (
+        children
+      )}
+    </PortfolioHeroHeader>
+  );
+}
+export function PortfolioHeroLayout({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof PortfolioHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = usePortfolioHeroComposition();
+  return (
+    <PortfolioHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <div>
+            <PortfolioHeroTitle>
+              {title ?? (
+                <>
+                  Thoughtful
+                  <br />
+                  by design.
+                  <br />
+                  <span className="text-[#7a8171]">
+                    Useful by
+                    <br />
+                    default.
+                  </span>
+                </>
+              )}
+            </PortfolioHeroTitle>
+            <div className="mt-8">
+              <PortfolioHeroAction />
+            </div>
+          </div>
+          <div className="flex flex-col justify-end gap-5">
+            <PortfolioHeroMedia />
+            <PortfolioHeroDescription />
+          </div>
+        </>
+      ) : (
+        children
+      )}
+    </PortfolioHeroContent>
+  );
+}
+
+export function PortfolioHeroBrand({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = usePortfolioHeroComposition();
+  return (
+    <span {...props}>
+      {children === undefined
+        ? (copy.brand ?? "ALEX RIVERS / DESIGN ENGINEER")
+        : children}
+    </span>
+  );
+}
+export function PortfolioHeroAction({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroLink>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, href } = usePortfolioHeroComposition();
+  return (
+    <HeroLink href={href} {...props}>
+      {children === undefined ? (actionLabel ?? "Selected projects") : children}
+    </HeroLink>
+  );
+}
+export function PortfolioHeroMeta({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = usePortfolioHeroComposition();
+  return (
+    <span {...props} className={cn("flex items-center gap-2", props.className)}>
+      {children === undefined ? (
+        <>
+          <span className="size-1.5 rounded-full bg-[#557746]" />
+          {copy.meta ?? "Independent practice"}
+        </>
+      ) : (
+        children
+      )}
+    </span>
+  );
+}
+export function PortfolioHeroMedia({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"img">> & { children?: React.ReactNode }) {
+  const { imageSrc, imageAlt } = usePortfolioHeroComposition();
+  return children === undefined ? (
+    <img
+      src={imageSrc ?? "/assets/common.svg"}
+      alt={imageAlt ?? "Common identity and digital design project"}
+      {...props}
+      className={cn(
+        "aspect-square w-full -rotate-3 object-cover shadow-lg",
+        props.className,
+      )}
+    />
+  ) : (
+    children
+  );
+}
+export function PortfolioHeroDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = usePortfolioHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn(
+        "mt-3 max-w-xs text-sm leading-relaxed text-[#676d60]",
+        props.className,
+      )}
+    >
+      {children === undefined
+        ? (description ??
+          "I bring design and engineering together to make the web feel a little more human.")
+        : children}
+    </p>
   );
 }

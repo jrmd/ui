@@ -122,8 +122,20 @@ export function Preview({
           >
             Preview
           </button>
+          {block && (
+            <button
+              aria-pressed={mode === "composition"}
+              onClick={() => setMode("composition")}
+            >
+              Composition
+            </button>
+          )}
           <a
-            href={"/preview/" + slug}
+            href={
+              "/preview/" +
+              slug +
+              (mode === "composition" ? "?composition=1" : "")
+            }
             target="_blank"
             rel="noreferrer"
             className="px-2 py-1.5"
@@ -163,7 +175,7 @@ export function Preview({
           </button>
         </div>
       </div>
-      {fields.length > 0 && (
+      {fields.length > 0 && mode === "preview" && (
         <div className="border-t border-border px-4 py-3">
           <button
             aria-expanded={customOpen}
@@ -279,7 +291,7 @@ export function Preview({
           onLoad={sendOptions}
           key={key}
           title={slug + " live preview"}
-          src={`/preview/${slug}?theme=${dark ? "dark" : "light"}`}
+          src={`/preview/${slug}?theme=${dark ? "dark" : "light"}&composition=${mode === "composition" ? "1" : "0"}`}
           style={{ width, height }}
           loading="lazy"
         />

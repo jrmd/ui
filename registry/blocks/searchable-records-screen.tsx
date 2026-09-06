@@ -58,53 +58,43 @@ export type SearchableRecordsScreenProps = Omit<
 > &
   SearchableRecordsScreenOptions;
 export const demoRecords = defaultDemoRecords;
-export function SearchableRecordsScreen({
+function useSearchableRecordsScreenModel({
   records = defaultDemoRecords,
-  heading = <>Customer directory</>,
+  heading = "Customer directory",
   className,
   children,
   ...rootProps
 }: SearchableRecordsScreenProps) {
+  return { records, heading, className, children, rootProps };
+}
+const SearchableRecordsScreenCompositionContext =
+  React.createContext<ReturnType<
+    typeof useSearchableRecordsScreenModel
+  > | null>(null);
+function useSearchableRecordsScreenComposition() {
+  const context = React.useContext(SearchableRecordsScreenCompositionContext);
+  if (!context)
+    throw new Error(
+      "SearchableRecordsScreen parts must be inside SearchableRecordsScreen.",
+    );
+  return context;
+}
+export function SearchableRecordsScreen(props: SearchableRecordsScreenProps) {
+  const model = useSearchableRecordsScreenModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section {...rootProps} className={cn("", className)}>
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <SearchableRecordsScreenContent>
-            <SearchableRecordsScreenTitle>
-              {heading}
-            </SearchableRecordsScreenTitle>
-            <p className="mt-1 text-sm text-muted-foreground">
-              People and businesses using your product.
-            </p>
-          </SearchableRecordsScreenContent>
-          <DataTable
-            data={records}
-            columns={[
-              { accessorKey: "name", header: "Name" },
-              { accessorKey: "email", header: "Email" },
-              {
-                accessorKey: "status",
-                header: "Status",
-                cell: (c) => (
-                  <Badge
-                    tone={c.getValue() === "Active" ? "positive" : "neutral"}
-                  >
-                    {String(c.getValue())}
-                  </Badge>
-                ),
-              },
-              {
-                accessorKey: "revenue",
-                header: "Revenue",
-                cell: (c) => "£" + c.getValue(),
-              },
-            ]}
-          />
-        </>
-      )}
-    </section>
+    <SearchableRecordsScreenCompositionContext.Provider value={model}>
+      <section {...rootProps} className={cn("", className)}>
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <SearchableRecordsScreenToolbar />
+            <SearchableRecordsScreenRecords />
+          </>
+        )}
+      </section>
+    </SearchableRecordsScreenCompositionContext.Provider>
   );
 }
 
@@ -130,5 +120,60 @@ export function SearchableRecordsScreenTitle({
       className={cn("text-lg font-semibold", className)}
       {...props}
     />
+  );
+}
+
+export function SearchableRecordsScreenToolbar({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof SearchableRecordsScreenContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { heading } = useSearchableRecordsScreenComposition();
+  return (
+    <SearchableRecordsScreenContent {...props}>
+      {children === undefined ? (
+        <>
+          <SearchableRecordsScreenTitle>{heading}</SearchableRecordsScreenTitle>
+          <p className="mt-1 text-sm text-muted-foreground">
+            People and businesses using your product.
+          </p>
+        </>
+      ) : (
+        children
+      )}
+    </SearchableRecordsScreenContent>
+  );
+}
+export function SearchableRecordsScreenRecords({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof DataTable>>) {
+  const { records } = useSearchableRecordsScreenComposition();
+  return (
+    <DataTable
+      data={records}
+      columns={[
+        { accessorKey: "name", header: "Name" },
+        { accessorKey: "email", header: "Email" },
+        {
+          accessorKey: "status",
+          header: "Status",
+          cell: (c) => (
+            <Badge tone={c.getValue() === "Active" ? "positive" : "neutral"}>
+              {String(c.getValue())}
+            </Badge>
+          ),
+        },
+        {
+          accessorKey: "revenue",
+          header: "Revenue",
+          cell: (c) => "£" + c.getValue(),
+        },
+      ]}
+      {...props}
+    >
+      {children}
+    </DataTable>
   );
 }

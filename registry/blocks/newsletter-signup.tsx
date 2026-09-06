@@ -16,7 +16,7 @@ export type NewsletterSignupProps = Omit<
 > &
   NewsletterSignupOptions;
 
-export function NewsletterSignup({
+function useNewsletterSignupModel({
   heading = (
     <>
       Good work starts
@@ -24,12 +24,7 @@ export function NewsletterSignup({
       with a good read.
     </>
   ),
-  description = (
-    <>
-      A monthly edit of design discoveries, work in progress, and things worth
-      keeping. Written by people who make things.
-    </>
-  ),
+  description = "A monthly edit of design discoveries, work in progress, and things worth keeping. Written by people who make things.",
   className,
   onSubmit,
   children,
@@ -37,66 +32,72 @@ export function NewsletterSignup({
 }: NewsletterSignupProps) {
   const [status, setStatus] = React.useState("");
   const [busy, setBusy] = React.useState(false);
+  return {
+    heading,
+    description,
+    className,
+    onSubmit,
+    children,
+    rootProps,
+    status,
+    setStatus,
+    busy,
+    setBusy,
+  };
+}
+const NewsletterSignupCompositionContext = React.createContext<ReturnType<
+  typeof useNewsletterSignupModel
+> | null>(null);
+function useNewsletterSignupComposition() {
+  const context = React.useContext(NewsletterSignupCompositionContext);
+  if (!context)
+    throw new Error("NewsletterSignup parts must be inside NewsletterSignup.");
+  return context;
+}
+export function NewsletterSignup(props: NewsletterSignupProps) {
+  const model = useNewsletterSignupModel(props);
+  const { className, onSubmit, rootProps, setStatus, setBusy, children } =
+    model;
   return (
-    <form
-      {...rootProps}
-      className={cn(
-        "relative grid gap-5 overflow-hidden rounded-2xl border border-border bg-muted/30 p-7 sm:p-10",
-        className,
-      )}
-      onSubmit={async (e) => {
-        e.preventDefault();
-        setBusy(true);
-        const email = String(new FormData(e.currentTarget).get("email"));
-        try {
-          await onSubmit?.(email);
-          setStatus(
-            onSubmit
-              ? "You’re on the list."
-              : "Demo complete. No email was sent.",
-          );
-        } catch {
-          setStatus("Unable to subscribe. Please try again.");
-        } finally {
-          setBusy(false);
-        }
-      }}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <NewsletterSignupContent>
-            <Mail size={15} />
-            The studio dispatch
-          </NewsletterSignupContent>
-          <NewsletterSignupTitle>{heading}</NewsletterSignupTitle>
-          <NewsletterSignupDescription>
-            {description}
-          </NewsletterSignupDescription>
-          <div className="mt-2 flex max-w-lg flex-col gap-2 sm:flex-row">
-            <Input
-              type="email"
-              name="email"
-              required
-              aria-label="Email address"
-              placeholder="you@example.com"
-            />
-            <Button type="submit" loading={busy}>
-              Subscribe <ArrowUpRight size={16} />
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            One email a month. Unsubscribe whenever you like.
-          </p>
-          {status && (
-            <p role="status" className="text-sm">
-              {status}
-            </p>
-          )}
-        </>
-      )}
-    </form>
+    <NewsletterSignupCompositionContext.Provider value={model}>
+      <form
+        {...rootProps}
+        className={cn(
+          "relative grid gap-5 overflow-hidden rounded-2xl border border-border bg-muted/30 p-7 sm:p-10",
+          className,
+        )}
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setBusy(true);
+          const email = String(new FormData(e.currentTarget).get("email"));
+          try {
+            await onSubmit?.(email);
+            setStatus(
+              onSubmit
+                ? "You’re on the list."
+                : "Demo complete. No email was sent.",
+            );
+          } catch {
+            setStatus("Unable to subscribe. Please try again.");
+          } finally {
+            setBusy(false);
+          }
+        }}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <NewsletterSignupEyebrow />
+            <NewsletterSignupHeading />
+            <NewsletterSignupLead />
+            <NewsletterSignupFields />
+            <NewsletterSignupPrivacy />
+            <NewsletterSignupStatus />
+          </>
+        )}
+      </form>
+    </NewsletterSignupCompositionContext.Provider>
   );
 }
 
@@ -144,4 +145,108 @@ export function NewsletterSignupDescription({
       {...props}
     />
   );
+}
+
+export function NewsletterSignupEyebrow({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof NewsletterSignupContent>> & {
+  children?: React.ReactNode;
+}) {
+  const {} = useNewsletterSignupComposition();
+  return (
+    <NewsletterSignupContent {...props}>
+      {children === undefined ? (
+        <>
+          <Mail size={15} />
+          The studio dispatch
+        </>
+      ) : (
+        children
+      )}
+    </NewsletterSignupContent>
+  );
+}
+export function NewsletterSignupHeading({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof NewsletterSignupTitle>> & {
+  children?: React.ReactNode;
+}) {
+  const { heading } = useNewsletterSignupComposition();
+  return (
+    <NewsletterSignupTitle {...props}>
+      {children === undefined ? heading : children}
+    </NewsletterSignupTitle>
+  );
+}
+export function NewsletterSignupLead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof NewsletterSignupDescription>> & {
+  children?: React.ReactNode;
+}) {
+  const { description } = useNewsletterSignupComposition();
+  return (
+    <NewsletterSignupDescription {...props}>
+      {children === undefined ? description : children}
+    </NewsletterSignupDescription>
+  );
+}
+export function NewsletterSignupFields({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  const { busy } = useNewsletterSignupComposition();
+  return (
+    <div
+      {...props}
+      className={cn(
+        "mt-2 flex max-w-lg flex-col gap-2 sm:flex-row",
+        props.className,
+      )}
+    >
+      {children === undefined ? (
+        <>
+          <Input
+            type="email"
+            name="email"
+            required
+            aria-label="Email address"
+            placeholder="you@example.com"
+          />
+          <Button type="submit" loading={busy}>
+            Subscribe <ArrowUpRight size={16} />
+          </Button>
+        </>
+      ) : (
+        children
+      )}
+    </div>
+  );
+}
+export function NewsletterSignupPrivacy({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  return (
+    <p
+      {...props}
+      className={cn("text-xs text-muted-foreground", props.className)}
+    >
+      {children === undefined
+        ? "One email a month. Unsubscribe whenever you like."
+        : children}
+    </p>
+  );
+}
+export function NewsletterSignupStatus({ children }: React.PropsWithChildren) {
+  const { status } = useNewsletterSignupComposition();
+  return children === undefined
+    ? status && (
+        <p role="status" className="text-sm">
+          {status}
+        </p>
+      )
+    : children;
 }

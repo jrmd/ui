@@ -148,7 +148,9 @@ for (const kind of ["vite", "next"]) {
     );
   }
   execFileSync("pnpm", ["install"], { cwd: dir, stdio: "pipe" });
-  console.log(`${kind}: installing ${items.length} items with the real shadcn CLI`);
+  console.log(
+    `${kind}: installing ${items.length} items with the real shadcn CLI`,
+  );
   try {
     execFileSync(
       path.join(root, "node_modules/.bin/shadcn"),
@@ -165,6 +167,19 @@ for (const kind of ["vite", "next"]) {
   } catch (e) {
     console.error(e.stdout?.toString(), e.stderr?.toString());
     throw e;
+  }
+  fs.mkdirSync(path.join(dir, "compositions"), { recursive: true });
+  for (const item of items.filter((item) => item.kind === "block")) {
+    const source = fs
+      .readFileSync(
+        path.join(root, "examples/blocks", item.slug + ".tsx"),
+        "utf8",
+      )
+      .replaceAll("../../registry/", "../components/jez-ui/");
+    fs.writeFileSync(
+      path.join(dir, "compositions", item.slug + ".tsx"),
+      source,
+    );
   }
   execFileSync("pnpm", ["build"], {
     cwd: dir,

@@ -45,7 +45,7 @@ export type PlanComparisonProps = Omit<
 > &
   PlanComparisonOptions;
 const PlanComparisonDefaultBillingPeriods = [false, true];
-export function PlanComparison({
+function usePlanComparisonModel({
   billingPeriods = PlanComparisonDefaultBillingPeriods,
   className,
   title = "Room for your next chapter.",
@@ -56,74 +56,47 @@ export function PlanComparison({
 }: PlanComparisonProps) {
   const [annual, setAnnual] = React.useState(false),
     [message, setMessage] = React.useState("");
+  return {
+    billingPeriods,
+    className,
+    title,
+    plans,
+    onSelect,
+    children,
+    rootProps,
+    annual,
+    setAnnual,
+    message,
+    setMessage,
+  };
+}
+const PlanComparisonCompositionContext = React.createContext<ReturnType<
+  typeof usePlanComparisonModel
+> | null>(null);
+function usePlanComparisonComposition() {
+  const context = React.useContext(PlanComparisonCompositionContext);
+  if (!context)
+    throw new Error("PlanComparison parts must be inside PlanComparison.");
+  return context;
+}
+export function PlanComparison(props: PlanComparisonProps) {
+  const model = usePlanComparisonModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section {...rootProps} className={cn("py-8", className)}>
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <PlanComparisonHeader>
-            <PlanComparisonTitle>{title}</PlanComparisonTitle>
-            <div aria-label="Billing period" className="flex gap-2">
-              {billingPeriods.map((v) => (
-                <Button
-                  key={String(v)}
-                  variant={annual === v ? "primary" : "outline"}
-                  aria-pressed={annual === v}
-                  onClick={() => setAnnual(v)}
-                >
-                  {v ? "Annual" : "Monthly"}
-                </Button>
-              ))}
-            </div>
-          </PlanComparisonHeader>
-          <PlanComparisonDescription>
-            Illustrative prices in GBP, per workspace.{" "}
-            {annual ? "Billed annually." : "Billed monthly."}
-          </PlanComparisonDescription>
-          <PlanComparisonContent>
-            {plans.map((p, i) => (
-              <PlanComparisonItem
-                key={p.name}
-                className={cn(
-                  i === 1 ? "bg-primary text-primary-foreground" : "bg-muted",
-                )}
-              >
-                <PlanComparisonItemTitle>{p.name}</PlanComparisonItemTitle>
-                <p className="mt-6 text-4xl tabular-nums">
-                  £{annual ? p.annual : p.monthly}
-                  <span className="text-sm">
-                    {" "}
-                    / {annual ? "year" : "month"}
-                  </span>
-                </p>
-                <ul className="my-8 flex-1 space-y-4 text-sm">
-                  {p.features.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-                <Button
-                  variant="outline"
-                  className="bg-background text-foreground"
-                  onClick={() =>
-                    onSelect
-                      ? onSelect(p.name, annual ? "annual" : "monthly")
-                      : setMessage(
-                          `${p.name} selected. Demo only; no purchase made.`,
-                        )
-                  }
-                >
-                  Choose {p.name}
-                </Button>
-              </PlanComparisonItem>
-            ))}
-          </PlanComparisonContent>
-          <p role="status" className="mt-4 text-sm">
-            {message}
-          </p>
-        </>
-      )}
-    </section>
+    <PlanComparisonCompositionContext.Provider value={model}>
+      <section {...rootProps} className={cn("py-8", className)}>
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <PlanComparisonToolbar />
+            <PlanComparisonBillingNote />
+            <PlanComparisonPlans />
+            <PlanComparisonStatus />
+          </>
+        )}
+      </section>
+    </PlanComparisonCompositionContext.Provider>
   );
 }
 
@@ -201,5 +174,116 @@ export function PlanComparisonItem({
       className={cn("flex flex-col rounded-xl p-6", className)}
       {...props}
     />
+  );
+}
+
+export function PlanComparisonToolbar({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof PlanComparisonHeader>> & {
+  children?: React.ReactNode;
+}) {
+  const { billingPeriods, title, annual, setAnnual } =
+    usePlanComparisonComposition();
+  return (
+    <PlanComparisonHeader {...props}>
+      {children === undefined ? (
+        <>
+          <PlanComparisonTitle>{title}</PlanComparisonTitle>
+          <div aria-label="Billing period" className="flex gap-2">
+            {billingPeriods.map((v) => (
+              <Button
+                key={String(v)}
+                variant={annual === v ? "primary" : "outline"}
+                aria-pressed={annual === v}
+                onClick={() => setAnnual(v)}
+              >
+                {v ? "Annual" : "Monthly"}
+              </Button>
+            ))}
+          </div>
+        </>
+      ) : (
+        children
+      )}
+    </PlanComparisonHeader>
+  );
+}
+export function PlanComparisonBillingNote({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof PlanComparisonDescription>> & {
+  children?: React.ReactNode;
+}) {
+  const { annual } = usePlanComparisonComposition();
+  return (
+    <PlanComparisonDescription {...props}>
+      {children === undefined ? (
+        <>
+          Illustrative prices in GBP, per workspace.{" "}
+          {annual ? "Billed annually." : "Billed monthly."}
+        </>
+      ) : (
+        children
+      )}
+    </PlanComparisonDescription>
+  );
+}
+export function PlanComparisonPlans({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof PlanComparisonContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { plans, onSelect, annual, setMessage } =
+    usePlanComparisonComposition();
+  return (
+    <PlanComparisonContent {...props}>
+      {children === undefined
+        ? plans.map((p, i) => (
+            <PlanComparisonItem
+              key={p.name}
+              className={cn(
+                i === 1 ? "bg-primary text-primary-foreground" : "bg-muted",
+              )}
+            >
+              <PlanComparisonItemTitle>{p.name}</PlanComparisonItemTitle>
+              <p className="mt-6 text-4xl tabular-nums">
+                £{annual ? p.annual : p.monthly}
+                <span className="text-sm"> / {annual ? "year" : "month"}</span>
+              </p>
+              <ul className="my-8 flex-1 space-y-4 text-sm">
+                {p.features.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+              <Button
+                variant="outline"
+                className="bg-background text-foreground"
+                onClick={() =>
+                  onSelect
+                    ? onSelect(p.name, annual ? "annual" : "monthly")
+                    : setMessage(
+                        `${p.name} selected. Demo only; no purchase made.`,
+                      )
+                }
+              >
+                Choose {p.name}
+              </Button>
+            </PlanComparisonItem>
+          ))
+        : children}
+    </PlanComparisonContent>
+  );
+}
+export function PlanComparisonStatus({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { message } = usePlanComparisonComposition();
+  return (
+    <p role="status" {...props} className={cn("mt-4 text-sm", props.className)}>
+      {children === undefined ? message : children}
+    </p>
   );
 }

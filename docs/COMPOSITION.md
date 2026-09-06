@@ -99,9 +99,38 @@ Control state through `open`/`onOpenChange`, or start with `defaultOpen`. `Sideb
 
 The Workspace, Rail, and Inset Sidebar blocks remain useful presets. Supply a `sidebar` node containing these parts to replace their navigation; their ordinary children remain the main content. Their source is a starting recipe, not a closed list of hard-coded menu items.
 
-## Collection-wide composition contract
+## Block migration status
 
-All 80 block entry points accept native root attributes, refs, style and className. Structural blocks export styled parts from their existing registry file. Use the preset for a ready-made layout; pass children to replace its body and assemble the exported parts in your own order. Atomic controls retain their direct interfaces rather than requiring extra wrappers.
+All 80 registered blocks now have a compiled composition example in `examples/blocks`. The catalogue's **Composition** preview runs that exact example; **Compose your own** shows its source. The preset preview remains available beside it.
+
+There are two kinds of parts. Styled primitives such as titles, content containers, rows and actions accept your children directly. Functional sections such as KanbanBoardComposer, ChatWorkspaceMessages and TerrainHeroControls read the nearest block root's state and supply their default contents. Both support replacement content; rendered elements forward native props and refs. Conditional status parts can render nothing and therefore expose children rather than a DOM ref.
+
+Keep functional sections under their corresponding root. Reorder, omit or wrap them without duplicating their state. Set data and action callbacks on the root; override a section's children for a different layout. Link parts support asChild where applicable. Custom forms must retain meaningful names, labels and any required fields.
+
+```tsx
+<KanbanBoard value={tasks} onValueChange={setTasks}>
+  <KanbanBoardFooter />
+  <KanbanBoardComposer className="max-w-none" />
+  <KanbanBoardColumns />
+  <KanbanBoardStatus />
+</KanbanBoard>
+```
+
+The three sidebar variants expose Root, Panel, Header, Body, Footer, Content and Trigger parts built on the focus-managed Sidebar primitives. Their original component names preserve the existing main-content shortcut. ArticleSidebarRoot, ApplicationShellRoot and ProductDemoHeroRoot likewise provide full child composition while the original components retain their established article/page/preview children.
+
+```tsx
+<ProductDemoHeroRoot>
+  <ProductDemoHeroIntro />
+  <ProductDemoHeroPreview><YourApplication /></ProductDemoHeroPreview>
+  <ProductDemoHeroCaption>Try the controls above.</ProductDemoHeroCaption>
+</ProductDemoHeroRoot>
+```
+
+FeatureGridItem takes a numeric `value`; FeatureGridPanel with the same value displays when selected. The root owns selection through value/defaultValue/onValueChange, including when panels and controls are reordered. FeatureGridHeader names the heading area; the older FeatureGridContent export retains that layout for compatibility.
+
+PricingTableBillingToggle and PricingTablePrice share the root's billing state, discount and formatter. TaskListItem identifies a root task with taskId; TaskListCheckbox, TaskListTitle and TaskListStatus read that task and update the caller's controlled collection. Layout parts accept native attributes, refs and className.
+
+MediaAsideDescription and MediaAsideAction preserve the preset spacing and typography. MediaAsideAction supports asChild for a router link. CTA Section exposes Content, Title, Description and Action; its Action uses Button's variants and asChild support.
 
 ```tsx
 import {
@@ -109,6 +138,8 @@ import {
   MediaAsideContent,
   MediaAsideTitle,
   MediaAsideMedia,
+  MediaAsideDescription,
+  MediaAsideAction,
 } from "@/components/jez-ui/blocks/media-aside";
 
 <MediaAside id="story" className="rounded-none">
@@ -116,7 +147,8 @@ import {
     <MediaAsideTitle>
       A <em>different</em> perspective
     </MediaAsideTitle>
-    <Link href="/story">Read the story</Link>
+    <MediaAsideDescription>Stories from our workshop.</MediaAsideDescription>
+    <MediaAsideAction asChild><Link href="/story">Read the story</Link></MediaAsideAction>
   </MediaAsideContent>
   <MediaAsideMedia src="/our-photo.jpg" alt="Our workshop" />
 </MediaAside>;
@@ -143,7 +175,7 @@ ProfileSettings and BillingSettings accept async onSave; TeamManagement accepts 
 
 ### Content and internal customization
 
-Feature, testimonial, comparison, activity and navigation presets accept their own datasets. PricingTable accepts plans, an annual price per plan, billing state, a discount, a formatter and renderAction. FeatureComparison uses stable plan IDs and a feature matrix keyed by those IDs. UsagePricing accepts seat pricing functions. Use children and named parts when changing the structure rather than extending a preset with unrelated options.
+Feature, testimonial, comparison, activity and navigation presets accept their own datasets. PricingTable accepts plans, an annual price per plan, billing state, a discount, a formatter and renderAction. FeatureComparison uses stable plan IDs and a feature matrix keyed by those IDs. UsagePricing accepts seat pricing functions. Use children and named parts when changing the structure rather than extending a preset with unrelated options. Collection blocks also expose row, quote, label, value or table primitives where those are meaningful.
 
 Login presets accept form to replace the complete form, or formProps to customize LoginFields. LoginFields also accepts native root props and children. This supports custom providers and field order without changing the presentation source.
 
@@ -155,6 +187,6 @@ ChartFrame exports ChartCaption and ChartContent. Chart presets accept native fi
 
 ### Verification
 
-`pnpm test:composition` typechecks and runs the independent Vite consumer fixture. It starts its own server. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH when using a system browser. Coverage includes every registered block's content, attributes, refs and styles, plus controlled state, input focus, table identity, pricing, async saves and chat callbacks. Catalogue rendering and interaction tests remain separate.
+`pnpm test:composition` typechecks and runs the independent Vite consumer fixture. It starts its own server. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH when using a system browser. Coverage includes all 80 compiled compositions at desktop and mobile widths, every registered block's root attributes and refs, shared section state, form labels and submissions, menus, artwork controls, sidebar focus, input focus, table identity, pricing, async saves and chat callbacks. Catalogue rendering and interaction tests remain separate. Run `pnpm fixtures:verify` to install the registry through the real shadcn CLI into Vite and Next.js projects, compile all 80 composition examples against the installed files, and build both applications.
 
 See [current composition inventory](COMPOSITION_INVENTORY.md) for the exported parts in each entry file.

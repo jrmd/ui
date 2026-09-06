@@ -6,8 +6,8 @@ import { Button } from "../ui/button";
 export type CtaSectionOptions = {
   className?: string;
   href?: string;
-  title?: string;
-  action?: string;
+  title?: React.ReactNode;
+  action?: React.ReactNode;
 };
 export type CtaSectionProps = Omit<
   React.ComponentProps<"section">,
@@ -34,19 +34,19 @@ export function CtaSection({
         children
       ) : (
         <>
-          <div>
+          <CtaSectionContent>
             <CtaSectionTitle>{title}</CtaSectionTitle>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
+            <CtaSectionDescription>
               Tell us how your team works. We’ll help you find a useful starting
               point.
-            </p>
-          </div>
-          <Button asChild size="lg">
+            </CtaSectionDescription>
+          </CtaSectionContent>
+          <CtaSectionAction asChild>
             <a href={href}>
               {action}
               <ArrowUpRight size={17} />
             </a>
-          </Button>
+          </CtaSectionAction>
         </>
       )}
     </section>
@@ -64,4 +64,35 @@ export function CtaSectionTitle({
       {...props}
     />
   );
+}
+
+export function CtaSectionContent({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="cta-section-content"
+      className={cn("min-w-0", className)}
+      {...props}
+    />
+  );
+}
+export function CtaSectionDescription({
+  className,
+  ...props
+}: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="cta-section-description"
+      className={cn(
+        "mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function CtaSectionAction(props: React.ComponentProps<typeof Button>) {
+  return <Button data-slot="cta-section-action" size="lg" {...props} />;
 }

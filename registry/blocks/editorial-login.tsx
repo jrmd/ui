@@ -19,7 +19,7 @@ export type EditorialLoginProps = Omit<
   keyof EditorialLoginOptions
 > &
   EditorialLoginOptions;
-export function EditorialLogin({
+function useEditorialLoginModel({
   className,
   brand = "Margin",
   title = "A good place to return to.",
@@ -33,57 +33,52 @@ export function EditorialLogin({
   children,
   ...rootProps
 }: EditorialLoginProps) {
+  return {
+    className,
+    brand,
+    title,
+    description,
+    imageSrc,
+    imageAlt,
+    onSubmit,
+    onSSO,
+    form,
+    formProps,
+    children,
+    rootProps,
+  };
+}
+const EditorialLoginCompositionContext = React.createContext<ReturnType<
+  typeof useEditorialLoginModel
+> | null>(null);
+function useEditorialLoginComposition() {
+  const context = React.useContext(EditorialLoginCompositionContext);
+  if (!context)
+    throw new Error("EditorialLogin parts must be inside EditorialLogin.");
+  return context;
+}
+export function EditorialLogin(props: EditorialLoginProps) {
+  const model = useEditorialLoginModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "overflow-hidden rounded-xl border border-border bg-background",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <EditorialLoginHeader>
-            <span className="font-serif text-3xl">{brand}</span>
-            <span className="self-center text-xs text-muted-foreground">
-              For the endlessly curious.
-            </span>
-          </EditorialLoginHeader>
-          <EditorialLoginContent>
-            <div className="flex items-center px-7 py-12 md:px-12">
-              <div className="mx-auto w-full max-w-sm">
-                <EditorialLoginTitle>{title}</EditorialLoginTitle>
-                <p className="mb-8 mt-4 text-sm text-muted-foreground">
-                  {description}
-                </p>
-                {form !== undefined ? (
-                  form
-                ) : (
-                  <LoginFields
-                    onSubmit={onSubmit}
-                    onSSO={onSSO}
-                    {...formProps}
-                  />
-                )}
-              </div>
-            </div>
-            <figure className="flex flex-col bg-muted p-6">
-              <img
-                src={imageSrc}
-                alt={imageAlt}
-                className="min-h-64 w-full flex-1 rounded-lg object-cover"
-              />
-              <figcaption className="flex justify-between gap-4 pt-5 text-xs">
-                <span>The art of paying attention.</span>
-                <span>Studio notes</span>
-              </figcaption>
-            </figure>
-          </EditorialLoginContent>
-        </>
-      )}
-    </section>
+    <EditorialLoginCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "overflow-hidden rounded-xl border border-border bg-background",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <EditorialLoginMasthead />
+            <EditorialLoginLayout />
+          </>
+        )}
+      </section>
+    </EditorialLoginCompositionContext.Provider>
   );
 }
 
@@ -124,5 +119,114 @@ export function EditorialLoginTitle({
       className={cn("font-serif text-4xl leading-tight", className)}
       {...props}
     />
+  );
+}
+
+export function EditorialLoginMasthead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof EditorialLoginHeader>> & {
+  children?: React.ReactNode;
+}) {
+  const { brand } = useEditorialLoginComposition();
+  return (
+    <EditorialLoginHeader {...props}>
+      {children === undefined ? (
+        <>
+          <span className="font-serif text-3xl">{brand}</span>
+          <span className="self-center text-xs text-muted-foreground">
+            For the endlessly curious.
+          </span>
+        </>
+      ) : (
+        children
+      )}
+    </EditorialLoginHeader>
+  );
+}
+export function EditorialLoginLayout({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof EditorialLoginContent>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <EditorialLoginContent {...props}>
+      {children === undefined ? (
+        <>
+          <EditorialLoginCopyContent />
+          <figure className="flex flex-col bg-muted p-6">
+            <EditorialLoginMedia />
+            <figcaption className="flex justify-between gap-4 pt-5 text-xs">
+              <span>The art of paying attention.</span>
+              <span>Studio notes</span>
+            </figcaption>
+          </figure>
+        </>
+      ) : (
+        children
+      )}
+    </EditorialLoginContent>
+  );
+}
+
+export function EditorialLoginDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useEditorialLoginComposition();
+  return (
+    <p
+      {...props}
+      className={cn("mb-8 mt-4 text-sm text-muted-foreground", props.className)}
+    >
+      {children === undefined ? description : children}
+    </p>
+  );
+}
+export function EditorialLoginMedia({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"img">> & { children?: React.ReactNode }) {
+  const { imageSrc, imageAlt } = useEditorialLoginComposition();
+  return children === undefined ? (
+    <img
+      src={imageSrc}
+      alt={imageAlt}
+      {...props}
+      className={cn(
+        "min-h-64 w-full flex-1 rounded-lg object-cover",
+        props.className,
+      )}
+    />
+  ) : (
+    children
+  );
+}
+export function EditorialLoginCopyContent({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  const { title, onSubmit, onSSO, form, formProps } =
+    useEditorialLoginComposition();
+  return (
+    <div
+      {...props}
+      className={cn("flex items-center px-7 py-12 md:px-12", props.className)}
+    >
+      {children === undefined ? (
+        <div className="mx-auto w-full max-w-sm">
+          <EditorialLoginTitle>{title}</EditorialLoginTitle>
+          <EditorialLoginDescription />
+          {form !== undefined ? (
+            form
+          ) : (
+            <LoginFields onSubmit={onSubmit} onSSO={onSSO} {...formProps} />
+          )}
+        </div>
+      ) : (
+        children
+      )}
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 # Composition and customization audit
 
-Implementation follow-up: the collection-wide migration is recorded in [COMPOSITION.md](COMPOSITION.md) and [COMPOSITION_INVENTORY.md](COMPOSITION_INVENTORY.md). The findings below are the pre-migration baseline; they are retained as audit history.
+Implementation follow-up: the completed block composition interfaces and executable examples are recorded in [COMPOSITION.md](COMPOSITION.md) and [COMPOSITION_INVENTORY.md](COMPOSITION_INVENTORY.md). The findings below are the pre-migration baseline; they are retained as audit history.
 
 Date: 2026-09-05. Scope: the current 91 registered components and 79 registered blocks. Baseline: Card. This report supersedes any assumption that the earlier component audit also established block composability.
 

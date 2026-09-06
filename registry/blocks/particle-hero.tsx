@@ -24,7 +24,7 @@ export type ParticleHeroProps = Omit<
   keyof ParticleHeroOptions
 > &
   ParticleHeroOptions;
-export function ParticleHero({
+function useParticleHeroModel({
   copy = {},
   title,
   actionLabel,
@@ -35,58 +35,50 @@ export function ParticleHero({
   children,
   ...rootProps
 }: ParticleHeroProps) {
+  return {
+    copy,
+    title,
+    actionLabel,
+    description,
+    artwork,
+    className,
+    href,
+    children,
+    rootProps,
+  };
+}
+const ParticleHeroCompositionContext = React.createContext<ReturnType<
+  typeof useParticleHeroModel
+> | null>(null);
+function useParticleHeroComposition() {
+  const context = React.useContext(ParticleHeroCompositionContext);
+  if (!context)
+    throw new Error("ParticleHero parts must be inside ParticleHero.");
+  return context;
+}
+export function ParticleHero(props: ParticleHeroProps) {
+  const model = useParticleHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "relative isolate overflow-hidden rounded-xl bg-[#10101c] text-[#efedf7]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <ParticleHeroContent>
-            <p className="text-xs tracking-[.3em] text-[#b9a4f8]">
-              {copy.eyebrow ?? "ATLAS / COLLECTIVE INTELLIGENCE"}
-            </p>
-            <ParticleHeroTitle>
-              {title ?? (
-                <>
-                  A million signals.
-                  <br />
-                  One new perspective.
-                </>
-              )}
-            </ParticleHeroTitle>
-          </ParticleHeroContent>
-          <HeroArt
-            options={{
-              ...artwork,
-              label: copy.artworkLabel ?? artwork?.label,
-              playLabel: copy.playLabel ?? artwork?.playLabel,
-              pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
-            }}
-            kind="particles"
-            className="-mt-6 h-80 md:h-96"
-          />
-          <ParticleHeroHeader>
-            <p className="max-w-sm text-sm text-white/60">
-              {description ?? (
-                <>
-                  Find the patterns hiding in plain sight. Make space for the
-                  next discovery.
-                </>
-              )}
-            </p>
-            <HeroLink href={href}>
-              {actionLabel ?? <>Start exploring</>}
-            </HeroLink>
-          </ParticleHeroHeader>
-        </>
-      )}
-    </section>
+    <ParticleHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "relative isolate overflow-hidden rounded-xl bg-[#10101c] text-[#efedf7]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <ParticleHeroIntro />
+            <ParticleHeroArtwork />
+            <ParticleHeroFooter />
+          </>
+        )}
+      </section>
+    </ParticleHeroCompositionContext.Provider>
   );
 }
 
@@ -130,5 +122,123 @@ export function ParticleHeroHeader({
       )}
       {...props}
     />
+  );
+}
+
+export function ParticleHeroIntro({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ParticleHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { title } = useParticleHeroComposition();
+  return (
+    <ParticleHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <ParticleHeroEyebrow />
+          <ParticleHeroTitle>
+            {title ?? (
+              <>
+                A million signals.
+                <br />
+                One new perspective.
+              </>
+            )}
+          </ParticleHeroTitle>
+        </>
+      ) : (
+        children
+      )}
+    </ParticleHeroContent>
+  );
+}
+export function ParticleHeroArtwork({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroArt>> & {
+  children?: React.ReactNode;
+}) {
+  const { copy, artwork } = useParticleHeroComposition();
+  return (
+    <HeroArt
+      options={{
+        ...artwork,
+        label: copy.artworkLabel ?? artwork?.label,
+        playLabel: copy.playLabel ?? artwork?.playLabel,
+        pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+      }}
+      kind="particles"
+      {...props}
+      className={cn("-mt-6 h-80 md:h-96", props.className)}
+    >
+      {children}
+    </HeroArt>
+  );
+}
+export function ParticleHeroFooter({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ParticleHeroHeader>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <ParticleHeroHeader {...props}>
+      {children === undefined ? (
+        <>
+          <ParticleHeroDescription />
+          <ParticleHeroAction />
+        </>
+      ) : (
+        children
+      )}
+    </ParticleHeroHeader>
+  );
+}
+
+export function ParticleHeroAction({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroLink>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, href } = useParticleHeroComposition();
+  return (
+    <HeroLink href={href} {...props}>
+      {children === undefined ? (actionLabel ?? "Start exploring") : children}
+    </HeroLink>
+  );
+}
+export function ParticleHeroEyebrow({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { copy } = useParticleHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn("text-xs tracking-[.3em] text-[#b9a4f8]", props.className)}
+    >
+      {children === undefined
+        ? (copy.eyebrow ?? "ATLAS / COLLECTIVE INTELLIGENCE")
+        : children}
+    </p>
+  );
+}
+export function ParticleHeroDescription({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { description } = useParticleHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn("max-w-sm text-sm text-white/60", props.className)}
+    >
+      {children === undefined
+        ? (description ??
+          "Find the patterns hiding in plain sight. Make space for the next discovery.")
+        : children}
+    </p>
   );
 }

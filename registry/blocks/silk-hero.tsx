@@ -20,7 +20,7 @@ export type SilkHeroProps = Omit<
   keyof SilkHeroOptions
 > &
   SilkHeroOptions;
-export function SilkHero({
+function useSilkHeroModel({
   copy = {},
   title,
   actionLabel,
@@ -30,60 +30,48 @@ export function SilkHero({
   children,
   ...rootProps
 }: SilkHeroProps) {
+  return {
+    copy,
+    title,
+    actionLabel,
+    artwork,
+    className,
+    href,
+    children,
+    rootProps,
+  };
+}
+const SilkHeroCompositionContext = React.createContext<ReturnType<
+  typeof useSilkHeroModel
+> | null>(null);
+function useSilkHeroComposition() {
+  const context = React.useContext(SilkHeroCompositionContext);
+  if (!context) throw new Error("SilkHero parts must be inside SilkHero.");
+  return context;
+}
+export function SilkHero(props: SilkHeroProps) {
+  const model = useSilkHeroModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "relative isolate overflow-hidden rounded-xl bg-[#030405] text-[#e4eadf]",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <SilkHeroHeader>
-            <span className="font-serif text-2xl italic">
-              {copy.brand ?? "Atelier No. 9"}
-            </span>
-            <span className="text-xs text-white/50">
-              {copy.meta ?? "Independent design practice"}
-            </span>
-          </SilkHeroHeader>
-          <SilkHeroContent>
-            <HeroArt
-              options={{
-                ...artwork,
-                label: copy.artworkLabel ?? artwork?.label,
-                playLabel: copy.playLabel ?? artwork?.playLabel,
-                pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
-              }}
-              kind="silk"
-              className="h-[460px]"
-            />
-            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              <p className="mb-7 text-xs tracking-[.35em]">
-                {copy.eyebrow ?? "NOTHING EXTRA. EVERYTHING CONSIDERED."}
-              </p>
-              <SilkHeroTitle>
-                {title ?? (
-                  <>
-                    Quietly
-                    <br />
-                    <em>extraordinary.</em>
-                  </>
-                )}
-              </SilkHeroTitle>
-            </div>
-          </SilkHeroContent>
-          <div className="flex justify-center border-t border-white/15 py-6">
-            <HeroLink href={href}>
-              {actionLabel ?? <>Selected work, 2026</>}
-            </HeroLink>
-          </div>
-        </>
-      )}
-    </section>
+    <SilkHeroCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "relative isolate overflow-hidden rounded-xl bg-[#030405] text-[#e4eadf]",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <SilkHeroMasthead />
+            <SilkHeroScene />
+            <SilkHeroFooter />
+          </>
+        )}
+      </section>
+    </SilkHeroCompositionContext.Provider>
   );
 }
 
@@ -124,5 +112,174 @@ export function SilkHeroTitle({
       )}
       {...props}
     />
+  );
+}
+
+export function SilkHeroMasthead({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof SilkHeroHeader>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <SilkHeroHeader {...props}>
+      {children === undefined ? (
+        <>
+          <SilkHeroBrand />
+          <SilkHeroMeta />
+        </>
+      ) : (
+        children
+      )}
+    </SilkHeroHeader>
+  );
+}
+export function SilkHeroScene({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof SilkHeroContent>> & {
+  children?: React.ReactNode;
+}) {
+  return (
+    <SilkHeroContent {...props}>
+      {children === undefined ? (
+        <>
+          <SilkHeroArtwork />
+          <SilkHeroCopyContent />
+        </>
+      ) : (
+        children
+      )}
+    </SilkHeroContent>
+  );
+}
+export function SilkHeroFooter({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "flex justify-center border-t border-white/15 py-6",
+        props.className,
+      )}
+    >
+      {children === undefined ? <SilkHeroAction /> : children}
+    </div>
+  );
+}
+
+export function SilkHeroAction({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroLink>> & {
+  children?: React.ReactNode;
+}) {
+  const { actionLabel, href } = useSilkHeroComposition();
+  return (
+    <HeroLink href={href} {...props}>
+      {children === undefined
+        ? (actionLabel ?? "Selected work, 2026")
+        : children}
+    </HeroLink>
+  );
+}
+export function SilkHeroBrand({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useSilkHeroComposition();
+  return (
+    <span
+      {...props}
+      className={cn("font-serif text-2xl italic", props.className)}
+    >
+      {children === undefined ? (copy.brand ?? "Atelier No. 9") : children}
+    </span>
+  );
+}
+export function SilkHeroMeta({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"span">> & { children?: React.ReactNode }) {
+  const { copy } = useSilkHeroComposition();
+  return (
+    <span {...props} className={cn("text-xs text-white/50", props.className)}>
+      {children === undefined
+        ? (copy.meta ?? "Independent design practice")
+        : children}
+    </span>
+  );
+}
+export function SilkHeroEyebrow({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"p">> & { children?: React.ReactNode }) {
+  const { copy } = useSilkHeroComposition();
+  return (
+    <p
+      {...props}
+      className={cn("mb-7 text-xs tracking-[.35em]", props.className)}
+    >
+      {children === undefined
+        ? (copy.eyebrow ?? "NOTHING EXTRA. EVERYTHING CONSIDERED.")
+        : children}
+    </p>
+  );
+}
+export function SilkHeroArtwork({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof HeroArt>> & {
+  children?: React.ReactNode;
+}) {
+  const { copy, artwork } = useSilkHeroComposition();
+  return (
+    <HeroArt
+      options={{
+        ...artwork,
+        label: copy.artworkLabel ?? artwork?.label,
+        playLabel: copy.playLabel ?? artwork?.playLabel,
+        pauseLabel: copy.pauseLabel ?? artwork?.pauseLabel,
+      }}
+      kind="silk"
+      {...props}
+      className={cn("h-[460px]", props.className)}
+    >
+      {children}
+    </HeroArt>
+  );
+}
+export function SilkHeroCopyContent({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  const { title } = useSilkHeroComposition();
+  return (
+    <div
+      {...props}
+      className={cn(
+        "pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center",
+        props.className,
+      )}
+    >
+      {children === undefined ? (
+        <>
+          <SilkHeroEyebrow />
+          <SilkHeroTitle>
+            {title ?? (
+              <>
+                Quietly
+                <br />
+                <em>extraordinary.</em>
+              </>
+            )}
+          </SilkHeroTitle>
+        </>
+      ) : (
+        children
+      )}
+    </div>
   );
 }

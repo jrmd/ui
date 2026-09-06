@@ -37,7 +37,7 @@ const defaultPlans = [
     note: "£240 per workspace / month, up to 50 people",
   },
 ];
-export function UsagePricing({
+function useUsagePricingModel({
   seats: controlledSeats,
   defaultSeats = 5,
   onSeatsChange,
@@ -59,83 +59,58 @@ export function UsagePricing({
     ),
     [message, setMessage] = React.useState("");
   const id = React.useId();
+  return {
+    controlledSeats,
+    defaultSeats,
+    onSeatsChange,
+    minSeats,
+    maxSeats,
+    plans,
+    formatPrice,
+    summary,
+    className,
+    title,
+    onSelect,
+    children,
+    rootProps,
+    seats,
+    setSeats,
+    message,
+    setMessage,
+    id,
+  };
+}
+const UsagePricingCompositionContext = React.createContext<ReturnType<
+  typeof useUsagePricingModel
+> | null>(null);
+function useUsagePricingComposition() {
+  const context = React.useContext(UsagePricingCompositionContext);
+  if (!context)
+    throw new Error("UsagePricing parts must be inside UsagePricing.");
+  return context;
+}
+export function UsagePricing(props: UsagePricingProps) {
+  const model = useUsagePricingModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "grid overflow-hidden rounded-xl border border-border md:grid-cols-2",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <UsagePricingContent>
-            <UsagePricingTitle>{title}</UsagePricingTitle>
-            <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
-              Compare a flexible seat-based plan with a flat workspace price.
-              Illustrative GBP pricing, billed monthly.
-            </p>
-            <label htmlFor={id} className="mt-10 flex justify-between text-sm">
-              Team size <span className="tabular-nums">{seats} people</span>
-            </label>
-            <input
-              id={id}
-              type="range"
-              min={minSeats}
-              max={maxSeats}
-              value={seats}
-              onChange={(e) => setSeats(Number(e.target.value))}
-              className="mt-5 w-full accent-primary"
-            />
-            <p className="mt-3 text-xs text-muted-foreground">
-              {minSeats}–{maxSeats} people · Adjust to compare monthly totals.
-            </p>
-          </UsagePricingContent>
-          <div className="bg-muted p-7 md:p-10">
-            {plans
-              .map((plan) => ({ ...plan, price: plan.price(seats) }))
-              .map((p) => (
-                <UsagePricingItem key={p.name}>
-                  <div className="flex flex-wrap items-baseline justify-between gap-3">
-                    <UsagePricingItemTitle>{p.name}</UsagePricingItemTitle>
-                    <p className="text-3xl tabular-nums">
-                      {formatPrice(p.price)}
-                      <span className="text-xs"> / month</span>
-                    </p>
-                  </div>
-                  <p className="my-3 text-xs text-muted-foreground">{p.note}</p>
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      onSelect
-                        ? onSelect(p.name, seats)
-                        : setMessage(
-                            `${p.name} selected for ${seats} people. Demo only.`,
-                          )
-                    }
-                  >
-                    Choose {p.name}
-                  </Button>
-                </UsagePricingItem>
-              ))}
-            <p aria-live="polite" className="mt-5 text-sm">
-              {summary !== undefined
-                ? summary
-                : plans === defaultPlans
-                  ? seats * 12 === 240
-                    ? "Both plans cost the same."
-                    : `${seats * 12 < 240 ? "Flexible" : "Workspace"} saves £${Math.abs(240 - seats * 12)} per month.`
-                  : null}
-            </p>
-            <p role="status" className="mt-3 text-sm">
-              {message}
-            </p>
-          </div>
-        </>
-      )}
-    </section>
+    <UsagePricingCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "grid overflow-hidden rounded-xl border border-border md:grid-cols-2",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <UsagePricingCalculator />
+            <UsagePricingPlans />
+          </>
+        )}
+      </section>
+    </UsagePricingCompositionContext.Provider>
   );
 }
 
@@ -186,5 +161,100 @@ export function UsagePricingItem({
       className={cn("border-b border-border py-6 first:pt-0", className)}
       {...props}
     />
+  );
+}
+
+export function UsagePricingCalculator({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof UsagePricingContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { minSeats, maxSeats, title, seats, setSeats, id } =
+    useUsagePricingComposition();
+  return (
+    <UsagePricingContent {...props}>
+      {children === undefined ? (
+        <>
+          <UsagePricingTitle>{title}</UsagePricingTitle>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+            Compare a flexible seat-based plan with a flat workspace price.
+            Illustrative GBP pricing, billed monthly.
+          </p>
+          <label htmlFor={id} className="mt-10 flex justify-between text-sm">
+            Team size <span className="tabular-nums">{seats} people</span>
+          </label>
+          <input
+            id={id}
+            type="range"
+            min={minSeats}
+            max={maxSeats}
+            value={seats}
+            onChange={(e) => setSeats(Number(e.target.value))}
+            className="mt-5 w-full accent-primary"
+          />
+          <p className="mt-3 text-xs text-muted-foreground">
+            {minSeats}–{maxSeats} people · Adjust to compare monthly totals.
+          </p>
+        </>
+      ) : (
+        children
+      )}
+    </UsagePricingContent>
+  );
+}
+export function UsagePricingPlans({
+  children,
+  ...props
+}: Partial<React.ComponentProps<"div">> & { children?: React.ReactNode }) {
+  const { plans, formatPrice, summary, onSelect, seats, message, setMessage } =
+    useUsagePricingComposition();
+  return (
+    <div {...props} className={cn("bg-muted p-7 md:p-10", props.className)}>
+      {children === undefined ? (
+        <>
+          {plans
+            .map((plan) => ({ ...plan, price: plan.price(seats) }))
+            .map((p) => (
+              <UsagePricingItem key={p.name}>
+                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                  <UsagePricingItemTitle>{p.name}</UsagePricingItemTitle>
+                  <p className="text-3xl tabular-nums">
+                    {formatPrice(p.price)}
+                    <span className="text-xs"> / month</span>
+                  </p>
+                </div>
+                <p className="my-3 text-xs text-muted-foreground">{p.note}</p>
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    onSelect
+                      ? onSelect(p.name, seats)
+                      : setMessage(
+                          `${p.name} selected for ${seats} people. Demo only.`,
+                        )
+                  }
+                >
+                  Choose {p.name}
+                </Button>
+              </UsagePricingItem>
+            ))}
+          <p aria-live="polite" className="mt-5 text-sm">
+            {summary !== undefined
+              ? summary
+              : plans === defaultPlans
+                ? seats * 12 === 240
+                  ? "Both plans cost the same."
+                  : `${seats * 12 < 240 ? "Flexible" : "Workspace"} saves £${Math.abs(240 - seats * 12)} per month.`
+                : null}
+          </p>
+          <p role="status" className="mt-3 text-sm">
+            {message}
+          </p>
+        </>
+      ) : (
+        children
+      )}
+    </div>
   );
 }

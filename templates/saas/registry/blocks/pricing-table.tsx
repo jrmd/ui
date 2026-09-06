@@ -5,6 +5,21 @@ import { useControllable } from "../ui/use-controllable";
 import { cn } from "../ui/utils";
 import { Button } from "../ui/button";
 import { Switch } from "../ui/switch";
+type PricingTableState = {
+  annual: boolean;
+  setAnnual: (annual: boolean) => void;
+  annualDiscount: number;
+  formatPrice: (amount: number) => React.ReactNode;
+};
+const PricingTableContext = React.createContext<PricingTableState | null>(null);
+function usePricingTable() {
+  const context = React.useContext(PricingTableContext);
+  if (!context)
+    throw new Error(
+      "PricingTableBillingToggle and PricingTablePrice must be inside PricingTable.",
+    );
+  return context;
+}
 export type PricingPlan = {
   name: string;
   price: number;
@@ -88,96 +103,76 @@ export function PricingTable({
   );
   return (
     <section {...rootProps} className={cn("py-12 md:py-16", className)}>
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          <PricingTableHeader>
-            <div>
-              <PricingTableTitle>{heading}</PricingTableTitle>
-              <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-                Start with a project. Choose a plan around the people and the
-                history you need to keep.
-              </p>
-            </div>
-            <label className="flex items-center gap-3 text-xs">
-              <Switch checked={annual} onCheckedChange={setAnnual} />
-              Annual billing
-              <span className="rounded-full bg-primary/10 px-2 py-1 font-medium text-primary">
-                Save {Math.round(annualDiscount * 100)}%
-              </span>
-            </label>
-          </PricingTableHeader>
-          <PricingTableContent>
-            {plans.map((p, i) => (
-              <PricingTableItem
-                key={p.name}
-                className={cn(i === 1 && "bg-muted/55")}
-              >
-                <div className="flex items-center justify-between">
-                  <PricingTableItemTitle>{p.name}</PricingTableItemTitle>
-                  {i === 1 && (
-                    <span className="text-[11px] text-primary">For teams</span>
-                  )}
-                </div>
-                <p className="mb-6 mt-3 min-h-12 text-sm leading-relaxed text-muted-foreground">
-                  {p.text}
-                </p>
-                <p className="text-5xl tabular-nums" aria-live="polite">
-                  {formatPrice(
-                    annual
-                      ? (p.annualPrice ?? p.price * (1 - annualDiscount))
-                      : p.price,
-                  )}
-                  <span className="ml-1 text-xs text-muted-foreground">
-                    / month
-                  </span>
-                </p>
-                <p className="mb-7 mt-2 text-xs text-muted-foreground">
-                  {p.price === 0 ? (
-                    "Free, with no billing details"
-                  ) : annual ? (
-                    <>
-                      {formatPrice(
-                        (p.annualPrice ?? p.price * (1 - annualDiscount)) * 12,
-                      )}{" "}
-                      billed annually
-                    </>
+      <PricingTableContext.Provider
+        value={{ annual, setAnnual, annualDiscount, formatPrice }}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <PricingTableHeader>
+              <div>
+                <PricingTableTitle>{heading}</PricingTableTitle>
+                <PricingTableLead>
+                  Start with a project. Choose a plan around the people and the
+                  history you need to keep.
+                </PricingTableLead>
+              </div>
+              <PricingTableBillingToggle />
+            </PricingTableHeader>
+            <PricingTableContent>
+              {plans.map((p, i) => (
+                <PricingTableItem
+                  key={p.name}
+                  className={cn(i === 1 && "bg-muted/55")}
+                >
+                  <div className="flex items-center justify-between">
+                    <PricingTableItemTitle>{p.name}</PricingTableItemTitle>
+                    {i === 1 && (
+                      <span className="text-[11px] text-primary">
+                        For teams
+                      </span>
+                    )}
+                  </div>
+                  <PricingTableItemDescription>
+                    {p.text}
+                  </PricingTableItemDescription>
+                  <PricingTablePrice
+                    amount={p.price}
+                    annualAmount={p.annualPrice}
+                  />
+                  {renderAction ? (
+                    renderAction(p, annual)
                   ) : (
-                    "Billed monthly"
-                  )}
-                </p>
-                {renderAction ? (
-                  renderAction(p, annual)
-                ) : (
-                  <Button
-                    asChild
-                    variant={i === 1 ? "primary" : "outline"}
-                    className="w-full justify-between"
-                  >
-                    <a href={href}>
-                      Choose {p.name}
-                      <ArrowUpRight size={15} />
-                    </a>
-                  </Button>
-                )}
-                <ul className="mt-7 grid gap-4 border-t border-border pt-6 text-xs">
-                  {p.features.map((f) => (
-                    <li
-                      key={typeof f === "string" ? f : p.features.indexOf(f)}
-                      className="flex items-center gap-2.5"
+                    <Button
+                      asChild
+                      variant={i === 1 ? "primary" : "outline"}
+                      className="w-full justify-between"
                     >
-                      <Check size={14} className="text-primary" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </PricingTableItem>
-            ))}
-          </PricingTableContent>
-          <PricingTableDescription>{description}</PricingTableDescription>
-        </>
-      )}
+                      <a href={href}>
+                        Choose {p.name}
+                        <ArrowUpRight size={15} />
+                      </a>
+                    </Button>
+                  )}
+                  <PricingTableFeatures>
+                    {p.features.map((f) => (
+                      <li
+                        key={typeof f === "string" ? f : p.features.indexOf(f)}
+                        className="flex items-center gap-2.5"
+                      >
+                        <Check size={14} className="text-primary" />
+                        {f}
+                      </li>
+                    ))}
+                  </PricingTableFeatures>
+                </PricingTableItem>
+              ))}
+            </PricingTableContent>
+            <PricingTableDescription>{description}</PricingTableDescription>
+          </>
+        )}
+      </PricingTableContext.Provider>
     </section>
   );
 }
@@ -262,5 +257,120 @@ export function PricingTableItem({
       )}
       {...props}
     />
+  );
+}
+
+export function PricingTableLead({
+  className,
+  ...props
+}: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="pricing-table-lead"
+      className={cn(
+        "mt-4 max-w-md text-sm leading-relaxed text-muted-foreground",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function PricingTableItemDescription({
+  className,
+  ...props
+}: React.ComponentProps<"p">) {
+  return (
+    <p
+      data-slot="pricing-table-item-description"
+      className={cn(
+        "mb-6 mt-3 min-h-12 text-sm leading-relaxed text-muted-foreground",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function PricingTableFeatures({
+  className,
+  ...props
+}: React.ComponentProps<"ul">) {
+  return (
+    <ul
+      data-slot="pricing-table-features"
+      className={cn(
+        "mt-7 grid gap-4 border-t border-border pt-6 text-xs",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+export function PricingTableBillingToggle({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"label">) {
+  const { annual, setAnnual, annualDiscount } = usePricingTable();
+  return (
+    <label
+      data-slot="pricing-table-billing-toggle"
+      className={cn("flex items-center gap-3 text-xs", className)}
+      {...props}
+    >
+      <Switch checked={annual} onCheckedChange={setAnnual} />
+      {children === undefined ? (
+        <>
+          Annual billing
+          <span className="rounded-full bg-primary/10 px-2 py-1 font-medium text-primary">
+            Save {Math.round(annualDiscount * 100)}%
+          </span>
+        </>
+      ) : (
+        children
+      )}
+    </label>
+  );
+}
+export function PricingTablePrice({
+  amount,
+  annualAmount,
+  suffix = "/ month",
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div"> & {
+  amount: number;
+  annualAmount?: number;
+  suffix?: React.ReactNode;
+}) {
+  const { annual, annualDiscount, formatPrice } = usePricingTable();
+  const monthly = annual
+    ? (annualAmount ?? amount * (1 - annualDiscount))
+    : amount;
+  return (
+    <div
+      data-slot="pricing-table-price"
+      aria-live="polite"
+      className={className}
+      {...props}
+    >
+      <p className="text-5xl tabular-nums">
+        {formatPrice(monthly)}
+        <span className="ml-1 text-xs text-muted-foreground">{suffix}</span>
+      </p>
+      <p className="mb-7 mt-2 text-xs text-muted-foreground">
+        {children === undefined ? (
+          amount === 0 ? (
+            "Free, with no billing details"
+          ) : annual ? (
+            <>{formatPrice(monthly * 12)} billed annually</>
+          ) : (
+            "Billed monthly"
+          )
+        ) : (
+          children
+        )}
+      </p>
+    </div>
   );
 }

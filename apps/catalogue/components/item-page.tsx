@@ -44,6 +44,7 @@ export function ItemPage({ slug }: { slug: string }) {
                 children to build your layout; add className only when you want
                 an override.
               </p>
+              {item.composition && <CodeBox code={item.composition} />}
               <CodeBox
                 code={`import { ${[item.symbol, ...item.parts].join(", ")} } from "@/components/jez-ui/${item.kind === "block" ? "blocks" : "ui"}/${item.slug}";`}
               />

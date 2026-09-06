@@ -54,10 +54,10 @@ const ChatWorkspaceDefaultItems = [
     icon: Lightbulb,
   },
 ];
-export function ChatWorkspace({
+function useChatWorkspaceModel({
   items = ChatWorkspaceDefaultItems,
-  heading = <>What are we working on?</>,
-  description = <>Simulated responses. Conversations stay on this device.</>,
+  heading = "What are we working on?",
+  description = "Simulated responses. Conversations stay on this device.",
   className,
   conversationId = "default",
   onSend,
@@ -131,140 +131,68 @@ export function ChatWorkspace({
       if (request.current === controller) setRunning(false);
     }
   }
+  return {
+    items,
+    heading,
+    description,
+    className,
+    conversationId,
+    onSend,
+    controlledValue,
+    defaultValue,
+    onValueChange,
+    children,
+    rootProps,
+    messages,
+    setMessages,
+    reset,
+    draft,
+    setDraft,
+    running,
+    setRunning,
+    request,
+    error,
+    setError,
+    previousConversation,
+    stop,
+    respond,
+  };
+}
+const ChatWorkspaceCompositionContext = React.createContext<ReturnType<
+  typeof useChatWorkspaceModel
+> | null>(null);
+function useChatWorkspaceComposition() {
+  const context = React.useContext(ChatWorkspaceCompositionContext);
+  if (!context)
+    throw new Error("ChatWorkspace parts must be inside ChatWorkspace.");
+  return context;
+}
+export function ChatWorkspace(props: ChatWorkspaceProps) {
+  const model = useChatWorkspaceModel(props);
+  const { className, rootProps, children } = model;
   return (
-    <section
-      {...rootProps}
-      className={cn(
-        "mx-auto flex min-h-[620px] max-w-3xl flex-col gap-5",
-        className,
-      )}
-    >
-      {children !== undefined ? (
-        children
-      ) : (
-        <>
-          {error && <p role="alert">{error}</p>}
-          <ChatWorkspaceHeader>
-            <span className="flex items-center gap-2 text-sm font-medium">
-              <Feather size={17} />
-              Margin{" "}
-              <span className="font-normal text-muted-foreground">
-                / Personal
-              </span>
-            </span>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => {
-                stop();
-                reset();
-              }}
-            >
-              New conversation
-            </Button>
-          </ChatWorkspaceHeader>
-          <ChatWorkspaceContent
-            role="log"
-            aria-label="Conversation"
-            aria-live={running ? "off" : "polite"}
-          >
-            {!messages.length && (
-              <div className="mx-auto max-w-xl py-10 sm:py-16">
-                <span className="mb-6 inline-flex rounded-xl border border-border p-3">
-                  <Feather size={25} strokeWidth={1.4} />
-                </span>
-                <ChatWorkspaceTitle>{heading}</ChatWorkspaceTitle>
-                <p className="mb-8 mt-3 text-sm leading-relaxed text-muted-foreground">
-                  A rough draft. A difficult decision. The beginning of
-                  something.
-                </p>
-                <div className="grid gap-2 sm:grid-cols-3">
-                  {items.map((item) => (
-                    <ChatWorkspaceItem
-                      key={item.title}
-                      onClick={() => setDraft(item.prompt)}
-                    >
-                      <item.icon
-                        size={18}
-                        className="mb-4 text-muted-foreground"
-                      />
-                      <span className="text-sm font-medium">{item.title}</span>
-                      <span className="mt-2 block text-xs leading-relaxed text-muted-foreground">
-                        {item.prompt}
-                      </span>
-                    </ChatWorkspaceItem>
-                  ))}
-                </div>
-              </div>
-            )}
-            {messages.map((m) => (
-              <article
-                key={m.id}
-                className={cn(
-                  "max-w-[90%] whitespace-pre-wrap rounded-xl p-4 text-sm leading-relaxed",
-                  m.role === "user" ? "ml-auto bg-muted" : "",
-                )}
-              >
-                <p className="mb-2 text-xs font-medium text-muted-foreground">
-                  {m.role === "user" ? "You" : "Assistant"}
-                </p>
-                {m.content || "Thinking…"}
-              </article>
-            ))}
-          </ChatWorkspaceContent>
-          {running ? (
-            <Button variant="outline" className="self-start" onClick={stop}>
-              Stop response
-            </Button>
-          ) : (
-            messages.length > 0 && (
-              <Button
-                variant="ghost"
-                className="self-start"
-                onClick={() =>
-                  respond(
-                    [...messages].reverse().find((m) => m.role === "user")
-                      ?.content ?? "Hello",
-                    true,
-                  )
-                }
-              >
-                <RotateCcw size={14} />
-                Retry response
-              </Button>
-            )
-          )}
-          <ChatWorkspaceForm
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (draft.trim()) {
-                respond(draft.trim());
-                setDraft("");
-              }
-            }}
-          >
-            <Textarea
-              aria-label="Message"
-              placeholder="What’s on your mind?"
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              className="min-h-20 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
-              required
-            />
-            <Button
-              type="submit"
-              aria-label="Send"
-              className="mb-1 mr-1 size-9 shrink-0 p-0"
-              disabled={running || !draft.trim()}
-            >
-              <ArrowUp size={18} />
-              <span className="sr-only">Send</span>
-            </Button>
-          </ChatWorkspaceForm>
-          <ChatWorkspaceDescription>{description}</ChatWorkspaceDescription>
-        </>
-      )}
-    </section>
+    <ChatWorkspaceCompositionContext.Provider value={model}>
+      <section
+        {...rootProps}
+        className={cn(
+          "mx-auto flex min-h-[620px] max-w-3xl flex-col gap-5",
+          className,
+        )}
+      >
+        {children !== undefined ? (
+          children
+        ) : (
+          <>
+            <ChatWorkspaceError />
+            <ChatWorkspaceToolbar />
+            <ChatWorkspaceMessages />
+            <ChatWorkspaceControls />
+            <ChatWorkspaceComposer />
+            <ChatWorkspaceFooter />
+          </>
+        )}
+      </section>
+    </ChatWorkspaceCompositionContext.Provider>
   );
 }
 
@@ -349,5 +277,205 @@ export function ChatWorkspaceItem({
       )}
       {...props}
     />
+  );
+}
+
+export function ChatWorkspaceError({ children }: React.PropsWithChildren) {
+  const { error } = useChatWorkspaceComposition();
+  return children === undefined
+    ? error && <p role="alert">{error}</p>
+    : children;
+}
+export function ChatWorkspaceToolbar({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ChatWorkspaceHeader>> & {
+  children?: React.ReactNode;
+}) {
+  const { reset, stop } = useChatWorkspaceComposition();
+  return (
+    <ChatWorkspaceHeader {...props}>
+      {children === undefined ? (
+        <>
+          <span className="flex items-center gap-2 text-sm font-medium">
+            <Feather size={17} />
+            Margin{" "}
+            <span className="font-normal text-muted-foreground">
+              / Personal
+            </span>
+          </span>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => {
+              stop();
+              reset();
+            }}
+          >
+            New conversation
+          </Button>
+        </>
+      ) : (
+        children
+      )}
+    </ChatWorkspaceHeader>
+  );
+}
+export function ChatWorkspaceMessages({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ChatWorkspaceContent>> & {
+  children?: React.ReactNode;
+}) {
+  const { items, heading, messages, setDraft, running } =
+    useChatWorkspaceComposition();
+  return (
+    <ChatWorkspaceContent
+      role="log"
+      aria-label="Conversation"
+      aria-live={running ? "off" : "polite"}
+      {...props}
+    >
+      {children === undefined ? (
+        <>
+          {!messages.length && (
+            <div className="mx-auto max-w-xl py-10 sm:py-16">
+              <span className="mb-6 inline-flex rounded-xl border border-border p-3">
+                <Feather size={25} strokeWidth={1.4} />
+              </span>
+              <ChatWorkspaceTitle>{heading}</ChatWorkspaceTitle>
+              <p className="mb-8 mt-3 text-sm leading-relaxed text-muted-foreground">
+                A rough draft. A difficult decision. The beginning of something.
+              </p>
+              <div className="grid gap-2 sm:grid-cols-3">
+                {items.map((item) => (
+                  <ChatWorkspaceItem
+                    key={item.title}
+                    onClick={() => setDraft(item.prompt)}
+                  >
+                    <item.icon
+                      size={18}
+                      className="mb-4 text-muted-foreground"
+                    />
+                    <span className="text-sm font-medium">{item.title}</span>
+                    <span className="mt-2 block text-xs leading-relaxed text-muted-foreground">
+                      {item.prompt}
+                    </span>
+                  </ChatWorkspaceItem>
+                ))}
+              </div>
+            </div>
+          )}
+          {messages.map((m) => (
+            <article
+              key={m.id}
+              className={cn(
+                "max-w-[90%] whitespace-pre-wrap rounded-xl p-4 text-sm leading-relaxed",
+                m.role === "user" ? "ml-auto bg-muted" : "",
+              )}
+            >
+              <p className="mb-2 text-xs font-medium text-muted-foreground">
+                {m.role === "user" ? "You" : "Assistant"}
+              </p>
+              {m.content || "Thinking…"}
+            </article>
+          ))}
+        </>
+      ) : (
+        children
+      )}
+    </ChatWorkspaceContent>
+  );
+}
+export function ChatWorkspaceControls({ children }: React.PropsWithChildren) {
+  const { messages, running, stop, respond } = useChatWorkspaceComposition();
+  return children === undefined ? (
+    running ? (
+      <Button variant="outline" className="self-start" onClick={stop}>
+        Stop response
+      </Button>
+    ) : (
+      messages.length > 0 && (
+        <Button
+          variant="ghost"
+          className="self-start"
+          onClick={() =>
+            respond(
+              [...messages].reverse().find((m) => m.role === "user")?.content ??
+                "Hello",
+              true,
+            )
+          }
+        >
+          <RotateCcw size={14} />
+          Retry response
+        </Button>
+      )
+    )
+  ) : (
+    children
+  );
+}
+export function ChatWorkspaceComposer({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ChatWorkspaceForm>> & {
+  children?: React.ReactNode;
+}) {
+  const { draft, setDraft, running, respond } = useChatWorkspaceComposition();
+  const defaultonSubmit: NonNullable<
+    React.ComponentProps<typeof ChatWorkspaceForm>["onSubmit"]
+  > = (e) => {
+    e.preventDefault();
+    if (draft.trim()) {
+      respond(draft.trim());
+      setDraft("");
+    }
+  };
+  return (
+    <ChatWorkspaceForm
+      {...props}
+      onSubmit={(event) => {
+        props.onSubmit?.(event);
+        if (!event.defaultPrevented) defaultonSubmit(event);
+      }}
+    >
+      {children === undefined ? (
+        <>
+          <Textarea
+            aria-label="Message"
+            placeholder="What’s on your mind?"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            className="min-h-20 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+            required
+          />
+          <Button
+            type="submit"
+            aria-label="Send"
+            className="mb-1 mr-1 size-9 shrink-0 p-0"
+            disabled={running || !draft.trim()}
+          >
+            <ArrowUp size={18} />
+            <span className="sr-only">Send</span>
+          </Button>
+        </>
+      ) : (
+        children
+      )}
+    </ChatWorkspaceForm>
+  );
+}
+export function ChatWorkspaceFooter({
+  children,
+  ...props
+}: Partial<React.ComponentProps<typeof ChatWorkspaceDescription>> & {
+  children?: React.ReactNode;
+}) {
+  const { description } = useChatWorkspaceComposition();
+  return (
+    <ChatWorkspaceDescription {...props}>
+      {children === undefined ? description : children}
+    </ChatWorkspaceDescription>
   );
 }

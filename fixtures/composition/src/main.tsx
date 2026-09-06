@@ -1,3 +1,10 @@
+import { SlotContracts } from "./slot-contracts";
+import { RecipeBrowser } from "./recipes";
+import MediaComposition from "../../../examples/blocks/media-aside";
+import FeatureComposition from "../../../examples/blocks/feature-grid";
+import PricingComposition from "../../../examples/blocks/pricing-table";
+import TaskComposition from "../../../examples/blocks/task-list";
+import CtaComposition from "../../../examples/blocks/cta-section";
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
@@ -34,7 +41,29 @@ function App() {
   const [nativeEvent, setNativeEvent] = React.useState("");
   const [saveFails, setSaveFails] = React.useState(true);
   const mode = new URLSearchParams(location.search).get("mode");
-  if (mode === "onboarding") return <main><OnboardingWizard onComplete={async value => { setNativeEvent(value.workspace); }}/><output>{nativeEvent}</output></main>;
+  if (mode === "slots") return <SlotContracts />;
+  if (mode === "recipe") return <RecipeBrowser />;
+  if (mode === "compound")
+    return (
+      <main className="mx-auto grid max-w-5xl gap-8 p-6">
+        <MediaComposition />
+        <FeatureComposition />
+        <PricingComposition />
+        <TaskComposition />
+        <CtaComposition />
+      </main>
+    );
+  if (mode === "onboarding")
+    return (
+      <main>
+        <OnboardingWizard
+          onComplete={async (value) => {
+            setNativeEvent(value.workspace);
+          }}
+        />
+        <output>{nativeEvent}</output>
+      </main>
+    );
   if (mode === "native")
     return (
       <main>

@@ -1,6 +1,6 @@
 # Current composition inventory
 
-91 components and 80 blocks. Canonical entry files and exported callable parts after the composition migration. Native attributes and refs belong on rendered parts; provider roots keep their underlying primitive interfaces. Atomic controls, data renderers, and motion/effect surfaces retain direct interfaces where additional parts would not help. See [composition guide](COMPOSITION.md) for state ownership, examples, and migration details.
+91 components and 80 blocks. Canonical entry files and exported callable parts. Every registered block has a compiled composition example, accessible from its catalogue page. Native attributes and refs belong on rendered parts; provider roots keep their underlying primitive interfaces. Atomic controls, data renderers, and motion/effect surfaces retain direct interfaces where additional parts would not help. See [composition guide](COMPOSITION.md) for state ownership, examples, and migration details.
 
 ## Components
 
@@ -99,96 +99,95 @@
 | [Scatter Chart](../registry/ui/scatter-chart.tsx) | Direct interface; see entry source |
 ## Blocks
 
-| Entry | Exported callable parts / helpers |
-| --- | --- |
-| [Media Aside](../registry/blocks/media-aside.tsx) | `MediaAsideContent`, `MediaAsideTitle`, `MediaAsideMedia` |
-| [Journal Bento](../registry/blocks/journal-bento.tsx) | `JournalBentoTitle`, `JournalBentoContent`, `JournalBentoItem` |
-| [Article Sidebar](../registry/blocks/article-sidebar.tsx) | `ArticleSidebarTitle`, `ArticleSidebarContent`, `ArticleSidebarItemTitle` |
-| [Editorial Footer](../registry/blocks/editorial-footer.tsx) | `EditorialFooterContent`, `EditorialFooterTitle`, `EditorialFooterDescription` |
-| [Studio Footer](../registry/blocks/studio-footer.tsx) | `StudioFooterTitle`, `StudioFooterContent` |
-| [Newsletter Footer](../registry/blocks/newsletter-footer.tsx) | `NewsletterFooterContent`, `NewsletterFooterHeader` |
-| [Plan Comparison](../registry/blocks/plan-comparison.tsx) | `PlanComparisonHeader`, `PlanComparisonTitle`, `PlanComparisonDescription`, `PlanComparisonContent`, `PlanComparisonItemTitle`, `PlanComparisonItem` |
-| [Feature Comparison](../registry/blocks/feature-comparison.tsx) | `FeatureComparisonTitle`, `FeatureComparisonDescription`, `FeatureComparisonContent` |
-| [Usage Pricing](../registry/blocks/usage-pricing.tsx) | `UsagePricingContent`, `UsagePricingTitle`, `UsagePricingItemTitle`, `UsagePricingItem` |
-| [Editorial Hero](../registry/blocks/editorial-hero.tsx) | `EditorialHeroTitle`, `EditorialHeroContent` |
-| [Product Demo Hero](../registry/blocks/product-demo-hero.tsx) | `ProductDemoHeroContent`, `ProductDemoHeroTitle`, `ProductDemoHeroDescription` |
-| [WebGL Hero](../registry/blocks/webgl-hero.tsx) | `WebglHeroContent`, `WebglHeroTitle`, `WebglHeroHeader` |
-| [Logo Wall](../registry/blocks/logo-wall.tsx) | `LogoWallDescription`, `LogoWallHeader` |
-| [Feature Grid](../registry/blocks/feature-grid.tsx) | `FeatureGridContent`, `FeatureGridTitle`, `FeatureGridItemTitle`, `FeatureGridItem` |
-| [Alternating Feature Story](../registry/blocks/alternating-feature-story.tsx) | `AlternatingFeatureStoryContent`, `AlternatingFeatureStoryTitle`, `AlternatingFeatureStoryItemTitle`, `AlternatingFeatureStoryItem` |
-| [Product Comparison](../registry/blocks/product-comparison.tsx) | `ProductComparisonTitle`, `ProductComparisonList` |
-| [Metrics Strip](../registry/blocks/metrics-strip.tsx) | Direct interface; see entry source |
-| [Testimonial Grid](../registry/blocks/testimonial-grid.tsx) | `TestimonialGridTitle`, `TestimonialGridDescription`, `TestimonialGridContent` |
-| [Testimonial Carousel](../registry/blocks/testimonial-carousel.tsx) | `TestimonialCarouselHeader`, `TestimonialCarouselContent`, `TestimonialCarouselItem` |
-| [Pricing Table](../registry/blocks/pricing-table.tsx) | `PricingTableHeader`, `PricingTableTitle`, `PricingTableContent`, `PricingTableItemTitle`, `PricingTableDescription`, `PricingTableItem` |
-| [Pricing Comparison](../registry/blocks/pricing-comparison.tsx) | `PricingComparisonList` |
-| [FAQ](../registry/blocks/faq.tsx) | `FaqTitle` |
-| [Newsletter Signup](../registry/blocks/newsletter-signup.tsx) | `NewsletterSignupContent`, `NewsletterSignupTitle`, `NewsletterSignupDescription` |
-| [Contact Form](../registry/blocks/contact-form.tsx) | `ContactFormContent`, `ContactFormTitle` |
-| [CTA Section](../registry/blocks/cta-section.tsx) | `CtaSectionTitle` |
-| [Marketing Navigation](../registry/blocks/marketing-navigation.tsx) | Direct interface; see entry source |
-| [Mega Navigation](../registry/blocks/mega-navigation.tsx) | `MegaNavigationHeader`, `MegaNavigationItem` |
-| [Floating Navigation](../registry/blocks/floating-navigation.tsx) | `FloatingNavigationItem` |
-| [Terrain Hero](../registry/blocks/terrain-hero.tsx) | `TerrainHeroHeader`, `TerrainHeroContent`, `TerrainHeroTitle` |
-| [Terrain Relief Hero](../registry/blocks/terrain-relief-hero.tsx) | `TerrainReliefHeroHeader`, `TerrainReliefHeroContent`, `TerrainReliefHeroTitle` |
-| [Marketing Footer](../registry/blocks/marketing-footer.tsx) | `MarketingFooterNavigation` |
-| [Particle Hero](../registry/blocks/particle-hero.tsx) | `ParticleHeroContent`, `ParticleHeroTitle`, `ParticleHeroHeader` |
-| [Liquid Hero](../registry/blocks/liquid-hero.tsx) | `LiquidHeroContent`, `LiquidHeroTitle` |
-| [Orb Hero](../registry/blocks/orb-hero.tsx) | `OrbHeroHeader`, `OrbHeroContent`, `OrbHeroTitle` |
-| [Silk Hero](../registry/blocks/silk-hero.tsx) | `SilkHeroHeader`, `SilkHeroContent`, `SilkHeroTitle` |
-| [Eclipse Hero](../registry/blocks/eclipse-hero.tsx) | `EclipseHeroContent`, `EclipseHeroTitle` |
-| [Tunnel Hero](../registry/blocks/tunnel-hero.tsx) | `TunnelHeroContent`, `TunnelHeroTitle` |
-| [Constellation Hero](../registry/blocks/constellation-hero.tsx) | `ConstellationHeroContent`, `ConstellationHeroTitle` |
-| [Distortion Hero](../registry/blocks/distortion-hero.tsx) | `DistortionHeroHeader`, `DistortionHeroContent`, `DistortionHeroTitle` |
-| [Media Hero](../registry/blocks/media-hero.tsx) | `MediaHeroContent`, `MediaHeroTitle` |
-| [Typographic Hero](../registry/blocks/typographic-hero.tsx) | `TypographicHeroHeader`, `TypographicHeroContent`, `TypographicHeroTitle` |
-| [Shape Hero](../registry/blocks/shape-hero.tsx) | `ShapeHeroContent`, `ShapeHeroTitle` |
-| [Studio Hero](../registry/blocks/studio-hero.tsx) | `StudioHeroContent`, `StudioHeroTitle` |
-| [Journal Hero](../registry/blocks/journal-hero.tsx) | `JournalHeroHeader`, `JournalHeroContent`, `JournalHeroTitle` |
-| [Poster Hero](../registry/blocks/poster-hero.tsx) | `PosterHeroContent`, `PosterHeroTitle` |
-| [Portfolio Hero](../registry/blocks/portfolio-hero.tsx) | `PortfolioHeroHeader`, `PortfolioHeroContent`, `PortfolioHeroTitle` |
-| [Collage Hero](../registry/blocks/collage-hero.tsx) | `CollageHeroContent`, `CollageHeroTitle` |
-| [Editorial Navigation](../registry/blocks/editorial-navigation.tsx) | `EditorialNavigationHeader`, `EditorialNavigationItem` |
-| [Commerce Navigation](../registry/blocks/commerce-navigation.tsx) | `CommerceNavigationDescription`, `CommerceNavigationContent` |
-| [Studio Navigation](../registry/blocks/studio-navigation.tsx) | `StudioNavigationContent`, `StudioNavigationItem` |
-| [Immersive Login](../registry/blocks/immersive-login.tsx) | `ImmersiveLoginContent`, `ImmersiveLoginTitle` |
-| [Ribbon Login](../registry/blocks/ribbon-login.tsx) | `RibbonLoginHeader`, `RibbonLoginContent`, `RibbonLoginTitle` |
-| [Editorial Login](../registry/blocks/editorial-login.tsx) | `EditorialLoginHeader`, `EditorialLoginContent`, `EditorialLoginTitle` |
-| [Application Shell](../registry/blocks/application-shell.tsx) | `ApplicationShellAside`, `ApplicationShellContent`, `ApplicationShellItem` |
-| [Workspace Navigation](../registry/blocks/workspace-navigation.tsx) | `WorkspaceNavigationHeader`, `WorkspaceNavigationContent`, `WorkspaceNavigationItem` |
-| [Analytics Overview](../registry/blocks/analytics-overview.tsx) | `AnalyticsOverviewContent`, `AnalyticsOverviewItemTitle`, `AnalyticsOverviewItem` |
-| [Activity Feed](../registry/blocks/activity-feed.tsx) | `ActivityFeedHeader`, `ActivityFeedTitle`, `ActivityFeedItem` |
-| [Searchable Records Screen](../registry/blocks/searchable-records-screen.tsx) | `SearchableRecordsScreenContent`, `SearchableRecordsScreenTitle` |
-| [Record Detail Panel](../registry/blocks/record-detail-panel.tsx) | `RecordDetailPanelHeader`, `RecordDetailPanelTitle`, `RecordDetailPanelList`, `RecordDetailPanelDescription` |
-| [Kanban Board](../registry/blocks/kanban-board.tsx) | `KanbanBoardForm`, `KanbanBoardContent`, `KanbanBoardItemTitle`, `KanbanBoardHeader`, `KanbanBoardDescription`, `KanbanBoardItem` |
-| [Task List](../registry/blocks/task-list.tsx) | `TaskListItem` |
-| [Calendar Schedule](../registry/blocks/calendar-schedule.tsx) | `CalendarScheduleContent`, `CalendarScheduleItemTitle`, `CalendarScheduleItem` |
-| [Onboarding Wizard](../registry/blocks/onboarding-wizard.tsx) | `OnboardingWizardAside`, `OnboardingWizardContent`, `OnboardingWizardTitle`, `OnboardingWizardItem` |
-| [Sign In Form](../registry/blocks/sign-in-form.tsx) | `SignInFormContent`, `SignInFormTitle` |
-| [Sign Up Form](../registry/blocks/sign-up-form.tsx) | `SignUpFormContent`, `SignUpFormTitle` |
-| [Password Reset Form](../registry/blocks/password-reset-form.tsx) | `PasswordResetFormContent`, `PasswordResetFormTitle` |
-| [Profile Settings](../registry/blocks/profile-settings.tsx) | `ProfileSettingsContent`, `ProfileSettingsTitle` |
-| [Team Management](../registry/blocks/team-management.tsx) | `TeamManagementTitle`, `TeamManagementForm`, `TeamManagementItem` |
-| [Billing Settings](../registry/blocks/billing-settings.tsx) | `BillingSettingsTitle`, `BillingSettingsContent`, `BillingSettingsHeader`, `BillingSettingsItem` |
-| [Notification Centre](../registry/blocks/notification-centre.tsx) | `NotificationCentreHeader`, `NotificationCentreTitle`, `NotificationCentreContent`, `NotificationCentreItem` |
-| [Command Search](../registry/blocks/command-search.tsx) | Direct interface; see entry source |
-| [Chat Workspace](../registry/blocks/chat-workspace.tsx) | `ChatWorkspaceHeader`, `ChatWorkspaceContent`, `ChatWorkspaceTitle`, `ChatWorkspaceForm`, `ChatWorkspaceDescription`, `ChatWorkspaceItem` |
-| [Workspace Sidebar](../registry/blocks/workspace-sidebar.tsx) | Direct interface; see entry source |
-| [Rail Sidebar](../registry/blocks/rail-sidebar.tsx) | Direct interface; see entry source |
-| [Inset Sidebar](../registry/blocks/inset-sidebar.tsx) | Direct interface; see entry source |
-| [User Switcher](../registry/blocks/user-switcher.tsx) | Direct interface; see entry source |
-| [Organization Switcher](../registry/blocks/organization-switcher.tsx) | Direct interface; see entry source |
-| [SSO Login](../registry/blocks/sso-login.tsx) | `SSOLoginContent`, `SSOLoginTitle` |
-| [Split Login](../registry/blocks/split-login.tsx) | `SplitLoginContent`, `SplitLoginTitle` |
-| [Workspace Login](../registry/blocks/workspace-login.tsx) | `WorkspaceLoginContent`, `WorkspaceLoginTitle`, `WorkspaceLoginDescription` |
+Functional sections share state through the block root; styled primitives accept caller content. Each linked example is compiled in the consumer fixture and displayed in the catalogue. Original content shortcuts are preserved through separate Root variants where needed. See [composition guide](COMPOSITION.md) for those contracts.
 
-## Validation
+| Entry | Composition example | Exported parts |
+| --- | --- | --- |
+| [Media Aside](../registry/blocks/media-aside.tsx) | [Example](../examples/blocks/media-aside.tsx) | `MediaAsideContent`, `MediaAsideTitle`, `MediaAsideMedia`, `MediaAsideDescription`, `MediaAsideAction` |
+| [Journal Bento](../registry/blocks/journal-bento.tsx) | [Example](../examples/blocks/journal-bento.tsx) | `JournalBentoTitle`, `JournalBentoContent`, `JournalBentoItem`, `JournalBentoHeading`, `JournalBentoStories`, `JournalBentoCategory` |
+| [Article Sidebar](../registry/blocks/article-sidebar.tsx) | [Example](../examples/blocks/article-sidebar.tsx) | `ArticleSidebarRoot`, `ArticleSidebarTitle`, `ArticleSidebarContent`, `ArticleSidebarItemTitle`, `ArticleSidebarHeading`, `ArticleSidebarArticle` |
+| [Editorial Footer](../registry/blocks/editorial-footer.tsx) | [Example](../examples/blocks/editorial-footer.tsx) | `EditorialFooterContent`, `EditorialFooterTitle`, `EditorialFooterDescription`, `EditorialFooterColumns`, `EditorialFooterNote` |
+| [Studio Footer](../registry/blocks/studio-footer.tsx) | [Example](../examples/blocks/studio-footer.tsx) | `StudioFooterTitle`, `StudioFooterContent`, `StudioFooterHeading`, `StudioFooterContact`, `StudioFooterColumns` |
+| [Newsletter Footer](../registry/blocks/newsletter-footer.tsx) | [Example](../examples/blocks/newsletter-footer.tsx) | `NewsletterFooterContent`, `NewsletterFooterHeader`, `NewsletterFooterColumns`, `NewsletterFooterBranding` |
+| [Plan Comparison](../registry/blocks/plan-comparison.tsx) | [Example](../examples/blocks/plan-comparison.tsx) | `PlanComparisonHeader`, `PlanComparisonTitle`, `PlanComparisonDescription`, `PlanComparisonContent`, `PlanComparisonItemTitle`, `PlanComparisonItem`, `PlanComparisonToolbar`, `PlanComparisonBillingNote`, `PlanComparisonPlans`, `PlanComparisonStatus` |
+| [Feature Comparison](../registry/blocks/feature-comparison.tsx) | [Example](../examples/blocks/feature-comparison.tsx) | `FeatureComparisonTitle`, `FeatureComparisonDescription`, `FeatureComparisonContent`, `FeatureComparisonHeading`, `FeatureComparisonLead`, `FeatureComparisonMatrix`, `FeatureComparisonStatus`, `FeatureComparisonTable`, `FeatureComparisonTableHeader`, `FeatureComparisonRow`, `FeatureComparisonHead`, `FeatureComparisonTableBody`, `FeatureComparisonCell` |
+| [Usage Pricing](../registry/blocks/usage-pricing.tsx) | [Example](../examples/blocks/usage-pricing.tsx) | `UsagePricingContent`, `UsagePricingTitle`, `UsagePricingItemTitle`, `UsagePricingItem`, `UsagePricingCalculator`, `UsagePricingPlans` |
+| [Editorial Hero](../registry/blocks/editorial-hero.tsx) | [Example](../examples/blocks/editorial-hero.tsx) | `EditorialHeroTitle`, `EditorialHeroContent`, `EditorialHeroHeading`, `EditorialHeroIntro`, `EditorialHeroDescription`, `EditorialHeroAction` |
+| [Product Demo Hero](../registry/blocks/product-demo-hero.tsx) | [Example](../examples/blocks/product-demo-hero.tsx) | `ProductDemoHeroRoot`, `ProductDemoHeroContent`, `ProductDemoHeroTitle`, `ProductDemoHeroDescription`, `ProductDemoHeroIntro`, `ProductDemoHeroPreview`, `ProductDemoHeroCaption`, `ProductDemoHeroAction`, `ProductDemoHeroLead` |
+| [WebGL Hero](../registry/blocks/webgl-hero.tsx) | [Example](../examples/blocks/webgl-hero.tsx) | `WebglHeroContent`, `WebglHeroTitle`, `WebglHeroHeader`, `WebglHeroIntro`, `WebglHeroArtwork`, `WebglHeroControls`, `WebglHeroDescription` |
+| [Logo Wall](../registry/blocks/logo-wall.tsx) | [Example](../examples/blocks/logo-wall.tsx) | `LogoWallDescription`, `LogoWallHeader`, `LogoWallLead`, `LogoWallLogos` |
+| [Feature Grid](../registry/blocks/feature-grid.tsx) | [Example](../examples/blocks/feature-grid.tsx) | `FeatureGridContent`, `FeatureGridTitle`, `FeatureGridItemTitle`, `FeatureGridItem`, `FeatureGridHeader`, `FeatureGridDescription`, `FeatureGridLayout`, `FeatureGridList`, `FeatureGridPreview`, `FeatureGridPanel`, `FeatureGridItemLabel`, `FeatureGridItemDescription` |
+| [Alternating Feature Story](../registry/blocks/alternating-feature-story.tsx) | [Example](../examples/blocks/alternating-feature-story.tsx) | `AlternatingFeatureStoryContent`, `AlternatingFeatureStoryTitle`, `AlternatingFeatureStoryItemTitle`, `AlternatingFeatureStoryItem`, `AlternatingFeatureStoryOverview`, `AlternatingFeatureStoryActivity` |
+| [Product Comparison](../registry/blocks/product-comparison.tsx) | [Example](../examples/blocks/product-comparison.tsx) | `ProductComparisonTitle`, `ProductComparisonList`, `ProductComparisonHeading`, `ProductComparisonTable`, `ProductComparisonTableHeader`, `ProductComparisonRow`, `ProductComparisonHead`, `ProductComparisonTableBody`, `ProductComparisonCell` |
+| [Metrics Strip](../registry/blocks/metrics-strip.tsx) | [Example](../examples/blocks/metrics-strip.tsx) | `MetricsStripItems`, `MetricsStripLabel`, `MetricsStripValue`, `MetricsStripItem` |
+| [Testimonial Grid](../registry/blocks/testimonial-grid.tsx) | [Example](../examples/blocks/testimonial-grid.tsx) | `TestimonialGridTitle`, `TestimonialGridDescription`, `TestimonialGridContent`, `TestimonialGridHeading`, `TestimonialGridLead`, `TestimonialGridQuotes`, `TestimonialGridQuote`, `TestimonialGridQuotation`, `TestimonialGridAttribution` |
+| [Testimonial Carousel](../registry/blocks/testimonial-carousel.tsx) | [Example](../examples/blocks/testimonial-carousel.tsx) | `TestimonialCarouselHeader`, `TestimonialCarouselContent`, `TestimonialCarouselItem`, `TestimonialCarouselHeading`, `TestimonialCarouselSlides`, `TestimonialCarouselControls` |
+| [Pricing Table](../registry/blocks/pricing-table.tsx) | [Example](../examples/blocks/pricing-table.tsx) | `PricingTableHeader`, `PricingTableTitle`, `PricingTableContent`, `PricingTableItemTitle`, `PricingTableDescription`, `PricingTableItem`, `PricingTableLead`, `PricingTableItemDescription`, `PricingTableFeatures`, `PricingTableBillingToggle`, `PricingTablePrice` |
+| [Pricing Comparison](../registry/blocks/pricing-comparison.tsx) | [Example](../examples/blocks/pricing-comparison.tsx) | `PricingComparisonList`, `PricingComparisonTable`, `PricingComparisonTableHeader`, `PricingComparisonRow`, `PricingComparisonHead`, `PricingComparisonTableBody`, `PricingComparisonCell` |
+| [FAQ](../registry/blocks/faq.tsx) | [Example](../examples/blocks/faq.tsx) | `FaqTitle`, `FaqHeading`, `FaqQuestions` |
+| [Newsletter Signup](../registry/blocks/newsletter-signup.tsx) | [Example](../examples/blocks/newsletter-signup.tsx) | `NewsletterSignupContent`, `NewsletterSignupTitle`, `NewsletterSignupDescription`, `NewsletterSignupEyebrow`, `NewsletterSignupHeading`, `NewsletterSignupLead`, `NewsletterSignupFields`, `NewsletterSignupPrivacy`, `NewsletterSignupStatus` |
+| [Contact Form](../registry/blocks/contact-form.tsx) | [Example](../examples/blocks/contact-form.tsx) | `ContactFormContent`, `ContactFormTitle`, `ContactFormIntro`, `ContactFormContactFields`, `ContactFormProjectField`, `ContactFormSubmit`, `ContactFormStatus` |
+| [CTA Section](../registry/blocks/cta-section.tsx) | [Example](../examples/blocks/cta-section.tsx) | `CtaSectionTitle`, `CtaSectionContent`, `CtaSectionDescription`, `CtaSectionAction` |
+| [Marketing Navigation](../registry/blocks/marketing-navigation.tsx) | [Example](../examples/blocks/marketing-navigation.tsx) | `MarketingNavigationBrand`, `MarketingNavigationLinks` |
+| [Mega Navigation](../registry/blocks/mega-navigation.tsx) | [Example](../examples/blocks/mega-navigation.tsx) | `MegaNavigationHeader`, `MegaNavigationItem`, `MegaNavigationToolbar`, `MegaNavigationMobileMenu` |
+| [Floating Navigation](../registry/blocks/floating-navigation.tsx) | [Example](../examples/blocks/floating-navigation.tsx) | `FloatingNavigationItem`, `FloatingNavigationLinks` |
+| [Terrain Hero](../registry/blocks/terrain-hero.tsx) | [Example](../examples/blocks/terrain-hero.tsx) | `TerrainHeroHeader`, `TerrainHeroContent`, `TerrainHeroTitle`, `TerrainHeroMasthead`, `TerrainHeroIntro`, `TerrainHeroArtwork`, `TerrainHeroControls`, `TerrainHeroMeta`, `TerrainHeroBrand`, `TerrainHeroDescription` |
+| [Terrain Relief Hero](../registry/blocks/terrain-relief-hero.tsx) | [Example](../examples/blocks/terrain-relief-hero.tsx) | `TerrainReliefHeroHeader`, `TerrainReliefHeroContent`, `TerrainReliefHeroTitle`, `TerrainReliefHeroMasthead`, `TerrainReliefHeroIntro`, `TerrainReliefHeroArtwork`, `TerrainReliefHeroControls`, `TerrainReliefHeroMeta`, `TerrainReliefHeroBrand`, `TerrainReliefHeroDescription` |
+| [Marketing Footer](../registry/blocks/marketing-footer.tsx) | [Example](../examples/blocks/marketing-footer.tsx) | `MarketingFooterNavigation`, `MarketingFooterBrand`, `MarketingFooterLinks`, `MarketingFooterNote` |
+| [Particle Hero](../registry/blocks/particle-hero.tsx) | [Example](../examples/blocks/particle-hero.tsx) | `ParticleHeroContent`, `ParticleHeroTitle`, `ParticleHeroHeader`, `ParticleHeroIntro`, `ParticleHeroArtwork`, `ParticleHeroFooter`, `ParticleHeroAction`, `ParticleHeroEyebrow`, `ParticleHeroDescription` |
+| [Liquid Hero](../registry/blocks/liquid-hero.tsx) | [Example](../examples/blocks/liquid-hero.tsx) | `LiquidHeroContent`, `LiquidHeroTitle`, `LiquidHeroLayout`, `LiquidHeroBrand`, `LiquidHeroAction`, `LiquidHeroEyebrow`, `LiquidHeroDescription`, `LiquidHeroArtwork`, `LiquidHeroCopyContent` |
+| [Orb Hero](../registry/blocks/orb-hero.tsx) | [Example](../examples/blocks/orb-hero.tsx) | `OrbHeroHeader`, `OrbHeroContent`, `OrbHeroTitle`, `OrbHeroMasthead`, `OrbHeroLayout`, `OrbHeroMeta`, `OrbHeroAction`, `OrbHeroBrand`, `OrbHeroArtwork`, `OrbHeroCopyContent` |
+| [Silk Hero](../registry/blocks/silk-hero.tsx) | [Example](../examples/blocks/silk-hero.tsx) | `SilkHeroHeader`, `SilkHeroContent`, `SilkHeroTitle`, `SilkHeroMasthead`, `SilkHeroScene`, `SilkHeroFooter`, `SilkHeroAction`, `SilkHeroBrand`, `SilkHeroMeta`, `SilkHeroEyebrow`, `SilkHeroArtwork`, `SilkHeroCopyContent` |
+| [Eclipse Hero](../registry/blocks/eclipse-hero.tsx) | [Example](../examples/blocks/eclipse-hero.tsx) | `EclipseHeroContent`, `EclipseHeroTitle`, `EclipseHeroLayout`, `EclipseHeroAction`, `EclipseHeroBrand`, `EclipseHeroFootnote`, `EclipseHeroEyebrow`, `EclipseHeroDescription`, `EclipseHeroArtwork`, `EclipseHeroCopyContent` |
+| [Tunnel Hero](../registry/blocks/tunnel-hero.tsx) | [Example](../examples/blocks/tunnel-hero.tsx) | `TunnelHeroContent`, `TunnelHeroTitle`, `TunnelHeroScene`, `TunnelHeroBrand`, `TunnelHeroMeta`, `TunnelHeroEyebrow`, `TunnelHeroFootnote`, `TunnelHeroAction`, `TunnelHeroArtwork`, `TunnelHeroCopyContent` |
+| [Constellation Hero](../registry/blocks/constellation-hero.tsx) | [Example](../examples/blocks/constellation-hero.tsx) | `ConstellationHeroContent`, `ConstellationHeroTitle`, `ConstellationHeroLayout`, `ConstellationHeroAction`, `ConstellationHeroBrand`, `ConstellationHeroFootnote`, `ConstellationHeroDescription`, `ConstellationHeroArtwork`, `ConstellationHeroCopyContent` |
+| [Distortion Hero](../registry/blocks/distortion-hero.tsx) | [Example](../examples/blocks/distortion-hero.tsx) | `DistortionHeroHeader`, `DistortionHeroContent`, `DistortionHeroTitle`, `DistortionHeroMasthead`, `DistortionHeroArtwork`, `DistortionHeroIntro`, `DistortionHeroMeta`, `DistortionHeroBrand`, `DistortionHeroAction`, `DistortionHeroDescription` |
+| [Media Hero](../registry/blocks/media-hero.tsx) | [Example](../examples/blocks/media-hero.tsx) | `MediaHeroContent`, `MediaHeroTitle`, `MediaHeroLayout`, `MediaHeroCaption`, `MediaHeroBrand`, `MediaHeroAction`, `MediaHeroEyebrow`, `MediaHeroMedia`, `MediaHeroDescription`, `MediaHeroCopyContent` |
+| [Typographic Hero](../registry/blocks/typographic-hero.tsx) | [Example](../examples/blocks/typographic-hero.tsx) | `TypographicHeroHeader`, `TypographicHeroContent`, `TypographicHeroTitle`, `TypographicHeroMasthead`, `TypographicHeroIntro`, `TypographicHeroMeta`, `TypographicHeroBrand`, `TypographicHeroAction`, `TypographicHeroDescription` |
+| [Shape Hero](../registry/blocks/shape-hero.tsx) | [Example](../examples/blocks/shape-hero.tsx) | `ShapeHeroContent`, `ShapeHeroTitle`, `ShapeHeroLayout`, `ShapeHeroAction`, `ShapeHeroBrand`, `ShapeHeroDescription`, `ShapeHeroCopyContent`, `ShapeHeroArtwork` |
+| [Studio Hero](../registry/blocks/studio-hero.tsx) | [Example](../examples/blocks/studio-hero.tsx) | `StudioHeroContent`, `StudioHeroTitle`, `StudioHeroMasthead`, `StudioHeroHeading`, `StudioHeroShowcase`, `StudioHeroMeta`, `StudioHeroBrand`, `StudioHeroAction`, `StudioHeroCaption`, `StudioHeroMedia`, `StudioHeroDescription` |
+| [Journal Hero](../registry/blocks/journal-hero.tsx) | [Example](../examples/blocks/journal-hero.tsx) | `JournalHeroHeader`, `JournalHeroContent`, `JournalHeroTitle`, `JournalHeroMasthead`, `JournalHeroLayout`, `JournalHeroBrand`, `JournalHeroAction`, `JournalHeroEyebrow`, `JournalHeroMedia`, `JournalHeroDescription`, `JournalHeroCopyContent` |
+| [Poster Hero](../registry/blocks/poster-hero.tsx) | [Example](../examples/blocks/poster-hero.tsx) | `PosterHeroContent`, `PosterHeroTitle`, `PosterHeroLayout`, `PosterHeroMeta`, `PosterHeroBrand`, `PosterHeroAction`, `PosterHeroDescription`, `PosterHeroCopyContent` |
+| [Portfolio Hero](../registry/blocks/portfolio-hero.tsx) | [Example](../examples/blocks/portfolio-hero.tsx) | `PortfolioHeroHeader`, `PortfolioHeroContent`, `PortfolioHeroTitle`, `PortfolioHeroMasthead`, `PortfolioHeroLayout`, `PortfolioHeroBrand`, `PortfolioHeroAction`, `PortfolioHeroMeta`, `PortfolioHeroMedia`, `PortfolioHeroDescription` |
+| [Collage Hero](../registry/blocks/collage-hero.tsx) | [Example](../examples/blocks/collage-hero.tsx) | `CollageHeroContent`, `CollageHeroTitle`, `CollageHeroLayout`, `CollageHeroAction`, `CollageHeroMeta`, `CollageHeroBrand`, `CollageHeroEyebrow`, `CollageHeroFootnote`, `CollageHeroMedia`, `CollageHeroSecondaryMedia`, `CollageHeroCopyContent`, `CollageHeroGallery` |
+| [Editorial Navigation](../registry/blocks/editorial-navigation.tsx) | [Example](../examples/blocks/editorial-navigation.tsx) | `EditorialNavigationHeader`, `EditorialNavigationItem`, `EditorialNavigationMasthead`, `EditorialNavigationLinks` |
+| [Commerce Navigation](../registry/blocks/commerce-navigation.tsx) | [Example](../examples/blocks/commerce-navigation.tsx) | `CommerceNavigationDescription`, `CommerceNavigationContent`, `CommerceNavigationAnnouncement`, `CommerceNavigationToolbar`, `CommerceNavigationMobileMenu` |
+| [Studio Navigation](../registry/blocks/studio-navigation.tsx) | [Example](../examples/blocks/studio-navigation.tsx) | `StudioNavigationContent`, `StudioNavigationItem`, `StudioNavigationBrand`, `StudioNavigationMenu` |
+| [Immersive Login](../registry/blocks/immersive-login.tsx) | [Example](../examples/blocks/immersive-login.tsx) | `ImmersiveLoginContent`, `ImmersiveLoginTitle`, `ImmersiveLoginArtwork`, `ImmersiveLoginFormPanel`, `ImmersiveLoginDescription`, `ImmersiveLoginCopyContent` |
+| [Ribbon Login](../registry/blocks/ribbon-login.tsx) | [Example](../examples/blocks/ribbon-login.tsx) | `RibbonLoginHeader`, `RibbonLoginContent`, `RibbonLoginTitle`, `RibbonLoginMasthead`, `RibbonLoginFormPanel`, `RibbonLoginDescription`, `RibbonLoginArtwork`, `RibbonLoginCopyContent` |
+| [Editorial Login](../registry/blocks/editorial-login.tsx) | [Example](../examples/blocks/editorial-login.tsx) | `EditorialLoginHeader`, `EditorialLoginContent`, `EditorialLoginTitle`, `EditorialLoginMasthead`, `EditorialLoginLayout`, `EditorialLoginDescription`, `EditorialLoginMedia`, `EditorialLoginCopyContent` |
+| [Application Shell](../registry/blocks/application-shell.tsx) | [Example](../examples/blocks/application-shell.tsx) | `ApplicationShellRoot`, `ApplicationShellAside`, `ApplicationShellContent`, `ApplicationShellItem`, `ApplicationShellNavigation`, `ApplicationShellWorkspace` |
+| [Workspace Navigation](../registry/blocks/workspace-navigation.tsx) | [Example](../examples/blocks/workspace-navigation.tsx) | `WorkspaceNavigationHeader`, `WorkspaceNavigationContent`, `WorkspaceNavigationItem`, `WorkspaceNavigationToolbar`, `WorkspaceNavigationViews`, `WorkspaceNavigationStatus` |
+| [Analytics Overview](../registry/blocks/analytics-overview.tsx) | [Example](../examples/blocks/analytics-overview.tsx) | `AnalyticsOverviewContent`, `AnalyticsOverviewItemTitle`, `AnalyticsOverviewItem`, `AnalyticsOverviewMetrics`, `AnalyticsOverviewCharts` |
+| [Activity Feed](../registry/blocks/activity-feed.tsx) | [Example](../examples/blocks/activity-feed.tsx) | `ActivityFeedHeader`, `ActivityFeedTitle`, `ActivityFeedItem`, `ActivityFeedHeading`, `ActivityFeedEntries` |
+| [Searchable Records Screen](../registry/blocks/searchable-records-screen.tsx) | [Example](../examples/blocks/searchable-records-screen.tsx) | `SearchableRecordsScreenContent`, `SearchableRecordsScreenTitle`, `SearchableRecordsScreenToolbar`, `SearchableRecordsScreenRecords` |
+| [Record Detail Panel](../registry/blocks/record-detail-panel.tsx) | [Example](../examples/blocks/record-detail-panel.tsx) | `RecordDetailPanelHeader`, `RecordDetailPanelTitle`, `RecordDetailPanelList`, `RecordDetailPanelDescription`, `RecordDetailPanelHeading`, `RecordDetailPanelDetails`, `RecordDetailPanelNote` |
+| [Kanban Board](../registry/blocks/kanban-board.tsx) | [Example](../examples/blocks/kanban-board.tsx) | `KanbanBoardForm`, `KanbanBoardContent`, `KanbanBoardItemTitle`, `KanbanBoardHeader`, `KanbanBoardDescription`, `KanbanBoardItem`, `KanbanBoardComposer`, `KanbanBoardColumns`, `KanbanBoardFooter`, `KanbanBoardStatus` |
+| [Task List](../registry/blocks/task-list.tsx) | [Example](../examples/blocks/task-list.tsx) | `TaskListItem`, `TaskListCheckbox`, `TaskListTitle`, `TaskListStatus` |
+| [Calendar Schedule](../registry/blocks/calendar-schedule.tsx) | [Example](../examples/blocks/calendar-schedule.tsx) | `CalendarScheduleContent`, `CalendarScheduleItemTitle`, `CalendarScheduleItem`, `CalendarScheduleCalendar`, `CalendarScheduleAgenda` |
+| [Onboarding Wizard](../registry/blocks/onboarding-wizard.tsx) | [Example](../examples/blocks/onboarding-wizard.tsx) | `OnboardingWizardAside`, `OnboardingWizardContent`, `OnboardingWizardTitle`, `OnboardingWizardItem`, `OnboardingWizardSteps`, `OnboardingWizardStepContent` |
+| [Sign In Form](../registry/blocks/sign-in-form.tsx) | [Example](../examples/blocks/sign-in-form.tsx) | `SignInFormContent`, `SignInFormTitle`, `SignInFormIntro`, `SignInFormEmailField`, `SignInFormPasswordField`, `SignInFormSubmit`, `SignInFormStatus` |
+| [Sign Up Form](../registry/blocks/sign-up-form.tsx) | [Example](../examples/blocks/sign-up-form.tsx) | `SignUpFormContent`, `SignUpFormTitle`, `SignUpFormIntro`, `SignUpFormNameField`, `SignUpFormEmailField`, `SignUpFormPasswordField`, `SignUpFormSubmit`, `SignUpFormStatus` |
+| [Password Reset Form](../registry/blocks/password-reset-form.tsx) | [Example](../examples/blocks/password-reset-form.tsx) | `PasswordResetFormContent`, `PasswordResetFormTitle`, `PasswordResetFormIntro`, `PasswordResetFormEmailField`, `PasswordResetFormSubmit`, `PasswordResetFormStatus` |
+| [Profile Settings](../registry/blocks/profile-settings.tsx) | [Example](../examples/blocks/profile-settings.tsx) | `ProfileSettingsContent`, `ProfileSettingsTitle`, `ProfileSettingsError`, `ProfileSettingsIntro`, `ProfileSettingsAvatar`, `ProfileSettingsNameField`, `ProfileSettingsEmailField`, `ProfileSettingsActions`, `ProfileSettingsStatus` |
+| [Team Management](../registry/blocks/team-management.tsx) | [Example](../examples/blocks/team-management.tsx) | `TeamManagementTitle`, `TeamManagementForm`, `TeamManagementItem`, `TeamManagementError`, `TeamManagementHeading`, `TeamManagementInviteForm`, `TeamManagementMembers`, `TeamManagementStatus`, `TeamManagementReset` |
+| [Billing Settings](../registry/blocks/billing-settings.tsx) | [Example](../examples/blocks/billing-settings.tsx) | `BillingSettingsTitle`, `BillingSettingsContent`, `BillingSettingsHeader`, `BillingSettingsItem`, `BillingSettingsError`, `BillingSettingsIntro`, `BillingSettingsPlans`, `BillingSettingsUsage`, `BillingSettingsActions`, `BillingSettingsStatus` |
+| [Notification Centre](../registry/blocks/notification-centre.tsx) | [Example](../examples/blocks/notification-centre.tsx) | `NotificationCentreHeader`, `NotificationCentreTitle`, `NotificationCentreContent`, `NotificationCentreItem`, `NotificationCentreToolbar`, `NotificationCentreFilters`, `NotificationCentreMessages`, `NotificationCentreEmpty` |
+| [Command Search](../registry/blocks/command-search.tsx) | [Example](../examples/blocks/command-search.tsx) | `CommandSearchPalette`, `CommandSearchStatus` |
+| [Chat Workspace](../registry/blocks/chat-workspace.tsx) | [Example](../examples/blocks/chat-workspace.tsx) | `ChatWorkspaceHeader`, `ChatWorkspaceContent`, `ChatWorkspaceTitle`, `ChatWorkspaceForm`, `ChatWorkspaceDescription`, `ChatWorkspaceItem`, `ChatWorkspaceError`, `ChatWorkspaceToolbar`, `ChatWorkspaceMessages`, `ChatWorkspaceControls`, `ChatWorkspaceComposer`, `ChatWorkspaceFooter` |
+| [Workspace Sidebar](../registry/blocks/workspace-sidebar.tsx) | [Example](../examples/blocks/workspace-sidebar.tsx) | `WorkspaceSidebarRoot`, `WorkspaceSidebarPanel`, `WorkspaceSidebarHeader`, `WorkspaceSidebarBody`, `WorkspaceSidebarFooter`, `WorkspaceSidebarContent`, `WorkspaceSidebarTrigger` |
+| [Rail Sidebar](../registry/blocks/rail-sidebar.tsx) | [Example](../examples/blocks/rail-sidebar.tsx) | `RailSidebarRoot`, `RailSidebarPanel`, `RailSidebarHeader`, `RailSidebarBody`, `RailSidebarFooter`, `RailSidebarContent`, `RailSidebarTrigger` |
+| [Inset Sidebar](../registry/blocks/inset-sidebar.tsx) | [Example](../examples/blocks/inset-sidebar.tsx) | `InsetSidebarRoot`, `InsetSidebarPanel`, `InsetSidebarHeader`, `InsetSidebarBody`, `InsetSidebarFooter`, `InsetSidebarContent`, `InsetSidebarTrigger` |
+| [User Switcher](../registry/blocks/user-switcher.tsx) | [Example](../examples/blocks/user-switcher.tsx) | `UserSwitcherMenu`, `UserSwitcherStatus`, `UserSwitcherTrigger`, `UserSwitcherOptions`, `UserSwitcherPopup` |
+| [Organization Switcher](../registry/blocks/organization-switcher.tsx) | [Example](../examples/blocks/organization-switcher.tsx) | `OrganizationSwitcherMenu`, `OrganizationSwitcherStatus`, `OrganizationSwitcherTrigger`, `OrganizationSwitcherOptions`, `OrganizationSwitcherPopup` |
+| [SSO Login](../registry/blocks/sso-login.tsx) | [Example](../examples/blocks/sso-login.tsx) | `SSOLoginContent`, `SSOLoginTitle`, `SSOLoginIntro`, `SSOLoginFields`, `SSOLoginDescription` |
+| [Split Login](../registry/blocks/split-login.tsx) | [Example](../examples/blocks/split-login.tsx) | `SplitLoginContent`, `SplitLoginTitle`, `SplitLoginBrandPanel`, `SplitLoginFormPanel`, `SplitLoginDescription`, `SplitLoginCopyContent` |
+| [Workspace Login](../registry/blocks/workspace-login.tsx) | [Example](../examples/blocks/workspace-login.tsx) | `WorkspaceLoginContent`, `WorkspaceLoginTitle`, `WorkspaceLoginDescription`, `WorkspaceLoginBackdrop`, `WorkspaceLoginFormPanel`, `WorkspaceLoginFooter`, `WorkspaceLoginLead`, `WorkspaceLoginCopyContent` |
 
-- `pnpm verify`: registry schemas, dependency closures, source parity, TypeScript and ESLint pass.
-- `pnpm test:composition`: 10 consumer tests, including all 80 block roots, pass with system Chromium.
-- Catalogue production build: 416 routes generated successfully.
-- The selected catalogue/composition/customization/content-block tests cover all 171 entries at desktop and mobile widths, plus interactive composition.
-- Real shadcn CLI installations of all 171 entries passed TypeScript and production builds in Vite and Next.js. Generic installation fixtures are regenerated on demand; this change keeps the dedicated consumer fixture.
-- Desktop and mobile custom compositions were visually inspected, including dark mode; the narrow-grid comparison overflow was repaired.
+## Verification
 
-The mechanical design detector reported advisory literal palette and small typography values in the existing artwork/presets. These were not treated as reasons to redesign the collection during an interface migration.
+- `pnpm verify` checks TypeScript, lint, registry schemas, dependency closures and canonical source parity.
+- `pnpm test:composition` compiles all 80 examples and runs desktop/mobile rendering plus interactive consumer checks.
+- Catalogue production and Vite/Next.js installation checks cover the distributed source separately.
+
+An exported name alone is not considered completion evidence. The compiled examples and behavioral checks exercise the public parts; optional backend adapters remain the calling application's responsibility.
